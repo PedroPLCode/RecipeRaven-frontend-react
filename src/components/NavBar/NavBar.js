@@ -6,16 +6,19 @@ const NavBar = () => {
   return (
     <Navbar bg="primary" variant="dark" sticky="top" className="mb-3">
       <Container>
-        <Navbar.Brand href="/">Flight Search App</Navbar.Brand>
+        <Navbar.Brand href="/">Food Search App</Navbar.Brand>
         <Nav className="justify-content-end">
           <Nav.Link as={NavLink} to="/">
-            Input
+            Main
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/output">
-            Output
+          <Nav.Link as={NavLink} to="/search">
+            Search
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/results">
+            Results
           </Nav.Link>
           <Nav.Link as={NavLink} to="/pagenotfound">
-            NotFound
+            PageNotFound
           </Nav.Link>
         </Nav>
       </Container>

@@ -1,16 +1,16 @@
 import { createStore, combineReducers } from 'redux';
 import initialState from './initialState';
-import originAirportReducer from './originAirportReducer';
-import destinationAirportReducer from './destinationAirportReducer';
-import startDateReducer from './startDateReducer';
-import endDateReducer from './endDateReducer';
+import ingredientsReducer from './ingredientsReducer';
 import searchResponseReducer from './searchResponseReducer';
+import glutenFreeReducer from './glutenFreeReducer';
+import veganReducer from './veganReducer';
+import vegetarianReducer from './vegetarianReducer';
 
 const subreducers = {
-  originAirport: originAirportReducer,
-  destinationAirport: destinationAirportReducer,
-  startDate: startDateReducer,
-  endDate: endDateReducer,
+  ingredients: ingredientsReducer,
+  vegan: veganReducer,
+  vegetarian: vegetarianReducer,
+  glutenFree: glutenFreeReducer,
   searchResponse: searchResponseReducer,
 }
 

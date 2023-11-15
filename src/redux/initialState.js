@@ -1,8 +1,8 @@
 const initialState = {
-  originAirport: '',
-  destinationAirport: '',
-  startDate: '',
-  endDate: '',
+  ingredients: '',
+  vegetarian: false,
+  vegan: false,
+  glutenFree: false,
   searchResponse: '',
 };
     

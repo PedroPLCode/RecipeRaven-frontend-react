@@ -1,6 +1,6 @@
 export const getSearchResponse = (state) => state.searchResponse;
 
-const createActionName = actionName => `app/lists/${actionName}`;
+const createActionName = actionName => `app/${actionName}`;
 const UPDATE_SEARCH_RESPONSE = createActionName('UPDATE_SEARCH_RESPONSE');
 
 export const updateSearchResponse = payload => ({ type: UPDATE_SEARCH_RESPONSE, payload });
