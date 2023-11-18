@@ -1,11 +1,9 @@
-import NavBar from './components/NavBar/NavBar';
-import Footer from './components/Footer/Footer';
+import NavBar from './components/views/NavBar/NavBar'
+import Footer from './components/views/Footer/Footer';
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import MainPage from './components/MainPage/MainPage';
-import SearchInput from './components/SearchInput/SearchInput';
-import SearchOutput from './components/SearchOutput/SearchOutput';
-import PageNotFound from './components/PageNotFound/PageNotFound';
+import AboutPage from './components/pages/AboutPage/AboutPage';
+import SearchPage from './components/pages/SearchPage/SearchPage';
 
 const App = () => {
   return (
@@ -13,10 +11,8 @@ const App = () => {
       <NavBar />
       <Container>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/search" element={<SearchInput />} />
-          <Route path="/results" element={<SearchOutput />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="*" element={<AboutPage />} />
+          <Route path="/" element={<SearchPage />} />
         </Routes>
       </Container>
       <Footer />

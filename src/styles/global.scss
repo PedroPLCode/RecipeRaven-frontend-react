@@ -7,15 +7,12 @@
 body {
   margin: 0;
   padding: 0;
-  background: $color-light;
+  height: 100vh;
+  background-image: url(../images/pexels-adonyi-gábor-1414651.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-family: $font-text;
-  font-size: ($base-size * 1.1);
-  color: $color-text;
+  font-size: ($base-size);
   letter-spacing: 0.5px;
-}
-
-:global(.container) {
-  width: 90%;
-  max-width: 1400px;
-  margin: 0 auto;
 }
