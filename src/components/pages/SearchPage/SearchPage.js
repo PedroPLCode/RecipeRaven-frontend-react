@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Button } from "react-bootstrap";
 import { updateIngredients, getIngredients } from '../../../redux/reducers/ingredientsReducer';
+import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
 import { updateResponse, getResponse } from '../../../redux/reducers/responseReducer';
 import styles from './SearchPage.module.scss';
@@ -17,12 +18,17 @@ const SearchPage = () => {
 
   const dispatch = useDispatch();
   const ingredients = useSelector(state => getIngredients(state));
+  const excluded = useSelector(state => getExcluded(state));
   const diet = useSelector(state => getDiet(state));
   const dietKeys = Object.keys(diet)
   const searchResponse = useSelector(state => getResponse(state));
 
   const handleIngredientsSet = value => {
     dispatch(updateIngredients(value));
+  }
+
+  const handleExcludedSet = value => {
+    dispatch(updateExcluded(value));
   }
 
   const handleDietClick = event => {
@@ -37,20 +43,25 @@ const SearchPage = () => {
       diet[clickedId]['value'] = false;
     }
     dispatch(updateDiet(diet));
-    prepareSearchString();
   }
 
   const prepareSearchString = () => {
     let searchString = ''; 
-    searchString += ingredients.replaceAll(' ', '%20');
+    searchString += `&q=${ingredients.replaceAll(' ', '%20')}`;
     for(let singleKey of dietKeys) {
       diet[`${singleKey}`]['value'] ? searchString += `%20${diet[`${singleKey}`]['string']}` : searchString += '';
     }
     return searchString;
   }
 
-  const searchReceipes = async searchString => {
-    const url = `https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public&q=${searchString}`;
+  const prepareExcludedString = () => {
+    let excludedString = ''; 
+    excludedString += `&excluded%5B0%5D=${excluded.replaceAll(' ', '%20')}`;
+    return excludedString;
+  }
+
+  const searchReceipes = async (searchString, exccludedString) => {
+    const url = `https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public${searchString}${exccludedString}`;
     const options = {
 	  method: 'GET',
 	  headers: {
@@ -75,22 +86,21 @@ const SearchPage = () => {
     <article className={styles.searchpage}>
       <div className={styles.wrapper}>
         <h3>Food Search component</h3>  
-        <form className="">
-          <div className="">
-            <h5>Ingredients</h5> 
-            <input type="text" placeholder="Inigredients..." value={ingredients} onChange={event => handleIngredientsSet(event.target.value)} />
-              <div className={styles.diet} >
-                {dietKeys.map(singleKey => (
-                  <div className={styles.button} id={diet[`${singleKey}`][`id`]} onClick={event => handleDietClick(event)} >
-                    {diet[`${singleKey}`][`description`]}
-                  </div>
-  ))}
-              </div>
+        <form className={styles.form}>
+          <div className={styles.form_inner}>
+            <input type="text" placeholder="Ingredients..." title="Set ingredients here" value={ingredients} onChange={event => handleIngredientsSet(event.target.value)} />
+            <input type="text" placeholder="Excluded..." title="Excluded ingredients here" value={excluded} onChange={event => handleExcludedSet(event.target.value)} />  
+            <div className={styles.diet} >
+              {dietKeys.map(singleKey => (
+                <div className={styles.button} id={diet[`${singleKey}`][`id`]} onClick={event => handleDietClick(event)} >
+                  {diet[`${singleKey}`][`description`]}
+                </div>))}
+            </div>
           </div> 
         </form>
-        <Button className='' variant="primary">
+        <div className={styles.search_button} variant="primary">
             SEARCH
-        </Button>
+        </div>
 
         <SearchResults response={testResponse}/>
       </div>
