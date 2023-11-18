@@ -1,5 +1,4 @@
 import NavBar from './components/views/NavBar/NavBar'
-import Footer from './components/views/Footer/Footer';
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import AboutPage from './components/pages/AboutPage/AboutPage';
@@ -15,7 +14,6 @@ const App = () => {
           <Route path="/" element={<SearchPage />} />
         </Routes>
       </Container>
-      <Footer />
     </main>
   );
 }
