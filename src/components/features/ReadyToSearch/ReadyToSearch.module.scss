@@ -1,0 +1,15 @@
+@import '../../../styles/settings.scss';
+
+.ready {
+    padding-top: ($base-size * 2);
+    padding-bottom: ($base-size);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h3, h5 {
+        font-weight: bold;
+        color: $transparent-background;
+    }
+}

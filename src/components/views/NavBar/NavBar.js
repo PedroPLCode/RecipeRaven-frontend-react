@@ -7,7 +7,10 @@ const NavBar = () => {
     <div className={styles.navbar}>
         <div className={styles.wrapper}>
           <Nav.Link className={styles.link} as={NavLink} to="/">
-            Food Search App
+            Search
+          </Nav.Link>
+          <Nav.Link className={styles.link} as={NavLink} to="/favorite">
+            Favorite
           </Nav.Link>
           <Nav.Link className={styles.link} as={NavLink} to="/about">
             About
