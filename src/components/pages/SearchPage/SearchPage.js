@@ -10,6 +10,7 @@ import styles from './SearchPage.module.scss';
 
 import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
 import ReadyToSearch from "../../features/ReadyToSearch/ReadyToSearch";
+import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import SearchResults from "../../features/SearchResults/SearchResults";
 
 import { responseForTest } from "../../../responseForTest2";
@@ -84,7 +85,6 @@ const SearchPage = () => {
     console.error(error);
   }
 }
-
 
   return (
     <article className={styles.searchpage}>

@@ -8,10 +8,10 @@ const AboutPage = () => {
         <h5>UNDER CONSTRUCTION</h5>
         <h5>UNDER CONSTRUCTION</h5>
         <h5>UNDER CONSTRUCTION</h5>
-        <h5>UNDER CONSTRUCTION</h5>
-        <h5>UNDER CONSTRUCTION</h5>
-        <h5><a href="https://rapidapi.com/edamam/api/recipe-search-and-diet" target="_blank">powered by RapidApi</a></h5>
-        <h5><a href="https://github.com/PedroPLCode/" target="_blank">my github profile</a></h5>
+        <h5>Created by piotrek.gaszczynski@gmail.com</h5>
+        <a href="mailto: piotrek.gaszczynski@gmail.com"><p>send me a email</p></a>
+        <a href="https://rapidapi.com/edamam/api/recipe-search-and-diet" target="_blank" rel="noreferrer"><p>powered by RapidApi</p></a>
+        <a href="https://github.com/PedroPLCode/" target="_blank" rel="noreferrer"><p>my github profile</p></a>
       </div>
     );
   }
