@@ -6,6 +6,10 @@ import store from './redux/store'
 import App from './App';
 import './styles/normalize.scss';
 import './styles/global.scss';
+
+import './styles/animatedTransitions.scss';
+import './styles/keyframes.scss';
+
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

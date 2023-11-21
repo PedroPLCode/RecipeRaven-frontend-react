@@ -1,20 +1,40 @@
 import NavBar from './components/views/NavBar/NavBar'
-import { Routes, Route } from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import AboutPage from './components/pages/AboutPage/AboutPage';
 import FavoritesPage from './components/pages/FavoritesPage/FavoritesPage';
 import SearchPage from './components/pages/SearchPage/SearchPage';
 
 const App = () => {
+
+  const location = useLocation();
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionStage, setTransistionStage] = useState("fadeIn");
+
+  useEffect(() => {
+    if (location !== displayLocation) setTransistionStage("fadeOut");
+  }, [location, displayLocation]);
+
   return (
     <main>
       <NavBar />
       <Container>
-        <Routes>
+      <div
+            className={transitionStage}
+            onAnimationEnd={() => {
+              if (transitionStage === "fadeOut") {
+                setTransistionStage("fadeIn");
+                setDisplayLocation(location);
+              }
+            }}
+          > 
+        <Routes location={displayLocation}>
           <Route path="/favorite" element={<FavoritesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<SearchPage />} />
         </Routes>
+      </div>
       </Container>
     </main>
   );

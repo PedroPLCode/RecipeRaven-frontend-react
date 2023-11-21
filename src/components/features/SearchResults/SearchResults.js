@@ -27,7 +27,10 @@ const SearchResults = props => {
 
             <div className={styles.single_result}>
               <div className={styles.image}>
-                <img  src={singleHit.recipe.images.REGULAR.url} alt={singleHit.recipe.images.SMALL.url} width='200' height='200' />
+                <a href={singleHit.recipe.url} target='_blank' rel="noreferrer">
+                  <i>Click to see full receipe!</i>
+                  <img src={singleHit.recipe.images.REGULAR.url} alt={singleHit.recipe.images.SMALL.url} width='200' height='200' />
+                </a>
               </div>  
               <div className={styles.description}>
                 <h4><strong className={styles.blue}>{singleHit.recipe.label}</strong></h4>
