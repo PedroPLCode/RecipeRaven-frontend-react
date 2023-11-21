@@ -15,7 +15,7 @@ import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
 const SearchPage = () => {
 
   const [loading, setLoading] = useState(false);
-  const [fetchSuccess, setFetchSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const dispatch = useDispatch();
   const ingredients = useSelector(state => getIngredients(state));
@@ -83,12 +83,12 @@ const SearchPage = () => {
     console.log(result);
     dispatch(updateResponse(result))
     setLoading(false); //
-    setFetchSuccess(true); //
+    setSuccess(true); //
     return result;
   } catch (error) {
     console.error(error);
     setLoading(false); //
-    setFetchSuccess(true); //
+    setSuccess(true); //
   }
 }
 
@@ -111,7 +111,7 @@ const SearchPage = () => {
         <div onClick={searchReceipes} className={styles.search_button} variant="primary">
             <p>Search</p>
         </div>
-          <BottomPart loading={loading} fetchSuccess={fetchSuccess} />
+          <BottomPart loading={loading} success={success} />
       </div>
     </article>
   );

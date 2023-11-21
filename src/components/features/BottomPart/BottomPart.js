@@ -7,7 +7,7 @@ const BottomPart = props => {
   if (props.loading) {
     return <Loading />
   } else {
-    if (!props.fetchSuccess) {
+    if (!props.success) {
       return <ReadyToSearch />
     } else {
       return <SearchResults />

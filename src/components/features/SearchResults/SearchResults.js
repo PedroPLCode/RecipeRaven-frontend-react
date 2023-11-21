@@ -7,10 +7,10 @@ import ErrorPage from "../../features/ErrorPage/ErrorPage";
 //const response = JSON.parse(responseForTest);
 //const response = undefined;
 
-const SearchResults = props => {
+const SearchResults = () => {
 
   const result = useSelector(state => getResponse(state));
-  const response = JSON.parse(result);
+  const response = JSON.parse(result); // TUTAJ NIE DZIAŁA
 
   const prepDishesInfo = () => {
     for(let singleHit of response.hits) {
