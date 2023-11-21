@@ -6,6 +6,9 @@ import AboutPage from './components/pages/AboutPage/AboutPage';
 import FavoritesPage from './components/pages/FavoritesPage/FavoritesPage';
 import SearchPage from './components/pages/SearchPage/SearchPage';
 
+import ErrorPage from './components/features/ErrorPage/ErrorPage';
+import Loading from './components/features/Loading/Loading';
+
 const App = () => {
 
   const location = useLocation();
@@ -33,6 +36,10 @@ const App = () => {
           <Route path="/favorite" element={<FavoritesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<SearchPage />} />
+
+          <Route path="*/error" element={<ErrorPage />} />
+          <Route path="/loading" element={<Loading />} />
+
         </Routes>
       </div>
       </Container>
