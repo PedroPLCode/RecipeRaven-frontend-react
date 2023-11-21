@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { clsx } from "clsx";
@@ -8,23 +8,20 @@ import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
 import { updateResponse, getResponse } from '../../../redux/reducers/responseReducer';
 import styles from './SearchPage.module.scss';
 
-import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
-import ReadyToSearch from "../../features/ReadyToSearch/ReadyToSearch";
-import ErrorPage from "../../features/ErrorPage/ErrorPage";
-import SearchResults from "../../features/SearchResults/SearchResults";
+import BottomPart from "../../features/BottomPart/BottomPart";
 
-import { responseForTest } from "../../../responseForTest2";
-const testResponse = JSON.parse(responseForTest);
-//const testResponse = undefined;
+import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
 
 const SearchPage = () => {
+
+  const [loading, setLoading] = useState(false);
+  const [fetchSuccess, setFetchSuccess] = useState(false);
 
   const dispatch = useDispatch();
   const ingredients = useSelector(state => getIngredients(state));
   const excluded = useSelector(state => getExcluded(state));
   const diet = useSelector(state => getDiet(state));
   const dietKeys = Object.keys(diet)
-  const searchResponse = useSelector(state => getResponse(state));
 
   const handleIngredientsSet = value => {
     dispatch(updateIngredients(value));
@@ -60,13 +57,17 @@ const SearchPage = () => {
   }
 
   const prepareExcludedString = () => {
-    let excludedString = ''; 
-    excludedString += `&excluded%5B0%5D=${excluded.replaceAll(' ', '%20')}`;
-    return excludedString;
+    if (excluded !== undefined) {
+      let excludedString = ''; 
+      excludedString += `&excluded%5B0%5D=${excluded.replaceAll(' ', '%20')}`;
+      return excludedString;
+    }
   }
 
-  const searchReceipes = async (searchString, exccludedString) => {
-    const url = `https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public${prepareSearchString(ingredients)}${prepareExcludedString(excluded)}`;
+  const searchReceipes = async () => {
+    const searchString = prepareSearchString(ingredients);
+    const exccludedString = prepareExcludedString(excluded);
+    const url = `https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public${searchString}${exccludedString}`;
     const options = {
 	  method: 'GET',
 	  headers: {
@@ -75,14 +76,19 @@ const SearchPage = () => {
 		  'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
 	  }
   };
+  setLoading(true); //
   try {
     const response = await fetch(url, options);
     const result = await response.text();
     console.log(result);
     dispatch(updateResponse(result))
+    setLoading(false); //
+    setFetchSuccess(true); //
     return result;
   } catch (error) {
     console.error(error);
+    setLoading(false); //
+    setFetchSuccess(true); //
   }
 }
 
@@ -102,10 +108,10 @@ const SearchPage = () => {
             </div>
           </div> 
         </form>
-        <div className={styles.search_button} variant="primary">
+        <div onClick={searchReceipes} className={styles.search_button} variant="primary">
             <p>Search</p>
         </div>
-        {testResponse ? <SearchResults response={testResponse}/> : <ReadyToSearch/>}
+          <BottomPart loading={loading} fetchSuccess={fetchSuccess} />
       </div>
     </article>
   );

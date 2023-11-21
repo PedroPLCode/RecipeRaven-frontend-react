@@ -1,9 +1,19 @@
+import { getResponse } from '../../../redux/reducers/responseReducer';
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import styles from './SeachResult.module.scss';
+import ErrorPage from "../../features/ErrorPage/ErrorPage";
+
+//import { responseForTest } from "../../../responseForTest2";
+//const response = JSON.parse(responseForTest);
+//const response = undefined;
 
 const SearchResults = props => {
 
+  const result = useSelector(state => getResponse(state));
+  const response = JSON.parse(result);
+
   const prepDishesInfo = () => {
-    for(let singleHit of props.response.hits) {
+    for(let singleHit of response.hits) {
       if (singleHit.recipe.totalTime === 0 || !singleHit.recipe.totalTime) {
         singleHit.recipe.totalTime = 15;
       }
@@ -17,13 +27,14 @@ const SearchResults = props => {
     }
   }
 
-  if (props.response) {
+  if (response) {
+    return <ErrorPage />
+  } else {
     prepDishesInfo();
     return (
-
         <div className={styles.results_wrapper}>
-          <h3>Search Results</h3>
-          {props.response.hits.map(singleHit => (
+          <h3>Found some receipes.. take a look</h3>
+          {response.hits.map(singleHit => (
 
             <div className={styles.single_result}>
               <div className={styles.image}>
@@ -44,13 +55,10 @@ const SearchResults = props => {
                 <a href={singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click here to see full receipe!</i></a>
               </div>
             </div>
-
-
           ))}  
       </div>
-
     )
-  }
+  } 
 }
 
 export default SearchResults;

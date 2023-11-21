@@ -4,8 +4,7 @@ const Loading = () => {
 
     return (
       <div className={styles.spinner}>
-        <h3>SpinnerLoading component</h3>
-        <h5>Fetching results...</h5>
+        <h3>Loading results...</h3>
         <h5>Please wait...</h5>
       </div>
     );
