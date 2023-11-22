@@ -3,14 +3,15 @@ import initialState from './initialState';
 import ingredientsReducer from './reducers/ingredientsReducer';
 import excludedReducer from './reducers/excludedReducer';
 import dietReducer from './reducers/dietReducer';
-import responseReducer from './reducers/responseReducer';
-
+import searchResponseReducer from './reducers/searchResponseReducer';
+import serverResponseReducer from './reducers/serverResponseReducer';
 
 const subreducers = {
   ingredients: ingredientsReducer,
   excluded: excludedReducer,
   diet: dietReducer,
-  response: responseReducer,
+  searchResponse: searchResponseReducer,
+  serverResponse: serverResponseReducer,
 }
 
 const reducer = combineReducers(subreducers);

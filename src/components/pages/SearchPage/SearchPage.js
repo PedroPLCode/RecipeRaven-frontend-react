@@ -5,7 +5,8 @@ import { clsx } from "clsx";
 import { updateIngredients, getIngredients } from '../../../redux/reducers/ingredientsReducer';
 import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
-import { updateResponse } from '../../../redux/reducers/responseReducer';
+import { updateSearchResponse } from '../../../redux/reducers/searchResponseReducer';
+import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import styles from './SearchPage.module.scss';
 import BottomPart from "../../features/BottomPart/BottomPart";
 import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
@@ -82,15 +83,15 @@ const SearchPage = () => {
   try {
     const response = await fetch(url, options);
     console.log(response); //
+    dispatch(updateServerResponse(response));
     const result = await response.text();
-    console.log(result); //
     const searchResponse = JSON.parse(result)
-    dispatch(updateResponse(searchResponse));
+    dispatch(updateSearchResponse(searchResponse));
     setLoading(false); 
     setSuccess(true); 
     return result;
   } catch (error) {
-    console.log(error); //
+    console.log(error); 
     setLoading(false); 
     setSuccess(true); 
   }

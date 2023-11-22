@@ -1,10 +1,10 @@
-import { getResponse } from '../../../redux/reducers/responseReducer';
+import { getSearchResponse } from '../../../redux/reducers/searchResponseReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import styles from './NoResultsPage.module.scss';
 
 const NoResultsPage = () => {
 
-  const searchResponse = useSelector(state => getResponse(state));
+  const searchResponse = useSelector(state => getSearchResponse(state));
   console.log('searchResponse', searchResponse);
 
     return (

@@ -1,4 +1,5 @@
-import { getResponse } from '../../../redux/reducers/responseReducer';
+import { getSearchResponse } from '../../../redux/reducers/searchResponseReducer';
+import { getServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import styles from './SeachResult.module.scss';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
@@ -6,8 +7,31 @@ import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 
 const SearchResults = () => {
 
-  const searchResponse = useSelector(state => getResponse(state));
+  const searchResponse = useSelector(state => getSearchResponse(state));
   console.log('searchResponse', searchResponse);
+
+  const serverResponse = useSelector(state => getServerResponse(state));
+  console.log('searchResponse', serverResponse);
+  /*
+headers
+: 
+Headers {}
+ok
+: 
+true
+redirected
+: 
+false
+status
+: 
+200
+statusText
+: 
+""
+type
+: 
+"cors"
+*/
 
   const prepDishesInfo = () => {
     for(let singleHit of searchResponse.hits) {

@@ -39,7 +39,8 @@ const initialState = {
       description: 'Low Fat',
     },
   },
-  response: 'initialState',
+  searchResponse: 'searchResponse initialState',
+  serverResponse: 'serverResponse initialState'
 };
     
 export default initialState;
