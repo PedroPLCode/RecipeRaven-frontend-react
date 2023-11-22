@@ -39,7 +39,7 @@ const initialState = {
       description: 'Low Fat',
     },
   },
-  searchResponse: '',
+  response: 'initialState',
 };
     
 export default initialState;

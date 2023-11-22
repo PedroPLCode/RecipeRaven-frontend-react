@@ -2,18 +2,15 @@ import { getResponse } from '../../../redux/reducers/responseReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import styles from './SeachResult.module.scss';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
-
-//import { responseForTest } from "../../../responseForTest2";
-//const response = JSON.parse(responseForTest);
-//const response = undefined;
+import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 
 const SearchResults = () => {
 
-  const result = useSelector(state => getResponse(state));
-  const response = JSON.parse(result); // TUTAJ NIE DZIAŁA
+  const searchResponse = useSelector(state => getResponse(state));
+  console.log('searchResponse', searchResponse);
 
   const prepDishesInfo = () => {
-    for(let singleHit of response.hits) {
+    for(let singleHit of searchResponse.hits) {
       if (singleHit.recipe.totalTime === 0 || !singleHit.recipe.totalTime) {
         singleHit.recipe.totalTime = 15;
       }
@@ -27,14 +24,19 @@ const SearchResults = () => {
     }
   }
 
-  if (response) {
+  if (!searchResponse) {
     return <ErrorPage />
+  } else if (searchResponse.count === 0) {
+    return <NoResultsPage />
   } else {
     prepDishesInfo();
+    let foundString = '';
+    searchResponse.count >= 21 ? foundString = 'But we wil show you only 20.. take a look' : foundString = 'Take a look' ;
     return (
         <div className={styles.results_wrapper}>
-          <h3>Found some receipes.. take a look</h3>
-          {response.hits.map(singleHit => (
+          <h3>Found {searchResponse.count} receipes..</h3>
+          <h3>{foundString}</h3>
+          {searchResponse.hits.map(singleHit => (
 
             <div className={styles.single_result}>
               <div className={styles.image}>

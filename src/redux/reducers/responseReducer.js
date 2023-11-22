@@ -1,4 +1,4 @@
-export const getResponse = (state) => state.searchResponse;
+export const getResponse = (state) => state.response;
 
 const createActionName = actionName => `app/${actionName}`;
 const UPDATE_RESPONSE = createActionName('UPDATE_RESPONSE');

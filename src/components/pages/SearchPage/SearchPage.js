@@ -5,12 +5,14 @@ import { clsx } from "clsx";
 import { updateIngredients, getIngredients } from '../../../redux/reducers/ingredientsReducer';
 import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
-import { updateResponse, getResponse } from '../../../redux/reducers/responseReducer';
+import { updateResponse } from '../../../redux/reducers/responseReducer';
 import styles from './SearchPage.module.scss';
-
 import BottomPart from "../../features/BottomPart/BottomPart";
-
 import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
+
+//import { responseForTest } from "../../../responseForTest2";
+//const response = JSON.parse(responseForTest);
+//const response = undefined;
 
 const SearchPage = () => {
 
@@ -76,19 +78,21 @@ const SearchPage = () => {
 		  'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
 	  }
   };
-  setLoading(true); //
+  setLoading(true); 
   try {
     const response = await fetch(url, options);
+    console.log(response); //
     const result = await response.text();
-    console.log(result);
-    dispatch(updateResponse(result))
-    setLoading(false); //
-    setSuccess(true); //
+    console.log(result); //
+    const searchResponse = JSON.parse(result)
+    dispatch(updateResponse(searchResponse));
+    setLoading(false); 
+    setSuccess(true); 
     return result;
   } catch (error) {
-    console.error(error);
-    setLoading(false); //
-    setSuccess(true); //
+    console.log(error); //
+    setLoading(false); 
+    setSuccess(true); 
   }
 }
 
