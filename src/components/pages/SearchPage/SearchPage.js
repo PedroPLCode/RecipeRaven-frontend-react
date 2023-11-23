@@ -1,3 +1,5 @@
+import styles from './SearchPage.module.scss';
+import BottomPart from "../../features/BottomPart/BottomPart";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -5,10 +7,9 @@ import { clsx } from "clsx";
 import { updateIngredients, getIngredients } from '../../../redux/reducers/ingredientsReducer';
 import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
-import { updateSearchResponse } from '../../../redux/reducers/searchResponseReducer';
+import { updateSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
-import styles from './SearchPage.module.scss';
-import BottomPart from "../../features/BottomPart/BottomPart";
+import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
 import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
 
 //import { responseForTest } from "../../../responseForTest2";
@@ -82,16 +83,17 @@ const SearchPage = () => {
   setLoading(true); 
   try {
     const response = await fetch(url, options);
-    console.log(response); //
+    console.log(response); //temp here
     dispatch(updateServerResponse(response));
     const result = await response.text();
     const searchResponse = JSON.parse(result)
-    dispatch(updateSearchResponse(searchResponse));
+    dispatch(updateSearchResult(searchResponse));
     setLoading(false); 
     setSuccess(true); 
     return result;
   } catch (error) {
-    console.log(error); 
+    console.log(error); //temp here
+    dispatch(updateServerError(error));
     setLoading(false); 
     setSuccess(true); 
   }

@@ -8,6 +8,9 @@ import SearchPage from './components/pages/SearchPage/SearchPage';
 
 import ErrorPage from './components/features/ErrorPage/ErrorPage';
 import Loading from './components/features/Loading/Loading';
+import ReadyToSearch from './components/features/ReadyToSearch/ReadyToSearch';
+import NoResultsPage from './components/features/NoResultsPage/NoResultsPage';
+import SearchResults from './components/features/SearchResults/SearchResults';
 
 const App = () => {
 
@@ -39,6 +42,9 @@ const App = () => {
 
           <Route path="*/error" element={<ErrorPage />} />
           <Route path="/loading" element={<Loading />} />
+          <Route path="/ready" element={<ReadyToSearch />} />
+          <Route path="/noresults" element={<NoResultsPage />} />
+          <Route path="/results" element={<SearchResults />} />
 
         </Routes>
       </div>

@@ -1,4 +1,4 @@
-import { getSearchResponse } from '../../../redux/reducers/searchResponseReducer';
+import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { getServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import styles from './SeachResult.module.scss';
@@ -7,34 +7,14 @@ import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 
 const SearchResults = () => {
 
-  const searchResponse = useSelector(state => getSearchResponse(state));
-  console.log('searchResponse', searchResponse);
+  const searchResult = useSelector(state => getSearchResult(state));
+  console.log('searchResponse', searchResult);
 
   const serverResponse = useSelector(state => getServerResponse(state));
   console.log('searchResponse', serverResponse);
-  /*
-headers
-: 
-Headers {}
-ok
-: 
-true
-redirected
-: 
-false
-status
-: 
-200
-statusText
-: 
-""
-type
-: 
-"cors"
-*/
 
   const prepDishesInfo = () => {
-    for(let singleHit of searchResponse.hits) {
+    for(let singleHit of searchResult.hits) {
       if (singleHit.recipe.totalTime === 0 || !singleHit.recipe.totalTime) {
         singleHit.recipe.totalTime = 15;
       }
@@ -48,20 +28,20 @@ type
     }
   }
 
-  if (!searchResponse) {
-    return <ErrorPage />
-  } else if (searchResponse.count === 0) {
-    return <NoResultsPage />
+  if (!serverResponse.headers.ok) {
+    return <ErrorPage serverResponse={serverResponse} />
   } else {
-    prepDishesInfo();
-    let foundString = '';
-    searchResponse.count >= 21 ? foundString = 'But we wil show you only 20.. take a look' : foundString = 'Take a look' ;
-    return (
+    if (searchResult.count === 0) {
+      return <NoResultsPage />
+    } else {
+      prepDishesInfo();
+      let foundString = '';
+      searchResult.count >= 21 ? foundString = 'But we wil show you only 20.. take a look' : foundString = 'Take a look' ;
+      return (
         <div className={styles.results_wrapper}>
-          <h3>Found {searchResponse.count} receipes..</h3>
+          <h3>Found {searchResult.count} receipes..</h3>
           <h3>{foundString}</h3>
-          {searchResponse.hits.map(singleHit => (
-
+          {searchResult.hits.map(singleHit => (
             <div className={styles.single_result}>
               <div className={styles.image}>
                 <a href={singleHit.recipe.url} target='_blank' rel="noreferrer">
@@ -83,8 +63,8 @@ type
             </div>
           ))}  
       </div>
-    )
-  } 
+    )}
+  }
 }
 
 export default SearchResults;

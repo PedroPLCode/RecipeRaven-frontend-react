@@ -3,15 +3,17 @@ import initialState from './initialState';
 import ingredientsReducer from './reducers/ingredientsReducer';
 import excludedReducer from './reducers/excludedReducer';
 import dietReducer from './reducers/dietReducer';
-import searchResponseReducer from './reducers/searchResponseReducer';
+import searchResultReducer from './reducers/searchResultReducer';
 import serverResponseReducer from './reducers/serverResponseReducer';
+import serverErrorReducer from './reducers/serverErrorReducer';
 
 const subreducers = {
   ingredients: ingredientsReducer,
   excluded: excludedReducer,
   diet: dietReducer,
-  searchResponse: searchResponseReducer,
+  searchResult: searchResultReducer,
   serverResponse: serverResponseReducer,
+  serverError: serverErrorReducer,
 }
 
 const reducer = combineReducers(subreducers);
