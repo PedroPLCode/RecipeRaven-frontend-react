@@ -29,8 +29,8 @@ const SearchResults = () => {
     }
   }
 
-  if (!serverResponse.headers.ok) {
-    return <ErrorPage serverResponse={serverResponse} />
+  if (!serverResponse.headers.ok || !navigator.online) {
+    return <ErrorPage navigator={navigator} serverResponse={serverResponse ? serverResponse : undefined} />
   } else {
     if (searchResult.count === 0) {
       return <NoResultsPage />

@@ -33,6 +33,8 @@ export const messages = {
   noInfoProvided: 'No information provided',
   showOnly20: 'But we wil show you only 20..',
   takeALook: 'Take a look',
+  online: 'Online',
+  offline: 'Offline',
 }
 
 export const infoData = {
