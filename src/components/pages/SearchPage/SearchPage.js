@@ -10,7 +10,7 @@ import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
 import { updateSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
-import { PRIVATE_API_KEY } from "../../../API_PRIVATE_KEY";
+import { parametersNames, ApiSettings, messages } from '../../../settings';
 
 //import { responseForTest } from "../../../responseForTest2";
 //const response = JSON.parse(responseForTest);
@@ -37,13 +37,13 @@ const SearchPage = () => {
 
   const handleDietClick = element => {
     if (element.classList.contains(styles.button)) {
-      const clickedId = element.getAttribute('id');
+      const clickedId = element.getAttribute(parametersNames.id);
       if (!element.classList.contains(styles.active)) {
         element.classList.add(styles.active);
-        diet[clickedId]['value'] = true;
+        diet[clickedId][parametersNames.value] = true;
       } else {
         element.classList.remove(styles.active);
-        diet[clickedId]['value'] = false;
+        diet[clickedId][parametersNames.value] = false;
       }
     dispatch(updateDiet(diet));
     }
@@ -53,9 +53,9 @@ const SearchPage = () => {
     let searchString = ''; 
     //ingredients.replaceAll(',', '');
     //ingredients.replaceAll('.', '');
-    searchString += `&q=${ingredients.replaceAll(' ', '%20')}`;
+    searchString += `${ApiSettings.question}${ingredients.replaceAll(' ', ApiSettings.and)}`;
     for(let singleKey of dietKeys) {
-      diet[`${singleKey}`]['value'] ? searchString += `%20${diet[`${singleKey}`]['string']}` : searchString += '';
+      diet[`${singleKey}`][parametersNames.value] ? searchString += `${ApiSettings.and}${diet[`${singleKey}`][parametersNames.string]}` : searchString += '';
     }
     return searchString;
   }
@@ -63,7 +63,7 @@ const SearchPage = () => {
   const prepareExcludedString = () => {
     if (excluded !== undefined) {
       let excludedString = ''; 
-      excludedString += `&excluded%5B0%5D=${excluded.replaceAll(' ', '%20')}`;
+      excludedString += `${ApiSettings.excluded}${excluded.replaceAll(' ', ApiSettings.and)}`;
       return excludedString;
     }
   }
@@ -71,14 +71,10 @@ const SearchPage = () => {
   const searchReceipes = async () => {
     const searchString = prepareSearchString(ingredients);
     const exccludedString = prepareExcludedString(excluded);
-    const url = `https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public${searchString}${exccludedString}`;
+    const url = `${ApiSettings.mainUrl}${searchString}${exccludedString}`;
     const options = {
-	  method: 'GET',
-	  headers: {
-		  'Accept-Language': 'en',
-		  'X-RapidAPI-Key': PRIVATE_API_KEY,
-		  'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
-	  }
+	  method: ApiSettings.methodGET,
+	  headers: ApiSettings.headers,
   };
   setLoading(true); 
   try {
@@ -105,12 +101,12 @@ const SearchPage = () => {
         <h3>Food Search component</h3>  
         <form className={styles.form}>
           <div className={styles.form_inner}>
-            <input type="text" placeholder="Put selected ingredients here..." title="Put selected ingredients here" value={ingredients} onChange={event => handleIngredientsSet(event.target.value)} />
-            <input type="text" placeholder="Put excluded ingredients here..." title="Put excluded ingredients here" value={excluded} onChange={event => handleExcludedSet(event.target.value)} />  
+            <input type="text" placeholder={messages.putIngredients} title={messages.putIngredients} value={ingredients} onChange={event => handleIngredientsSet(event.target.value)} />
+            <input type="text" placeholder={messages.putExcluded} title={messages.putExcluded} value={excluded} onChange={event => handleExcludedSet(event.target.value)} />  
             <div className={styles.diet} >
               {dietKeys.map(singleKey => (
-                <div className={clsx(styles.button, diet[singleKey]['value'] ? styles.active : '')} id={diet[`${singleKey}`][`id`]} onClick={event => handleDietClick(event.target)} >
-                  <p onClick={event => handleDietClick(event.target.parentElement)}>{diet[`${singleKey}`][`description`]}</p>
+                <div className={clsx(styles.button, diet[singleKey][parametersNames.value] ? styles.active : '')} id={diet[`${singleKey}`][parametersNames.id]} onClick={event => handleDietClick(event.target)} >
+                  <p onClick={event => handleDietClick(event.target.parentElement)}>{diet[`${singleKey}`][parametersNames.description]}</p>
                 </div>))}
             </div>
           </div> 

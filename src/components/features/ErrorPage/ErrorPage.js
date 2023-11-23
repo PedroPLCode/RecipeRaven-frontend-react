@@ -5,7 +5,7 @@ import { getServerError } from '../../../redux/reducers/serverErrorReducer';
 const ErrorPage = props => {
 
   const serverError = useSelector(state => getServerError(state));
-  console.log('serverError', serverError);
+  console.log('serverError', serverError);  //temp here
 
     return (
       <div className={styles.error_page}>

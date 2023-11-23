@@ -1,6 +1,11 @@
 import styles from './AboutPage.module.scss';
+import { infoData } from '../../../settings';
 
 const AboutPage = () => {
+
+  const myEmailLink = infoData.myEmail;
+  const myGitHub = infoData.myGitHub;
+  const LinkToApi = infoData.LinkToApi;
 
     return (
       <div className={styles.about}>
@@ -9,9 +14,9 @@ const AboutPage = () => {
         <h5>UNDER CONSTRUCTION</h5>
         <h5>UNDER CONSTRUCTION</h5>
         <h5>Created by piotrek.gaszczynski@gmail.com</h5>
-        <a href="mailto: piotrek.gaszczynski@gmail.com"><p>send me a email</p></a>
-        <a href="https://rapidapi.com/edamam/api/recipe-search-and-diet" target="_blank" rel="noreferrer"><p>powered by RapidApi</p></a>
-        <a href="https://github.com/PedroPLCode/" target="_blank" rel="noreferrer"><p>my github profile</p></a>
+        <a href={myEmailLink}><p>send me a email</p></a>
+        <a href={LinkToApi} target="_blank" rel="noreferrer"><p>powered by RapidApi</p></a>
+        <a href={myGitHub} target="_blank" rel="noreferrer"><p>my github profile</p></a>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { getServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { messages } from '../../../settings';
 import styles from './SeachResult.module.scss';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
@@ -8,10 +9,10 @@ import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 const SearchResults = () => {
 
   const searchResult = useSelector(state => getSearchResult(state));
-  console.log('searchResponse', searchResult);
+  console.log('searchResponse', searchResult); //temp here
 
   const serverResponse = useSelector(state => getServerResponse(state));
-  console.log('searchResponse', serverResponse);
+  console.log('searchResponse', serverResponse);  //temp here
 
   const prepDishesInfo = () => {
     for(let singleHit of searchResult.hits) {
@@ -19,11 +20,11 @@ const SearchResults = () => {
         singleHit.recipe.totalTime = 15;
       }
       if (singleHit.recipe.dietLabels.length === 0) {
-        singleHit.recipe.dietLabels.push('No information provided');
+        singleHit.recipe.dietLabels.push(messages.noInfoProvided);
       }
       singleHit.recipe.calories = parseInt(singleHit.recipe.calories);
       if (singleHit.recipe.calories === 0 || !singleHit.recipe.calories) {
-        singleHit.recipe.calories = 'No information provided';
+        singleHit.recipe.calories = messages.noInfoProvided;
       }
     }
   }
@@ -36,7 +37,7 @@ const SearchResults = () => {
     } else {
       prepDishesInfo();
       let foundString = '';
-      searchResult.count >= 21 ? foundString = 'But we wil show you only 20.. take a look' : foundString = 'Take a look' ;
+      searchResult.count >= 21 ? foundString = messages.showOnly20 + messages.takeALook : foundString =  messages.takeALook;
       return (
         <div className={styles.results_wrapper}>
           <h3>Found {searchResult.count} receipes..</h3>
@@ -46,7 +47,7 @@ const SearchResults = () => {
               <div className={styles.image}>
                 <a href={singleHit.recipe.url} target='_blank' rel="noreferrer">
                   <i>Click to see full receipe!</i>
-                  <img src={singleHit.recipe.images.REGULAR.url} alt={singleHit.recipe.images.SMALL.url} width='200' height='200' />
+                  <img src={singleHit.recipe.images.SMALL.url} alt={singleHit.recipe.images.REGULAR.url} width='200' height='200' />
                 </a>
               </div>  
               <div className={styles.description}>
