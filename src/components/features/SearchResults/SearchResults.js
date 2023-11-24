@@ -1,19 +1,62 @@
 import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { getServerResponse } from '../../../redux/reducers/serverResponseReducer';
+import { getServerError } from '../../../redux/reducers/serverErrorReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useEffect } from 'react';
+import { clsx } from "clsx";
 import { messages } from '../../../settings';
 import styles from './SeachResult.module.scss';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 
+
+
+// test responses only
+import { responseForTest } from "../../../responseForTest3";
+import { useState } from 'react';
+const searchResult = JSON.parse(responseForTest);
+const serverResponse = {
+  headers: {
+    ok: true,
+  }
+};
+const serverError = false;
+
+
+
 const SearchResults = () => {
 
-  const searchResult = useSelector(state => getSearchResult(state));
-  console.log('searchResponse', searchResult); //temp here
+  const [inViewport, setInViewport] = useState(false);
 
-  const serverResponse = useSelector(state => getServerResponse(state));
+  // real fetch responses
+  //const searchResult = useSelector(state => getSearchResult(state));
+  console.log('searchResult', searchResult); //temp here
+  //const serverResponse = useSelector(state => getServerResponse(state));
   console.log('searchResponse', serverResponse);  //temp here
+  //const serverError = useSelector(state => getServerError(state));
+  console.log('serverError', serverError);  //temp here
 
+  useEffect(() => {
+    const resultBoxes = document.querySelectorAll('.SeachResult_hidden__EFmjh');
+    let previousScrollPosition = 0;
+    let currentScrollPosition = 0;
+    window.addEventListener('scroll', function (event) {
+      currentScrollPosition = window.pageYOffset;
+      if (previousScrollPosition - currentScrollPosition < 0) {
+        if (resultBoxes) {
+          for (let singleBox of resultBoxes) {
+            const rect = singleBox.getBoundingClientRect();
+            if (rect.top >= 0 && rect.bottom <= (window.innerHeight*2 || document.documentElement.clientHeight*2)) {
+              singleBox.classList.remove('.SeachResult_hidden__EFmjh');
+              singleBox.classList.add(styles.visible);
+            }
+          }
+        }
+      }
+      previousScrollPosition = currentScrollPosition;
+    });
+  }, []);
+  
   const prepDishesInfo = () => {
     for(let singleHit of searchResult.hits) {
       if (singleHit.recipe.totalTime === 0 || !singleHit.recipe.totalTime) {
@@ -29,8 +72,10 @@ const SearchResults = () => {
     }
   }
 
-  if (!serverResponse.headers.ok || !navigator.online) {
-    return <ErrorPage navigator={navigator} serverResponse={serverResponse ? serverResponse : undefined} />
+  if (!navigator.onLine || serverError || !serverResponse.headers.ok) {
+    return <ErrorPage navigator={navigator} 
+            serverResponse={serverResponse ? serverResponse : undefined}
+            serverError={serverError ? serverError : undefined} />
   } else {
     if (searchResult.count === 0) {
       return <NoResultsPage />
@@ -43,7 +88,7 @@ const SearchResults = () => {
           <h3>Found {searchResult.count} receipes..</h3>
           <h3>{foundString}</h3>
           {searchResult.hits.map(singleHit => (
-            <div className={styles.single_result}>
+            <div className={clsx(styles.single_result, styles.hidden)}>
               <div className={styles.image}>
                 <a href={singleHit.recipe.url} target='_blank' rel="noreferrer">
                   <i>Click to see full receipe!</i>
@@ -63,6 +108,7 @@ const SearchResults = () => {
               </div>
             </div>
           ))}  
+        <h3>That's it.. Lets search for something again!</h3>
       </div>
     )}
   }

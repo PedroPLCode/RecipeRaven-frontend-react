@@ -1,6 +1,7 @@
 import { PRIVATE_API_KEY } from "./API_PRIVATE_KEY";
 
 export const classNames = {
+  offline: '.offline',
 }
 
 export const parametersNames = {
@@ -16,7 +17,7 @@ export const elementsNames = {
 
 export const ApiSettings = {
   mainUrl: 'https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public',
-  question: '&q=',
+  query: '&q=',
   excluded: '&excluded%5B0%5D=',
   and: '%20',
   methodGET: 'GET',
@@ -35,10 +36,11 @@ export const messages = {
   takeALook: 'Take a look',
   online: 'Online',
   offline: 'Offline',
+  search: 'Search',
 }
 
 export const infoData = {
   myEmailLink: 'mailto: piotrek.gaszczynski@gmail.com',
   myGitHub: 'https://github.com/PedroPLCode/',
-  LinkToApi: 'ttps://rapidapi.com/edamam/api/recipe-search-and-diet',
+  LinkToApi: 'https://rapidapi.com/edamam/api/recipe-search-and-diet',
 }

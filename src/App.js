@@ -1,4 +1,5 @@
 import NavBar from './components/views/NavBar/NavBar'
+import Footer from './components/views/Footer/Footer';
 import { React, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
@@ -49,6 +50,7 @@ const App = () => {
         </Routes>
       </div>
       </Container>
+      <Footer />
     </main>
   );
 }

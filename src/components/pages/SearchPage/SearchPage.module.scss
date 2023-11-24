@@ -13,6 +13,12 @@
         h3 {
             font-weight: bold;
             color: $transparent-background;
+            transition-property: color;
+            transition-duration: $transition-duration;
+        }
+
+        .header_error {
+            color: $color-error;
         }
 
       .form {
@@ -29,6 +35,9 @@
 
             border: $base-size solid $transparent-background;
             border-radius: $radius * 6;
+
+            transition-property: background-color;
+            transition-duration: $transition-duration;
 
             input {
                 width: 100%;
@@ -81,7 +90,7 @@
         margin: ($base-size * 1);
         width: ($base-size * 10);
         height: ($base-size * 3);
-        background-color: rgba(0, 0, 0, .5);
+        background-color: $transparent-background;
         border-radius: $radius;
         display: flex;
         flex-direction: column;
@@ -104,6 +113,9 @@
             color: $transparent-background;
             cursor: pointer;
         }
+      }
+      .offline {
+        background-color: $color-error;
       }
     }
 }
