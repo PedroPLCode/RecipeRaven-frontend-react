@@ -46,7 +46,8 @@ const SearchPage = () => {
   }
 
   const validateInputString = input => {
-    if (input.includes(',') || input.includes('.') || input.includes('/') || input.includes('  ')) {
+    let regex = /^[A-Za-z\s]*$/; 
+    if (!regex.test(input) || input.includes('  ')) {
       setInputOK(false);
       return false;
     } else {
@@ -59,8 +60,11 @@ const SearchPage = () => {
     if (element.classList.contains(styles.button)) {
       const clickedId = element.getAttribute(parametersNames.id);
       if (!element.classList.contains(styles.active)) {
-        element.classList.add(styles.active);
-        diet[clickedId][parametersNames.value] = true;
+        const selectedButtons = document.querySelectorAll('.SearchPage_active__321Sw');
+        if (selectedButtons.length <= 2) {
+          element.classList.add(styles.active);
+          diet[clickedId][parametersNames.value] = true;
+        } 
       } else {
         element.classList.remove(styles.active);
         diet[clickedId][parametersNames.value] = false;

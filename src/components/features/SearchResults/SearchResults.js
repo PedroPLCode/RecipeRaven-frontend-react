@@ -26,8 +26,6 @@ const serverError = false;
 
 const SearchResults = () => {
 
-  const [inViewport, setInViewport] = useState(false);
-
   // real fetch responses
   //const searchResult = useSelector(state => getSearchResult(state));
   console.log('searchResult', searchResult); //temp here

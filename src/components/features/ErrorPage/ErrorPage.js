@@ -2,6 +2,7 @@ import styles from './ErrorPage.module.scss';
 import { messages } from '../../../settings';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getServerError } from '../../../redux/reducers/serverErrorReducer';
+import PropTypes from "prop-types";
 
 const ErrorPage = props => {
 
@@ -37,5 +38,10 @@ const ErrorPage = props => {
     )
   }
   }
+
+  ErrorPage.propTypes = {
+    serverError: PropTypes.object.isRequired,
+    serverResponse: PropTypes.object.isRequired,
+  };
     
   export default ErrorPage;

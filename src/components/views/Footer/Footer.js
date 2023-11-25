@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //<FontAwesomeIcon icon="fa-solid fa-arrow-up" />   
+
 const Footer = () => {
     
   const [show, setShow] = useState(true);

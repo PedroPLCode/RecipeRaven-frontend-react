@@ -16,6 +16,7 @@
     "flatpickr": "^4.6.13",
     "font-awesome": "^4.7.0",
     "mdb-react-ui-kit": "^6.3.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "2.8.0",
     "react-datepicker": "^4.17.0",
