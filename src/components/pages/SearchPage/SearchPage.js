@@ -12,10 +12,10 @@ import { updateSearchResult } from '../../../redux/reducers/searchResultReducer'
 import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
 import { classNames, parametersNames, ApiSettings, messages } from '../../../settings';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 //<FontAwesomeIcon icon="fa-solid fa-xmark" />
 //<FontAwesomeIcon icon="fa-solid fa-plus" />
-//<FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
 //<FontAwesomeIcon icon="fa-regular fa-star" />
 //<FontAwesomeIcon icon="fa-regular fa-trash-can" />
 
@@ -27,7 +27,7 @@ const SearchPage = () => {
 
   const [inputOK, setInputOK] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
 
   const dispatch = useDispatch();
   const ingredients = useSelector(state => getIngredients(state));
@@ -49,8 +49,20 @@ const SearchPage = () => {
     let regex = /^[A-Za-z\s]*$/; 
     if (!regex.test(input) || input.includes('  ')) {
       setInputOK(false);
+
+      const inputFields = document.querySelectorAll('input');
+      for (let singleInput of inputFields) {
+        singleInput.classList.add(styles.input_error);
+      }
+
       return false;
     } else {
+
+      const inputFields = document.querySelectorAll('input');
+      for (let singleInput of inputFields) {
+        singleInput.classList.remove(styles.input_error);
+      }
+
       setInputOK(true);
       return true;
     }
@@ -119,7 +131,7 @@ const SearchPage = () => {
   }
 }
 
-const headerString = inputOK ? 'Food Search component' : "Don't use , . / and long spaces"
+const headerString = inputOK ? 'Food Search App' : "Use only letters and short spaces"
 
   return (
     <Detector
@@ -129,8 +141,8 @@ const headerString = inputOK ? 'Food Search component' : "Don't use , . / and lo
           <h3 className={clsx(inputOK ? '' : styles.header_error)}>{headerString}</h3>  
           <form className={styles.form}>
             <div className={clsx(styles.form_inner, !online ? styles.offline : '', !inputOK ? styles.offline : '')}>
-              <input type="text" placeholder={messages.putIngredients} title={messages.putIngredients} value={ingredients} onChange={event => handleIngredientsSet(event.target.value)} />
-              <input type="text" placeholder={messages.putExcluded} title={messages.putExcluded} value={excluded} onChange={event => handleExcludedSet(event.target.value)} />  
+              <input id="ingredients" type="text" placeholder={messages.putIngredients} title={messages.putIngredients} value={ingredients} onChange={event => handleIngredientsSet(event.target.value)} />
+              <input id="excluded" type="text" placeholder={messages.putExcluded} title={messages.putExcluded} value={excluded} onChange={event => handleExcludedSet(event.target.value)} />  
               <div className={styles.diet} >
                 {dietKeys.map(singleKey => (
                   <div className={clsx(styles.button, diet[singleKey][parametersNames.value] ? styles.active : '')} id={diet[`${singleKey}`][parametersNames.id]} onClick={event => handleDietClick(event.target)} >
@@ -141,8 +153,8 @@ const headerString = inputOK ? 'Food Search component' : "Don't use , . / and lo
           </form>
           <div onClick={searchReceipes} className={clsx(styles.search_button, !online ? styles.offline : '')} variant="primary">
               <p>
-                <Online>{messages.search}</Online>
-                <Offline>{messages.offline}</Offline>
+                <Online><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.search}</Online>
+                <Offline><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.offline}</Offline>
               </p>
           </div>
             <BottomPart inputOK={inputOK} loading={loading} success={success} />

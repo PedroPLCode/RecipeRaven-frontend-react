@@ -11,7 +11,7 @@ const ErrorPage = props => {
   if (navigator.onLine) {
     return (
       <div className={styles.error_page}>
-        <h3>ErrorPage component</h3>
+        <h3>Error</h3>
         <h5>Looks like you are {onlineStatus} </h5>
         <h5>But somehting went wrong</h5>
         {props.serverResponse ? 
@@ -28,7 +28,7 @@ const ErrorPage = props => {
   } else {
     return (
       <div className={styles.error_page}>
-        <h3>ErrorPage component</h3>
+        <h3>Error</h3>
         <h5>Looks like you are {onlineStatus} </h5>
         <h5>Chech your internet connection</h5>
         <h5>{props.serverError.toString()}</h5>

@@ -3,7 +3,7 @@
 .searchpage {
 
     .wrapper {
-        padding-top: ($base-size * 9);
+        padding-top: ($base-size * 7);
         padding-bottom: ($base-size);
         display: flex;
         flex-direction: column;
@@ -59,6 +59,12 @@
                 transition-property: border, color, background-color;
                 transition-duration: $transition-duration;
                 
+            }
+
+            .input_error {
+              &:focus {
+                background-color: $error-background;
+              }
             }
 
             input::placeholder {

@@ -12,26 +12,26 @@ import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 
 
 // test responses only
-import { responseForTest } from "../../../responseForTest3";
-import { useState } from 'react';
-const searchResult = JSON.parse(responseForTest);
-const serverResponse = {
-  headers: {
-    ok: true,
-  }
-};
-const serverError = false;
+//import { responseForTest } from "../../../responseForTest3";
+//import { useState } from 'react';
+//const searchResult = JSON.parse(responseForTest);
+//const serverResponse = {
+//  headers: {
+//    ok: true,
+//  }
+//};
+//const serverError = false;
 
 
 
 const SearchResults = () => {
 
   // real fetch responses
-  //const searchResult = useSelector(state => getSearchResult(state));
+  const searchResult = useSelector(state => getSearchResult(state));
   console.log('searchResult', searchResult); //temp here
-  //const serverResponse = useSelector(state => getServerResponse(state));
-  console.log('searchResponse', serverResponse);  //temp here
-  //const serverError = useSelector(state => getServerError(state));
+  const serverResponse = useSelector(state => getServerResponse(state));
+  console.log('serverResponse', serverResponse);  //temp here
+  const serverError = useSelector(state => getServerError(state));
   console.log('serverError', serverError);  //temp here
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const SearchResults = () => {
     }
   }
 
-  if (!navigator.onLine || serverError || !serverResponse.headers.ok) {
+  if (!navigator.onLine || serverError) { // || !serverResponse.headers.ok
     return <ErrorPage navigator={navigator} 
             serverResponse={serverResponse ? serverResponse : undefined}
             serverError={serverError ? serverError : undefined} />
@@ -79,29 +79,28 @@ const SearchResults = () => {
       return <NoResultsPage />
     } else {
       prepDishesInfo();
-      let foundString = '';
-      searchResult.count >= 21 ? foundString = messages.showOnly20 + messages.takeALook : foundString =  messages.takeALook;
       return (
         <div className={styles.results_wrapper}>
           <h3>Found {searchResult.count} receipes..</h3>
-          <h3>{foundString}</h3>
+          {searchResult.count >= 21 ? <h3>{messages.showOnly20}</h3> : ''}
+          <h3>{messages.takeALook}</h3>
           {searchResult.hits.map(singleHit => (
             <div className={clsx(styles.single_result, styles.hidden)}>
               <div className={styles.image}>
                 <a href={singleHit.recipe.url} target='_blank' rel="noreferrer">
                   <i>Click to see full receipe!</i>
-                  <img src={singleHit.recipe.images.SMALL.url} alt={singleHit.recipe.images.REGULAR.url} width='200' height='200' />
+                  <img src={singleHit.recipe.images.SMALL.url} alt={singleHit.recipe.images.REGULAR.url} width='400' height='400' />
                 </a>
               </div>  
               <div className={styles.description}>
-                <h4><strong className={styles.blue}>{singleHit.recipe.label}</strong></h4>
-                <h4><span className={styles.blue}>Dist Type:</span> <strong>{singleHit.recipe.dishType} / {singleHit.recipe.mealType}</strong></h4>
-                <h4><span className={styles.blue}>Cuisine Type:</span>  <strong>{singleHit.recipe.cuisineType}</strong></h4>
-                <h4><span className={styles.blue}>Cautions:</span>  <strong>{singleHit.recipe.cautions.map(singleCaution => ` ${singleCaution},`)}</strong></h4>
-                <h4><span className={styles.blue}>Prep Time:</span>  <strong>{singleHit.recipe.totalTime} min</strong></h4>
-                <h4><span className={styles.blue}>Diet Info:</span>  <strong>{singleHit.recipe.dietLabels}</strong></h4>
-                <h4><span className={styles.blue}>Health Info:</span> <strong>{singleHit.recipe.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong></h4>
-                <h4><span className={styles.blue}>Calories per one portion:</span> <strong>{singleHit.recipe.calories}</strong></h4>
+                <p><strong className={styles.blue}>{singleHit.recipe.label}</strong></p>
+                <p><span className={styles.blue}>Dist Type:</span> <strong>{singleHit.recipe.dishType} / {singleHit.recipe.mealType}</strong></p>
+                <p><span className={styles.blue}>Cuisine Type:</span>  <strong>{singleHit.recipe.cuisineType}</strong></p>
+                <p><span className={styles.blue}>Cautions:</span>  <strong>{singleHit.recipe.cautions.map(singleCaution => ` ${singleCaution},`)}</strong></p>
+                <p><span className={styles.blue}>Prep Time:</span>  <strong>{singleHit.recipe.totalTime} min</strong></p>
+                <p><span className={styles.blue}>Diet Info:</span>  <strong>{singleHit.recipe.dietLabels}</strong></p>
+                <p><span className={styles.blue}>Health Info:</span> <strong>{singleHit.recipe.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong></p>
+                <p><span className={styles.blue}>Calories per one portion:</span> <strong>{singleHit.recipe.calories}</strong></p>
                 <a href={singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click here to see full receipe!</i></a>
               </div>
             </div>

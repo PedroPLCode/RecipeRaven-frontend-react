@@ -1,12 +1,11 @@
-import NavBar from './components/views/NavBar/NavBar'
-import Footer from './components/views/Footer/Footer';
 import { React, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import NavBar from './components/views/NavBar/NavBar'
+import Footer from './components/views/Footer/Footer';
 import AboutPage from './components/pages/AboutPage/AboutPage';
 import FavoritesPage from './components/pages/FavoritesPage/FavoritesPage';
 import SearchPage from './components/pages/SearchPage/SearchPage';
-
 import ErrorPage from './components/features/ErrorPage/ErrorPage';
 import Loading from './components/features/Loading/Loading';
 import ReadyToSearch from './components/features/ReadyToSearch/ReadyToSearch';
@@ -40,13 +39,11 @@ const App = () => {
           <Route path="/favorite" element={<FavoritesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<SearchPage />} />
-
-          <Route path="*/error" element={<ErrorPage />} />
-          <Route path="/loading" element={<Loading />} />
-          <Route path="/ready" element={<ReadyToSearch />} />
-          <Route path="/noresults" element={<NoResultsPage />} />
-          <Route path="/results" element={<SearchResults />} />
-
+          <Route path="*/errorpage" element={<ErrorPage />} />
+          <Route path="/loadingpage" element={<Loading />} />
+          <Route path="/readypage" element={<ReadyToSearch />} />
+          <Route path="/noresultspage" element={<NoResultsPage />} />
+          <Route path="/resultspage" element={<SearchResults />} />
         </Routes>
       </div>
       </Container>

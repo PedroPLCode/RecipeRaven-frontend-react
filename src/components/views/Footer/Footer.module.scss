@@ -1,32 +1,35 @@
 @import '../../../styles/settings.scss';
 
 .footer {
-    width: 97%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    opacity: 1;
-    transition-property: opacity, bottom;
+  width: 97%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  opacity: 1;
+  transition-property: opacity, bottom;
+  transition-duration: $transition-duration;
+
+  .link {
+    margin-bottom: $base-size*2;
+    text-decoration: none;
+    color: $color-two;
+    font-size: $base-size*3;
+    font-weight: bold;
+    transition-property: transform;
     transition-duration: $transition-duration;
 
-        .link {
-            text-decoration: none;
-            color: $color-two;
-            font-size: $base-size*2;
-            font-weight: bold;
-            transition-property: transform;
-            transition-duration: $transition-duration;
-            &:hover {
-                transform: scale(1.2);
-            }
+    &:hover {
+      transform: scale(1.2);
+      color: $color-one;
     }
+  }
 }
 
 .footer_hidden {
-    bottom: -60px;
-    opacity: 0;
+  bottom: -60px;
+  opacity: 0;
 }

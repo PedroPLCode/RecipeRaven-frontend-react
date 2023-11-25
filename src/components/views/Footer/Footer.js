@@ -1,8 +1,8 @@
 import styles from './Footer.module.scss';
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-//<FontAwesomeIcon icon="fa-solid fa-arrow-up" />   
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
     
@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <div className={clsx(styles.footer, show ? '' : styles.footer_hidden)}>
       <a className={styles.link} href="#top">
-        <p>TOP</p>
+        <FontAwesomeIcon icon={faArrowUp} />
       </a>
     </div>
   )
