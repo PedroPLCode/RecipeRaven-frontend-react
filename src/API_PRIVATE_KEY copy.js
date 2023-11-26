@@ -1,0 +1,1 @@
+export const PRIVATE_API_KEY = "95281ab549msh660cc4b619e884ep183bf6jsn9274d73a8115";

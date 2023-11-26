@@ -14,8 +14,6 @@ import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
 import { classNames, elementsNames, parametersNames, ApiSettings, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-//<FontAwesomeIcon icon="fa-regular fa-star" />
-//<FontAwesomeIcon icon="fa-regular fa-trash-can" />
 
 const SearchPage = () => {
 

@@ -42,6 +42,7 @@ const initialState = {
   searchResult: '',
   serverResponse: '',
   serverError: '',
+  favorites: {},
 };
     
 export default initialState;

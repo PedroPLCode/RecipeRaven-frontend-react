@@ -1,11 +1,13 @@
 import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { getServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { getServerError } from '../../../redux/reducers/serverErrorReducer';
+import { getFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { messages } from '../../../settings';
 import { useEffect } from 'react';
-import { clsx } from "clsx";
-import { classNames, messages } from '../../../settings';
+import { classNames } from '../../../settings';
 import styles from './SeachResult.module.scss';
+import SingleResult from '../SingleResult/SingleResult';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 
@@ -14,6 +16,7 @@ const SearchResults = () => {
   const searchResult = useSelector(state => getSearchResult(state));
   const serverResponse = useSelector(state => getServerResponse(state));
   const serverError = useSelector(state => getServerError(state));
+  const favorites = useSelector(state => getFavorites(state));
 
   useEffect(() => {
     const resultBoxes = document.querySelectorAll(classNames.resultBoxes);
@@ -25,7 +28,7 @@ const SearchResults = () => {
         if (resultBoxes) {
           for (let singleBox of resultBoxes) {
             const rect = singleBox.getBoundingClientRect();
-            if (rect.top >= 0 && rect.bottom <= (window.innerHeight*2 || document.documentElement.clientHeight*2)) {
+            if (rect.top >= 0 && rect.bottom <= ((window.innerHeight * 2) || (document.documentElement.clientHeight * 2))) {
               singleBox.classList.remove(classNames.resultBoxes);
               singleBox.classList.add(styles.visible);
             }
@@ -66,41 +69,9 @@ const SearchResults = () => {
           {searchResult.count >= 21 ? <h3>{messages.showOnly20}</h3> : ''}
           <h3>{messages.takeALook}</h3>
           {searchResult.hits.map(singleHit => (
-            <div className={clsx(styles.single_result, styles.hidden)}>
-              <div className={styles.image}>
-                <a href={singleHit.recipe.url} target='_blank' rel="noreferrer">
-                  <i>Click for full receipe!</i>
-                  <img src={singleHit.recipe.images.SMALL.url} alt={singleHit.recipe.images.REGULAR.url} width='400' height='400' />
-                </a>
-              </div>  
-              <div className={styles.description}>
-                <p><strong className={styles.blue}>{singleHit.recipe.label}</strong></p>
-                <p><span className={styles.blue}>Dist Type:</span> 
-                   <strong>{singleHit.recipe.dishType} / {singleHit.recipe.mealType}</strong>
-                </p>
-                <p><span className={styles.blue}>Cuisine Type:</span>  
-                   <strong>{singleHit.recipe.cuisineType}</strong>
-                </p>
-                <p><span className={styles.blue}>Cautions:</span>  
-                   <strong>{singleHit.recipe.cautions.map(singleCaution => ` ${singleCaution},`)}</strong>
-                </p>
-                <p><span className={styles.blue}>Prep Time:</span>  
-                   <strong>{singleHit.recipe.totalTime} min</strong>
-                </p>
-                <p><span className={styles.blue}>Diet Info:</span>  
-                   <strong>{singleHit.recipe.dietLabels}</strong>
-                </p>
-                <p><span className={styles.blue}>Health Info:</span> 
-                   <strong>{singleHit.recipe.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong>
-                </p>
-                <p><span className={styles.blue}>Calories per one portion:</span> 
-                   <strong>{singleHit.recipe.calories}</strong>
-                </p>
-                <a href={singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
-              </div>
-            </div>
+            <SingleResult singleHit={singleHit} favorites={favorites} />
           ))}  
-        <h3>That's it.. Lets search for something again!</h3>
+        <h3>That's it.. Lets search again!</h3>
       </div>
     )}
   }

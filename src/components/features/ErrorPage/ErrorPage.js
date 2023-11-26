@@ -35,11 +35,11 @@ const ErrorPage = props => {
       </div>
     )
   }
-  }
+}
 
-  ErrorPage.propTypes = {
-    serverError: PropTypes.object.isRequired,
-    serverResponse: PropTypes.object.isRequired,
-  };
+ErrorPage.propTypes = {
+  serverError: PropTypes.object.isRequired,
+  serverResponse: PropTypes.object.isRequired,
+};
     
-  export default ErrorPage;
+export default ErrorPage;

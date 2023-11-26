@@ -27,16 +27,16 @@ const App = () => {
       <NavBar />
       <Container>
       <div
-            className={transitionStage}
-            onAnimationEnd={() => {
-              if (transitionStage === "fadeOut") {
-                setTransistionStage("fadeIn");
-                setDisplayLocation(location);
-              }
-            }}
-          > 
+        className={transitionStage}
+        onAnimationEnd={() => {
+          if (transitionStage === "fadeOut") {
+            setTransistionStage("fadeIn");
+            setDisplayLocation(location);
+          }
+        }}
+      > 
         <Routes location={displayLocation}>
-          <Route path="/favorite" element={<FavoritesPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<SearchPage />} />
           <Route path="*/errorpage" element={<ErrorPage />} />

@@ -2,6 +2,7 @@
 
 # personal API KEY
 API_PRIVATE_KEY.js
+src/API_PRIVATE_KEY.js
 
 # dependencies
 /node_modules

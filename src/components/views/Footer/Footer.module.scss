@@ -1,7 +1,7 @@
 @import '../../../styles/settings.scss';
 
 .footer {
-  width: 97%;
+  width: 100%;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -14,7 +14,8 @@
   transition-duration: $transition-duration;
 
   .link {
-    margin-bottom: ($base-size * 2);
+    margin-bottom: $base-size;
+    margin-right: $base-size;
     text-decoration: none;
     color: $color-one;
     font-size: ($base-size * 3);

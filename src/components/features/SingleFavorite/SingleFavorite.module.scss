@@ -1,0 +1,181 @@
+@import '../../../styles/settings.scss';
+
+.single_favorite {
+  margin: ($base-size * 4);
+  background-color: $transparent-background;
+  border-radius: ($radius * 6);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  transition-property: opacity, filter, transform;
+  transition-duration: $transition-duration-long;
+  
+  @media (max-width: $media-border) {
+    flex-direction: column;
+    margin: $base-size;
+  }
+  
+  .image, .description {
+    margin: ($base-size * 2);
+    height: 100%;
+      
+    @media (max-width: $media-border) {
+      padding: $base-size;
+      margin: 0;
+    }
+  }
+  
+  
+  .image {
+    width: 35%;
+    height: 100%;
+  
+    @media (max-width: $media-border) {
+      width: 100%;
+      height: 50%;
+    }
+  
+    a {
+      position: relative;
+      width: 100%;
+      height: 100%;
+  
+      img, i {
+        width: 100%;
+        height: 100%;
+        transition-duration: $transition-duration;
+      }
+  
+      i {
+        position: absolute;
+        z-index: 11;
+        text-align: center;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: $color-one;
+        font-weight: bold;
+        font-size: ($base-size * 2);
+        opacity: 0;
+        transform: translateY(-75px);
+        transition-property: opacity;
+      }
+  
+      img {
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        border-radius: ($radius * 6);
+        transition-property: filter;
+      }
+  
+      &:hover img {
+        filter: brightness(.5) blur(3px);
+      }
+  
+      &:hover i {
+        opacity: 1;
+      }
+    }
+  }
+  
+  .description {
+    width: 65%;
+    height: 100%;
+    margin: auto ($base-size * 2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: $base-size;
+  
+    @media (max-width: $media-border) {
+      width: 100%;
+      height: 50%;
+      justify-content: center;
+      align-items: center;    
+    }
+  
+    p, a {
+      color: $color-two;
+      font-size: ($base-size * 1.5);
+      text-align: right;
+    }
+  
+    p {
+      margin: 0;
+    
+      .blue {
+        color: $color-one;
+      }
+  
+      @media (max-width: $media-border) {
+        text-align: center; 
+      }
+    }
+  
+    a {
+      text-decoration: none;
+      font-weight: bold;
+      padding: auto;
+      height: ($base-size * 3);
+      width: 340px;
+      background-color: $transparent-background;
+      border-radius: $radius;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
+      background-position: 100% 0;
+      background-size: 300% 300%;
+      transition-duration: $transition-duration;
+      transition-property: color, background-color, background-position;
+  
+      @media (max-width: $media-border) {
+        margin-bottom: $base-size;
+        background-position: 0 100%;
+      }
+  
+      i {
+        margin: $base-size;
+        text-align: center;
+      }
+  
+      &:hover {
+        background-position: 0 100%;
+        color: $transparent-background;
+         cursor: pointer;
+      }
+    }
+  
+    .button_remove {
+      color: $color-two;
+      font-size: ($base-size * 1.5);
+      font-weight: bold;
+      padding: auto;
+      height: ($base-size * 3);
+      width: 340px;
+      background-color: $transparent-background;
+      border-radius: $radius;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      background-image: linear-gradient(90deg, $color-error 50% , $transparent-background 50%);
+      background-position: 100% 0;
+      background-size: 300% 300%;
+      transition-duration: $transition-duration;
+      transition-property: color, background-color, background-position;
+  
+      &:hover {
+        background-position: 0 100%;
+        color: $transparent-background;
+        cursor: pointer;
+      }
+    }
+  }
+}
+  

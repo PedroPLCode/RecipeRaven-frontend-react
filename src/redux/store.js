@@ -6,6 +6,7 @@ import dietReducer from './reducers/dietReducer';
 import searchResultReducer from './reducers/searchResultReducer';
 import serverResponseReducer from './reducers/serverResponseReducer';
 import serverErrorReducer from './reducers/serverErrorReducer';
+import favoritesReducer from './reducers/favoritesReducer';
 
 const subreducers = {
   ingredients: ingredientsReducer,
@@ -14,6 +15,7 @@ const subreducers = {
   searchResult: searchResultReducer,
   serverResponse: serverResponseReducer,
   serverError: serverErrorReducer,
+  favorites: favoritesReducer,
 }
 
 const reducer = combineReducers(subreducers);
