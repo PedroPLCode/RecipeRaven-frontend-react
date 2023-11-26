@@ -2,6 +2,8 @@ import { PRIVATE_API_KEY } from "./API_PRIVATE_KEY";
 
 export const classNames = {
   offline: '.offline',
+  selectedButtons: '.SearchPage_active__321Sw',
+  resultBoxes: '.SeachResult_hidden__EFmjh',
 }
 
 export const parametersNames = {
@@ -9,10 +11,12 @@ export const parametersNames = {
   id: 'id',
   description: 'description',
   string: 'string',
+  regexString: /^[A-Za-z\s]*$/,
 }
 
 export const elementsNames = {
   root: 'root',
+  input: 'input',
 }
 
 export const ApiSettings = {
@@ -25,18 +29,20 @@ export const ApiSettings = {
     'Accept-Language': 'en',
     'X-RapidAPI-Key': PRIVATE_API_KEY,
     'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
-}
+  }
 }
 
 export const messages = {
   putIngredients: 'Put selected ingredients here...',
   putExcluded: 'Put excluded ingredients here...',
   noInfoProvided: 'No information provided',
-  showOnly20: 'But we wil show you only 20..',
-  takeALook: 'Take a look',
+  showOnly20: 'But we wil show you only 20',
+  takeALook: 'Take a look...',
   online: 'Online',
   offline: 'Offline',
   search: 'Search',
+  foodSearchApp: 'Food Search App',
+  inputWarning: 'Use only letters and short spaces',
 }
 
 export const infoData = {

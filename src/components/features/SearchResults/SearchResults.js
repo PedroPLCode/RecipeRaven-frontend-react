@@ -4,38 +4,22 @@ import { getServerError } from '../../../redux/reducers/serverErrorReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useEffect } from 'react';
 import { clsx } from "clsx";
-import { messages } from '../../../settings';
+import { classNames, messages } from '../../../settings';
 import styles from './SeachResult.module.scss';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 
-
-
-// test responses only
-//import { responseForTest } from "../../../responseForTest3";
-//import { useState } from 'react';
-//const searchResult = JSON.parse(responseForTest);
-//const serverResponse = {
-//  headers: {
-//    ok: true,
-//  }
-//};
-//const serverError = false;
-
-
-
 const SearchResults = () => {
 
-  // real fetch responses
   const searchResult = useSelector(state => getSearchResult(state));
-  console.log('searchResult', searchResult); //temp here
+  //console.log('searchResult', searchResult); //temp here
   const serverResponse = useSelector(state => getServerResponse(state));
-  console.log('serverResponse', serverResponse);  //temp here
+  //console.log('serverResponse', serverResponse);  //temp here
   const serverError = useSelector(state => getServerError(state));
-  console.log('serverError', serverError);  //temp here
+  //console.log('serverError', serverError);  //temp here
 
   useEffect(() => {
-    const resultBoxes = document.querySelectorAll('.SeachResult_hidden__EFmjh');
+    const resultBoxes = document.querySelectorAll(classNames.resultBoxes);
     let previousScrollPosition = 0;
     let currentScrollPosition = 0;
     window.addEventListener('scroll', function (event) {
@@ -45,7 +29,7 @@ const SearchResults = () => {
           for (let singleBox of resultBoxes) {
             const rect = singleBox.getBoundingClientRect();
             if (rect.top >= 0 && rect.bottom <= (window.innerHeight*2 || document.documentElement.clientHeight*2)) {
-              singleBox.classList.remove('.SeachResult_hidden__EFmjh');
+              singleBox.classList.remove(classNames.resultBoxes);
               singleBox.classList.add(styles.visible);
             }
           }
@@ -70,7 +54,7 @@ const SearchResults = () => {
     }
   }
 
-  if (!navigator.onLine || serverError) { // || !serverResponse.headers.ok
+  if (!navigator.onLine || serverError || serverResponse.headers.ok === false) {
     return <ErrorPage navigator={navigator} 
             serverResponse={serverResponse ? serverResponse : undefined}
             serverError={serverError ? serverError : undefined} />
@@ -88,20 +72,34 @@ const SearchResults = () => {
             <div className={clsx(styles.single_result, styles.hidden)}>
               <div className={styles.image}>
                 <a href={singleHit.recipe.url} target='_blank' rel="noreferrer">
-                  <i>Click to see full receipe!</i>
+                  <i>Click for full receipe!</i>
                   <img src={singleHit.recipe.images.SMALL.url} alt={singleHit.recipe.images.REGULAR.url} width='400' height='400' />
                 </a>
               </div>  
               <div className={styles.description}>
                 <p><strong className={styles.blue}>{singleHit.recipe.label}</strong></p>
-                <p><span className={styles.blue}>Dist Type:</span> <strong>{singleHit.recipe.dishType} / {singleHit.recipe.mealType}</strong></p>
-                <p><span className={styles.blue}>Cuisine Type:</span>  <strong>{singleHit.recipe.cuisineType}</strong></p>
-                <p><span className={styles.blue}>Cautions:</span>  <strong>{singleHit.recipe.cautions.map(singleCaution => ` ${singleCaution},`)}</strong></p>
-                <p><span className={styles.blue}>Prep Time:</span>  <strong>{singleHit.recipe.totalTime} min</strong></p>
-                <p><span className={styles.blue}>Diet Info:</span>  <strong>{singleHit.recipe.dietLabels}</strong></p>
-                <p><span className={styles.blue}>Health Info:</span> <strong>{singleHit.recipe.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong></p>
-                <p><span className={styles.blue}>Calories per one portion:</span> <strong>{singleHit.recipe.calories}</strong></p>
-                <a href={singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click here to see full receipe!</i></a>
+                <p><span className={styles.blue}>Dist Type:</span> 
+                   <strong>{singleHit.recipe.dishType} / {singleHit.recipe.mealType}</strong>
+                </p>
+                <p><span className={styles.blue}>Cuisine Type:</span>  
+                   <strong>{singleHit.recipe.cuisineType}</strong>
+                </p>
+                <p><span className={styles.blue}>Cautions:</span>  
+                   <strong>{singleHit.recipe.cautions.map(singleCaution => ` ${singleCaution},`)}</strong>
+                </p>
+                <p><span className={styles.blue}>Prep Time:</span>  
+                   <strong>{singleHit.recipe.totalTime} min</strong>
+                </p>
+                <p><span className={styles.blue}>Diet Info:</span>  
+                   <strong>{singleHit.recipe.dietLabels}</strong>
+                </p>
+                <p><span className={styles.blue}>Health Info:</span> 
+                   <strong>{singleHit.recipe.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong>
+                </p>
+                <p><span className={styles.blue}>Calories per one portion:</span> 
+                   <strong>{singleHit.recipe.calories}</strong>
+                </p>
+                <a href={singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
               </div>
             </div>
           ))}  

@@ -2,93 +2,84 @@
 
 .searchpage {
 
-    .wrapper {
-        padding-top: ($base-size * 7);
-        padding-bottom: ($base-size);
+  .wrapper {
+    padding-top: ($base-size * 7);
+    padding-bottom: ($base-size);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+      font-weight: bold;
+      color: $transparent-background;
+      transition-property: color;
+      transition-duration: $transition-duration;
+    }
+
+    .header_error {
+      color: $color-error;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+       
+      .form_inner {
+        padding: $base-size;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border: $base-size solid $transparent-background;
+        border-radius: $radius * 6;
+        transition-property: background-color;
+        transition-duration: $transition-duration;
 
-        h3 {
+          input {
+            width: 100%;
+            height: ($base-size *3);
+            text-align: center;
+            color: $color-one;
             font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            background-color: $transparent-background;
+            transition-property: border, color, background-color;
+            transition-duration: $transition-duration;   
+          }
+
+          .input_error {
+            &:focus {
+              background-color: $error-background;
+            }
+          }
+
+          input::placeholder {
+            text-align: center;
+            color: $color-one;
+          }
+
+          input:focus {
+            outline: none;
+            background-color: $color-one;
             color: $transparent-background;
-            transition-property: color;
-            transition-duration: $transition-duration;
-        }
+          }
 
-        .header_error {
-            color: $color-error;
-        }
+          input:not(:placeholder-shown) {
+            background-color: $color-one;
+            color: $transparent-background;
+          }
 
-      .form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .form_inner {
-            padding: $base-size;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            border: $base-size solid $transparent-background;
-            border-radius: $radius * 6;
-
-            transition-property: background-color;
-            transition-duration: $transition-duration;
-
-            input {
-                width: 100%;
-                height: ($base-size *3);
-                text-align: center;
-                color: $color-one;
-                font-weight: bold;
-                border: none;
-                border-radius: 50px;
-                background-color: $transparent-background;
-
-                /*
-                background-image: url('searchicon.png');
-                background-position: 10px 10px;
-                background-repeat: no-repeat;
-                padding-left: 40px;
-                */
-
-                transition-property: border, color, background-color;
-                transition-duration: $transition-duration;
-                
-            }
-
-            .input_error {
-              &:focus {
-                background-color: $error-background;
-              }
-            }
-
-            input::placeholder {
-                text-align: center;
-                color: $color-one;
-            }
-
-            input:focus {
-                outline: none;
-                background-color: $color-one;
-                color: $transparent-background;
-            }
-
-            input:not(:placeholder-shown) {
-                background-color: $color-one;
-                color: $transparent-background;
-            }
-
-            input:first-of-type {
-                margin-bottom: ($base-size * 1);
-            }
-            input:last-of-type {
-                margin-bottom: ($base-size * 1);
-            }
+          input:first-of-type {
+            margin-bottom: ($base-size * 1);
+          }
+            
+          input:last-of-type {
+            margin-bottom: ($base-size * 1);
+          }
         }
       }
 
@@ -102,22 +93,21 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        background-image: linear-gradient(90deg, $color-one 50% , rgba(0, 0, 0, 0) 50%);
+        background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
         background-position: 100% 0;
         background-size: 300% 300%;
-
         transition-duration: $transition-duration;
         transition-property: color, background-color, background-position;
 
         p {
-            margin: auto;
-            font-weight: bold;
+          margin: auto;
+          font-weight: bold;
         }
+
         &:hover {
-            background-position: 0 100%;
-            color: $transparent-background;
-            cursor: pointer;
+          background-position: 0 100%;
+          color: $transparent-background;
+          cursor: pointer;
         }
       }
       .offline {
@@ -131,28 +121,34 @@
   grid-template-columns: repeat(3, calc($base-size * 10));
   grid-template-rows: repeat(2, calc($base-size * 3));
   gap: $base-size;
-    
-    .button {
-        background-color: rgba(0, 0, 0, .5);
-        border-radius: 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition-duration: $transition-duration;
-        transition-property: color, background-color;
-        p {
-            margin: auto;
-            font-weight: bold;
-        }
-        &:hover {
-            cursor: pointer;
-        }
 
-        &.active {
-            background-color: $color-one;
-            color: rgba(0, 0, 0, .5);
-        }
+  @media (max-width: $media-border) {
+    grid-template-columns: repeat(2, calc($base-size * 10));
+    grid-template-rows: repeat(3, calc($base-size * 3));
+  }
+    
+  .button {
+    background-color: $transparent-background;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition-duration: $transition-duration;
+    transition-property: color, background-color;
+        
+    p {
+      margin: auto;
+      font-weight: bold;
+    }
+        
+    &:hover {
+      cursor: pointer;
     }
 
+    &.active {
+      background-color: $color-one;
+      color: rgba(0, 0, 0, .5);
+    }
+  }
 }
