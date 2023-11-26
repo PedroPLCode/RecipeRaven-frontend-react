@@ -14,17 +14,17 @@
   transition-duration: $transition-duration;
 
   .link {
-    margin-bottom: $base-size*2;
+    margin-bottom: ($base-size * 2);
     text-decoration: none;
-    color: $color-two;
-    font-size: $base-size*3;
+    color: $color-one;
+    font-size: ($base-size * 3);
     font-weight: bold;
     transition-property: transform;
     transition-duration: $transition-duration;
 
     &:hover {
       transform: scale(1.2);
-      color: $color-one;
+      color: $color-two;
     }
   }
 }

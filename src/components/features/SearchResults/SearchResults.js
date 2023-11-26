@@ -12,11 +12,8 @@ import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 const SearchResults = () => {
 
   const searchResult = useSelector(state => getSearchResult(state));
-  //console.log('searchResult', searchResult); //temp here
   const serverResponse = useSelector(state => getServerResponse(state));
-  //console.log('serverResponse', serverResponse);  //temp here
   const serverError = useSelector(state => getServerError(state));
-  //console.log('serverError', serverError);  //temp here
 
   useEffect(() => {
     const resultBoxes = document.querySelectorAll(classNames.resultBoxes);

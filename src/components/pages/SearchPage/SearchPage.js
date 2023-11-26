@@ -14,8 +14,6 @@ import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
 import { classNames, elementsNames, parametersNames, ApiSettings, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-//<FontAwesomeIcon icon="fa-solid fa-xmark" />
-//<FontAwesomeIcon icon="fa-solid fa-plus" />
 //<FontAwesomeIcon icon="fa-regular fa-star" />
 //<FontAwesomeIcon icon="fa-regular fa-trash-can" />
 
@@ -99,29 +97,29 @@ const SearchPage = () => {
     const exccludedString = prepareExcludedString(excluded);
     const url = `${ApiSettings.mainUrl}${searchString}${exccludedString}`;
     const options = {
-	  method: ApiSettings.methodGET,
-	  headers: ApiSettings.headers,
-  }; 
-  if (validateInputString(ingredients) && validateInputString(excluded)) {
-    setLoading(true); 
-    try {
-      const response = await fetch(url, options);
-      dispatch(updateServerResponse(response));
-      const result = await response.text();
-      const searchResponse = JSON.parse(result)
-      dispatch(updateSearchResult(searchResponse));
-      setLoading(false); 
-      setSuccess(true); 
-      return result;
-    } catch (error) {
-      dispatch(updateServerError(error));
-      setLoading(false); 
-      setSuccess(true); 
+	    method: ApiSettings.methodGET,
+	    headers: ApiSettings.headers,
+    }; 
+    if (validateInputString(ingredients) && validateInputString(excluded)) {
+      setLoading(true); 
+      try {
+        const response = await fetch(url, options);
+        dispatch(updateServerResponse(response));
+        const result = await response.text();
+        const searchResponse = JSON.parse(result)
+        dispatch(updateSearchResult(searchResponse));
+        setLoading(false); 
+        setSuccess(true); 
+        return result;
+      } catch (error) {
+        dispatch(updateServerError(error));
+        setLoading(false); 
+        setSuccess(true); 
+      }
     }
   }
-}
 
-const headerString = inputOK ? messages.foodSearchApp : messages.inputWarning;
+  const headerString = inputOK ? messages.foodSearchApp : messages.inputWarning;
 
   return (
     <Detector

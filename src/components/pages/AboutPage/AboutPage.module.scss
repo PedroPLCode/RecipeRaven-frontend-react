@@ -2,7 +2,7 @@
 
 .about {
   padding-top: ($base-size * 9);
-  padding-bottom: ($base-size);
+  padding-bottom: $base-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,8 +10,12 @@
 
   h3, h5 {
     font-weight: bold;
+    color: $color-one;
+    margin: ($base-size / 2);
+  }
+
+  h3 {
     color: $transparent-background;
-    margin: $base-size / 2;
   }
     
   a {

@@ -4,7 +4,7 @@
 
   .wrapper {
     padding-top: ($base-size * 7);
-    padding-bottom: ($base-size);
+    padding-bottom: $base-size;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,7 +34,7 @@
         justify-content: center;
         align-items: center;
         border: $base-size solid $transparent-background;
-        border-radius: $radius * 6;
+        border-radius: ($radius * 6);
         transition-property: background-color;
         transition-duration: $transition-duration;
 
@@ -83,37 +83,46 @@
         }
       }
 
-      .search_button {
-        margin: ($base-size * 1);
-        width: ($base-size * 10);
-        height: ($base-size * 3);
-        background-color: $transparent-background;
-        border-radius: $radius;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
-        background-position: 100% 0;
-        background-size: 300% 300%;
-        transition-duration: $transition-duration;
-        transition-property: color, background-color, background-position;
+    .search_button {
+      margin: ($base-size * 1);
+      width: ($base-size * 10);
+      height: ($base-size * 3);
+      background-color: $transparent-background;
+      border-radius: $radius;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
+      background-position: 100% 0;
+      background-size: 300% 300%;
+      transition-duration: $transition-duration;
+      transition-property: color, background-color, background-position;
 
-        p {
-          margin: auto;
-          font-weight: bold;
-        }
-
-        &:hover {
-          background-position: 0 100%;
-          color: $transparent-background;
-          cursor: pointer;
-        }
+      p {
+        margin: auto;
+        font-weight: bold;
       }
-      .offline {
-        background-color: $color-error;
+
+      &:hover {
+      background-position: 0 100%;
+      color: $transparent-background;
+        cursor: pointer;
+      }
+
+      @media (max-width: $media-border) {
+        background-position: 0 100%;
       }
     }
+
+    .offline {
+      background-color: $color-error;
+
+      @media (max-width: $media-border) {
+        background-position: 100% 0;
+      }
+    }
+  }
 }
 
 .diet {
@@ -148,7 +157,7 @@
 
     &.active {
       background-color: $color-one;
-      color: rgba(0, 0, 0, .5);
+      color: $transparent-background;
     }
   }
 }

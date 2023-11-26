@@ -33,8 +33,8 @@ export const ApiSettings = {
 }
 
 export const messages = {
-  putIngredients: 'Put selected ingredients here...',
-  putExcluded: 'Put excluded ingredients here...',
+  putIngredients: 'Selected ingredients...',
+  putExcluded: 'Excluded ingredients...',
   noInfoProvided: 'No information provided',
   showOnly20: 'But we wil show you only 20',
   takeALook: 'Take a look...',

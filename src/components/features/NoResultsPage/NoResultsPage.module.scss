@@ -2,7 +2,7 @@
 
 .noresults_page {
   padding-top: ($base-size * 2);
-  padding-bottom: ($base-size);
+  padding-bottom: $base-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,7 @@
 
   h3, h5 {
     font-weight: bold;
-    color: $transparent-background;
-    margin: $base-size / 2;
+    color: $color-one;
+    margin: ($base-size / 2);
   }
 }

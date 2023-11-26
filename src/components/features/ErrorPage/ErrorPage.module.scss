@@ -2,7 +2,7 @@
 
 .error_page {
   padding-top: ($base-size * 2);
-  padding-bottom: ($base-size);
+  padding-bottom: $base-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,6 +11,6 @@
   h3, h5 {
     font-weight: bold;
     color: $color-error;
-    margin: $base-size / 2;
+    margin: ($base-size / 2);
   }
 }

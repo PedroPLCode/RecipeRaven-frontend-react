@@ -14,13 +14,13 @@ const ErrorPage = props => {
         <h5>But somehting went wrong</h5>
         {props.serverResponse ? 
           <>
-            <h5>{`headers.ok ${props.serverResponse.headers.ok}`}</h5>
-            <h5>{`headers.statusText ${props.serverResponse.headers.statusText}`}</h5>
-            <h5>{`headers.status ${props.serverResponse.headers.status}`}</h5>
+            <h5>{`headers.ok: ${props.serverResponse.headers.ok}`}</h5>
+            <h5>{`headers.statusText: ${props.serverResponse.headers.statusText}`}</h5>
+            <h5>{`headers.status: ${props.serverResponse.headers.status}`}</h5>
           </> : ''}
         {props.serverError ? <h5>{props.serverError.toString()}</h5> : ''}
         <h5>{navigator.userAgent}</h5>
-        <h5>UNDER CONSTRUCTION</h5>
+        <h5>Try again</h5>
       </div>
     )
   } else {
@@ -31,7 +31,7 @@ const ErrorPage = props => {
         <h5>Chech your internet connection</h5>
         <h5>{props.serverError.toString()}</h5>
         <h5>{navigator.userAgent}</h5>
-        <h5>UNDER CONSTRUCTION</h5>
+        <h5>Try again</h5>
       </div>
     )
   }
