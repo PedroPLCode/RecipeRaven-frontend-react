@@ -68,3 +68,7 @@ export const infoData = {
 export const stylesParams = {
   clickedButton: '0 100%',
 }
+
+export const settings = {
+  delay: 1000,
+}

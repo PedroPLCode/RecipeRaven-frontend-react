@@ -18,12 +18,10 @@ const FavoritesPage = () => {
         <h5>Your favorites</h5>
         <h5>You have {favoriteKeys.length} saved recipes</h5>
         <h5>UNDER CONSTRUCTION</h5>
-        <div>
           {favoriteKeys.map(singleKey => (
             <SingleFavorite favorites={favorites} singleKey={singleKey} reload={reload} setReload={setReload} />
           ))}  
-        </div>
-        <h3>That's it. No more favorites</h3>
+        {favoriteKeys.length !== 0 ? <h3>{favoriteKeys.length} recipes saved. That's it.</h3> : ''}
       </div>
     );
   } else {

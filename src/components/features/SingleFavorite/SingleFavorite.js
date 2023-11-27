@@ -53,7 +53,7 @@ const SingleFavorite = props => {
         <p><span className={styles.blue}>Calories per one portion: </span> 
           <strong>{props.favorites[props.singleKey][parametersNames.recipe][parametersNames.calories]}</strong>
         </p>
-          <a href={props.favorites[props.singleKey][parametersNames.recipe][parametersNames.url]} target='_blank' rel="noreferrer"><i>Click here to see full receipe!</i></a>
+          <a href={props.favorites[props.singleKey][parametersNames.recipe][parametersNames.url]} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
           <div onClick={handleRemoveFavorites} className={styles.button_remove}><i>Remove from favorites <FontAwesomeIcon icon={faTrashCan} /></i></div>
       </div>
     </div>

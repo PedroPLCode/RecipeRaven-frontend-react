@@ -26,7 +26,6 @@
     }
   }
   
-  
   .image {
     width: 35%;
     height: 100%;
@@ -121,7 +120,7 @@
       font-weight: bold;
       padding: auto;
       height: ($base-size * 3);
-      width: 340px;
+      width: 240px;
       background-color: $transparent-background;
       border-radius: $radius;
       display: flex;
@@ -157,7 +156,7 @@
       font-weight: bold;
       padding: auto;
       height: ($base-size * 3);
-      width: 340px;
+      width: 240px;
       background-color: $transparent-background;
       border-radius: $radius;
       display: flex;
@@ -174,6 +173,11 @@
         background-position: 0 100%;
         color: $transparent-background;
         cursor: pointer;
+
+        @media (max-width: $media-border) {
+          background-position: 100% 0;
+          color: $color-two;
+        }
       }
     }
   }

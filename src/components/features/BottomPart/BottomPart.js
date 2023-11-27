@@ -9,9 +9,9 @@ const BottomPart = props => {
     return <Loading />
   } else {
     if (!props.success) {
-      return <ReadyToSearch inputOK={props.inputOK} />
+      return <ReadyToSearch />
     } else {
-      return <SearchResults inputOK={props.inputOK} />
+      return <SearchResults />
     }
   }
 }

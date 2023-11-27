@@ -150,7 +150,7 @@ const SearchPage = () => {
                 <Offline><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.offline}</Offline>
               </p>
           </div>
-            <BottomPart inputOK={inputOK} loading={loading} success={success} />
+            <BottomPart loading={loading} success={success} />
         </div>
       </article>
       )}

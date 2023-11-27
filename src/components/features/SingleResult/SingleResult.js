@@ -2,7 +2,6 @@ import styles from './SingleResult.module.scss';
 import { clsx } from "clsx";
 import { updateFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useDispatch } from "react-redux";
-import { stylesParams, parametersNames } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
@@ -11,27 +10,12 @@ const SingleResult = props => {
 
   const dispatch = useDispatch();
 
-  const changeButtonStyle = id => {
-    const activeButton = document.getElementById(id);
-    if (activeButton !== null) {
-      activeButton.style.backgroundPosition = stylesParams.clickedButton;
-    }
-  }
-
-  const checkIfAlreadyInFavorites = id => {
-    const favoriteKeys = Object.keys(props.favorites)
-    for (let singleKey of favoriteKeys) {
-      return (id === props.favorites[singleKey][parametersNames.recipe][parametersNames.calories]) ? true : false;
-    }
-  }
-
   const handleAddToFavorites = () => {
     props.favorites[props.singleHit.recipe.label] = props.singleHit;
     dispatch(updateFavorites(props.favorites));
-    changeButtonStyle(props.singleHit.recipe.calories);
+    props.changeButtonStyle(props.singleHit.recipe.calories);
   }
 
-  const isFavorite = checkIfAlreadyInFavorites(props.singleHit.recipe.calories);
   return (
     <div className={clsx(styles.single_result, styles.hidden)}>
       <div className={styles.image}>
@@ -63,8 +47,8 @@ const SingleResult = props => {
         <p><span className={styles.blue}>Calories per one portion: </span> 
           <strong>{props.singleHit.recipe.calories}</strong>
         </p>
-        <a href={props.singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click here to see full receipe!</i></a>
-        <div id={props.singleHit.recipe.calories} onClick={handleAddToFavorites} className={clsx(styles.button_favorites, isFavorite ? styles.button_selected : '')}><i>Save in favorites <FontAwesomeIcon icon={faStar} /></i></div>
+        <a href={props.singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
+        <div id={props.singleHit.recipe.calories} onClick={handleAddToFavorites} className={styles.button_favorites}><i>Save in favorites <FontAwesomeIcon icon={faStar} /></i></div>
       </div>
     </div>
   )
@@ -73,6 +57,7 @@ const SingleResult = props => {
 SingleResult.propTypes = {
   favorites: PropTypes.object.isRequired,
   singleHit: PropTypes.object.isRequired,
+  changeButtonStyle: PropTypes.func.isRequired,
 };
 
 export default SingleResult;

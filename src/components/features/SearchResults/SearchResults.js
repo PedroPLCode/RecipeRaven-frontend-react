@@ -5,11 +5,12 @@ import { getFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { messages } from '../../../settings';
 import { useEffect } from 'react';
-import { classNames } from '../../../settings';
+import { stylesParams, classNames } from '../../../settings';
 import styles from './SeachResult.module.scss';
 import SingleResult from '../SingleResult/SingleResult';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
+import FavoritesCheck from '../../features/FavoritesCheck/FavoritesCheck';
 
 const SearchResults = () => {
 
@@ -17,6 +18,7 @@ const SearchResults = () => {
   const serverResponse = useSelector(state => getServerResponse(state));
   const serverError = useSelector(state => getServerError(state));
   const favorites = useSelector(state => getFavorites(state));
+  const favoriteKeys = Object.keys(favorites);
 
   useEffect(() => {
     const resultBoxes = document.querySelectorAll(classNames.resultBoxes);
@@ -54,6 +56,13 @@ const SearchResults = () => {
     }
   }
 
+  const changeButtonStyle = id => {
+    const activeButton = document.getElementById(id);
+    if (activeButton !== null) {
+      activeButton.style.backgroundPosition = stylesParams.clickedButton;
+    }
+  }
+
   if (!navigator.onLine || serverError || serverResponse.headers.ok === false) {
     return <ErrorPage navigator={navigator} 
             serverResponse={serverResponse ? serverResponse : undefined}
@@ -69,10 +78,15 @@ const SearchResults = () => {
           {searchResult.count >= 21 ? <h3>{messages.showOnly20}</h3> : ''}
           <h3>{messages.takeALook}</h3>
           {searchResult.hits.map(singleHit => (
-            <SingleResult singleHit={singleHit} favorites={favorites} />
+            <SingleResult singleHit={singleHit} 
+                          favorites={favorites} 
+                          changeButtonStyle={changeButtonStyle} />
           ))}  
-        <h3>That's it.. Lets search again!</h3>
-      </div>
+          <FavoritesCheck changeButtonStyle={changeButtonStyle} 
+                          searchResult={searchResult} 
+                          favorites={favorites} 
+                          favoriteKeys={favoriteKeys}/>
+        </div>
     )}
   }
 }
