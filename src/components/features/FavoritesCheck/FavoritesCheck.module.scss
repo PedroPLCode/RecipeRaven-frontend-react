@@ -1,0 +1,7 @@
+@import '../../../styles/settings.scss';
+
+.favorites_bottom {
+  @media (max-width: $media-border) {
+    margin-top: $base-size * 5;
+  }
+}

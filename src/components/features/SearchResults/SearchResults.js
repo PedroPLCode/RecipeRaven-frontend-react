@@ -83,7 +83,7 @@ const SearchResults = () => {
                           changeButtonStyle={changeButtonStyle} />
           ))}  
           <FavoritesCheck changeButtonStyle={changeButtonStyle} 
-                          searchResult={searchResult} 
+                          searchResultHits={searchResult.hits} 
                           favorites={favorites} 
                           favoriteKeys={favoriteKeys}/>
         </div>

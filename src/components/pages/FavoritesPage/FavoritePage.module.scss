@@ -17,4 +17,10 @@
   h3 {
     color: $transparent-background;
   }
+
+  @media (max-width: $media-border) {
+    h5:last-of-type {
+      margin-bottom: $base-size * 3;
+    }
+  }
 }

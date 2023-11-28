@@ -19,7 +19,6 @@ const BottomPart = props => {
 BottomPart.propTypes = {
   loading: PropTypes.bool.isRequired,
   success: PropTypes.bool.isRequired,
-  inputOK: PropTypes.bool.isRequired,
 };
 
 export default BottomPart;

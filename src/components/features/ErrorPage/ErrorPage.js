@@ -38,8 +38,8 @@ const ErrorPage = props => {
 }
 
 ErrorPage.propTypes = {
-  serverError: PropTypes.object.isRequired,
-  serverResponse: PropTypes.object.isRequired,
+  serverError: PropTypes.object,
+  serverResponse: PropTypes.object,
 };
     
 export default ErrorPage;

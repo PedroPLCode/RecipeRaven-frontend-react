@@ -14,6 +14,11 @@
   @media (max-width: $media-border) {
     flex-direction: column;
     margin: $base-size;
+    margin-bottom: 0px;
+
+    &:last-of-type {
+      margin-bottom: ($base-size * 3);
+    }
   }
   
   .image, .description {
@@ -72,10 +77,18 @@
   
       &:hover img {
         filter: brightness(.5) blur(3px);
+
+        @media (max-width: $media-border) {
+          filter: none;
+        }
       }
   
       &:hover i {
         opacity: 1;
+
+        @media (max-width: $media-border) {
+          filter: none;
+        }
       }
     }
   }
@@ -173,15 +186,20 @@
       background-size: 300% 300%;
       transition-duration: $transition-duration;
       transition-property: color, background-color, background-position;
-  
+
+      @media (max-width: $media-border) {
+        margin-bottom: $base-size;
+      }
+
       &:hover {
         background-position: 0 100%;
         color: $transparent-background;
         cursor: pointer;
 
         @media (max-width: $media-border) {
-          background-position: 100% 0;
+          background-position: 0 100%;
           color: $color-two;
+          margin-bottom: $base-size;
         }
       }
     }
@@ -192,13 +210,13 @@
     }
   }
 }
-  
+/*
 .hidden {
   opacity: 0;
   filter: blur(6px);
   transform: scale(.5);
 }
-  
+*/
 .visible {
   opacity: 1;
   filter: none;
