@@ -8,6 +8,10 @@
   justify-content: center;
   align-items: center;
 
+  @media (max-width: $media-border) {
+    padding: calc($base-size * 9) $base-size calc($base-size * 3) $base-size;
+  }
+
   h3, h5 {
     font-weight: bold;
     color: $color-one;
