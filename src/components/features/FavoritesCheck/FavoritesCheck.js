@@ -1,15 +1,19 @@
 import styles from './FavoritesCheck.module.scss';
+import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import { parametersNames, settings } from '../../../settings';
 import PropTypes from "prop-types";
 
 const FavoritesCheck = props => {
+
+  const searchResult = useSelector(state => getSearchResult(state));
 
   const sleep = ms => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   const checkIfAlreadyInFavorites = () => {
-    for (let singleHit of props.searchResultHits) {
+    for (let singleHit of searchResult.hits) {
       for (let singleKey of props.favoriteKeys) {
         if (singleHit.recipe.calories === props.favorites[singleKey][parametersNames.recipe][parametersNames.calories]) {
           props.changeButtonStyle(singleHit.recipe.calories);
@@ -33,7 +37,6 @@ const FavoritesCheck = props => {
 
 FavoritesCheck.propTypes = {
     changeButtonStyle: PropTypes.func.isRequired,
-    searchResult: PropTypes.object.isRequired,
     favoriteKeys: PropTypes.array.isRequired,
     favorites: PropTypes.object.isRequired,
 };

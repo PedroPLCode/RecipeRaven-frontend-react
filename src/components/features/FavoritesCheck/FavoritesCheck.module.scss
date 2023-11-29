@@ -2,6 +2,6 @@
 
 .favorites_bottom {
   @media (max-width: $media-border) {
-    margin-top: $base-size * 5;
+    margin-top: calc($base-size * 5);
   }
 }

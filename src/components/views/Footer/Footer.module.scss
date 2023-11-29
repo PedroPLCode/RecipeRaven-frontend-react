@@ -18,7 +18,7 @@
     margin-right: $base-size;
     text-decoration: none;
     color: $color-one;
-    font-size: ($base-size * 3);
+    font-size: calc($base-size * 3);
     font-weight: bold;
     transition-property: transform;
     transition-duration: $transition-duration;

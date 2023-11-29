@@ -12,7 +12,7 @@
     
     @media (max-width: $media-border) {
       &:last-of-type {
-        margin-bottom: $base-size * 3;
+        margin-bottom: calc($base-size * 3);
       }
     }
   }

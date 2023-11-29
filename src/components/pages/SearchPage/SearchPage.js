@@ -135,7 +135,7 @@ const SearchPage = () => {
                      onChange={event => handleExcludedSet(event.target.value)} />  
               <div className={styles.diet} >
                 {dietKeys.map(singleKey => (
-                  <div className={clsx(styles.button, diet[singleKey][parametersNames.value] ? styles.active : '')} 
+                  <div key={singleKey} className={clsx(styles.button, diet[singleKey][parametersNames.value] ? styles.active : '')} 
                        id={diet[`${singleKey}`][parametersNames.id]} onClick={event => handleDietClick(event.target)} >
                     <p onClick={event => handleDietClick(event.target.parentElement)}>
                       {diet[`${singleKey}`][parametersNames.description]}

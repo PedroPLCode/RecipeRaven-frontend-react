@@ -3,7 +3,7 @@
 .searchpage {
 
   .wrapper {
-    padding-top: ($base-size * 7);
+    padding-top: calc($base-size * 7);
     padding-bottom: $base-size;
     display: flex;
     flex-direction: column;
@@ -34,13 +34,13 @@
         justify-content: center;
         align-items: center;
         border: $base-size solid $transparent-background;
-        border-radius: ($radius * 6);
+        border-radius: calc($radius * 6);
         transition-property: background-color;
         transition-duration: $transition-duration;
 
           input {
             width: 100%;
-            height: ($base-size *3);
+            height: calc($base-size *3);
             text-align: center;
             color: $color-one;
             font-weight: bold;
@@ -74,19 +74,19 @@
           }
 
           input:first-of-type {
-            margin-bottom: ($base-size * 1);
+            margin-bottom: calc($base-size * 1);
           }
             
           input:last-of-type {
-            margin-bottom: ($base-size * 1);
+            margin-bottom: calc($base-size * 1);
           }
         }
       }
 
     .search_button {
-      margin: ($base-size * 1);
-      width: ($base-size * 10);
-      height: ($base-size * 3);
+      margin: calc($base-size * 1);
+      width: calc($base-size * 10);
+      height: calc($base-size * 3);
       background-color: $transparent-background;
       border-radius: $radius;
       display: flex;

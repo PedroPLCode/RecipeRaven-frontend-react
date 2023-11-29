@@ -1,8 +1,8 @@
 @import '../../../styles/settings.scss';
 
 .favorite {
-  padding-top: ($base-size * 9);
-  padding-bottom: ($base-size * 3);
+  width: 100%;
+  padding: calc($base-size * 9) calc($base-size * 4) calc($base-size * 3) calc($base-size * 4);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,7 +11,7 @@
   h3, h5 {
     font-weight: bold;
     color: $color-one;
-    margin: ($base-size / 2);
+    margin: calc($base-size / 2);
   }
 
   h3 {
@@ -20,7 +20,7 @@
 
   @media (max-width: $media-border) {
     h5:last-of-type {
-      margin-bottom: $base-size * 3;
+      margin-bottom: calc($base-size * 3);
     }
   }
 }

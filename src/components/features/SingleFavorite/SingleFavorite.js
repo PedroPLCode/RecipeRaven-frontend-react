@@ -62,7 +62,7 @@ const SingleFavorite = props => {
 
 SingleFavorite.propTypes = {
   favorites: PropTypes.object.isRequired,
-  singleKey: PropTypes.object.isRequired,
+  singleKey: PropTypes.string.isRequired,
 };
 
 export default SingleFavorite;

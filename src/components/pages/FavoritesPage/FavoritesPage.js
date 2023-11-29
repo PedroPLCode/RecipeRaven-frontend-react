@@ -7,7 +7,6 @@ import SingleFavorite from '../../features/SingleFavorite/SingleFavorite';
 const FavoritesPage = () => {
 
   const [reload, setReload] = useState(false);
-
   const favorites = useSelector(state => getFavorites(state));
   const favoriteKeys = Object.keys(favorites)
   
@@ -19,7 +18,11 @@ const FavoritesPage = () => {
         <h5>You have {favoriteKeys.length} saved recipes</h5>
         <h5>UNDER CONSTRUCTION</h5>
           {favoriteKeys.map(singleKey => (
-            <SingleFavorite favorites={favorites} singleKey={singleKey} reload={reload} setReload={setReload} />
+            <SingleFavorite key={singleKey} 
+                            favorites={favorites} 
+                            singleKey={singleKey} 
+                            reload={reload} 
+                            setReload={setReload} />
           ))}  
         {favoriteKeys.length !== 0 ? <h3>{favoriteKeys.length} recipes saved. That's it.</h3> : ''}
       </div>

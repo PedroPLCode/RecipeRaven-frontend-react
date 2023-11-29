@@ -78,12 +78,12 @@ const SearchResults = () => {
           {searchResult.count >= 21 ? <h3>{messages.showOnly20}</h3> : ''}
           <h3>{messages.takeALook}</h3>
           {searchResult.hits.map(singleHit => (
-            <SingleResult singleHit={singleHit} 
+            <SingleResult key={singleHit.recipe.calories}
+                          singleHit={singleHit} 
                           favorites={favorites} 
                           changeButtonStyle={changeButtonStyle} />
           ))}  
           <FavoritesCheck changeButtonStyle={changeButtonStyle} 
-                          searchResultHits={searchResult.hits} 
                           favorites={favorites} 
                           favoriteKeys={favoriteKeys}/>
         </div>
