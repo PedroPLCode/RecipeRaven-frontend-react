@@ -56,8 +56,8 @@ export const messages = {
   online: 'Online',
   offline: 'Offline',
   search: 'Search',
-  foodSearchApp: 'Food Search App',
-  inputWarning: 'Use only letters and short spaces',
+  foodSearchApp: 'Search for new recipes',
+  inputWarning: 'Warning. Use only letters and short spaces',
 }
 
 export const infoData = {

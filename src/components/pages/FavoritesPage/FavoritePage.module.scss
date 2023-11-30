@@ -14,12 +14,23 @@
 
   h3, h5 {
     font-weight: bold;
-    color: $color-one;
+    color: $color-two;
     margin: calc($base-size / 2);
   }
 
   h3 {
-    color: $transparent-background;
+    color: $color-one;
+  }
+
+  h5 { 
+    margin-bottom: calc($base-size * 3);
+  }
+
+  .bottom {
+    margin-top: calc($base-size * 2);
+      @media (max-width: $media-border) {
+        margin-top: $base-size;
+      }
   }
 
   @media (max-width: $media-border) {

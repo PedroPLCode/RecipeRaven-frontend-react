@@ -124,7 +124,7 @@ const SearchPage = () => {
       render={({ online }) => (
         <article className={styles.searchpage}>
         <div className={styles.wrapper}>
-          <h3 className={clsx(inputOK ? '' : styles.header_error)}>{headerString}</h3>  
+          <h3 className={clsx(styles.main_header, inputOK ? '' : styles.header_error)}>{headerString}</h3>  
           <form className={styles.form}>
             <div className={clsx(styles.form_inner, !online ? styles.offline : '', !inputOK ? styles.offline : '')}>
               <input id="ingredients" type="text" placeholder={messages.putIngredients} 

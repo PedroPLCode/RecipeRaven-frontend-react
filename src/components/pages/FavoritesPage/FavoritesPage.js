@@ -13,10 +13,8 @@ const FavoritesPage = () => {
   if (favorites.length !== 0 && favoriteKeys.length !== 0) {
     return (
       <div className={styles.favorite}>
-        <h3>Food Search App</h3>
-        <h5>Your favorites</h5>
+        <h3>Yours favorite recipes</h3>
         <h5>You have {favoriteKeys.length} saved recipes</h5>
-        <h5>UNDER CONSTRUCTION</h5>
           {favoriteKeys.map(singleKey => (
             <SingleFavorite key={singleKey} 
                             favorites={favorites} 
@@ -24,15 +22,14 @@ const FavoritesPage = () => {
                             reload={reload} 
                             setReload={setReload} />
           ))}  
-        {favoriteKeys.length !== 0 ? <h3>{favoriteKeys.length} recipes saved. That's it.</h3> : ''}
+        {favoriteKeys.length !== 0 ? <h3 className={styles.bottom}>{favoriteKeys.length} recipes saved. That's it.</h3> : ''}
       </div>
     );
   } else {
     return (
       <div className={styles.favorite}>
-        <h3>Food Search App</h3>
-        <h5>No selected favorites</h5>
-        <h5>UNDER CONSTRUCTION</h5>
+        <h3>You have no favorite recipes</h3>
+        <h5>Your saved recipes will be shown here</h5>
       </div>
     );
   }

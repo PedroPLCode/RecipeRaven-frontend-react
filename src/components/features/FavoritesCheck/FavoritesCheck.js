@@ -30,7 +30,7 @@ const FavoritesCheck = props => {
   return (
     <div>
       <h3 className={styles.favorites_bottom} >That's it.. Lets search again!</h3>
-      {props.favoriteKeys.length !== 0 ? <h3>{props.favoriteKeys.length} recipes saved in favorites</h3> : <h3>Let's save something in favorites</h3>}
+      {props.favoriteKeys.length !== 0 ? <h3>{props.favoriteKeys.length} recipes saved in favorites</h3> : <h3>And let's save something in favorites</h3>}
     </div>
   )
 }

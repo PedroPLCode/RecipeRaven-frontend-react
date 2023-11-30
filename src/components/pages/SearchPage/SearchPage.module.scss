@@ -12,9 +12,14 @@
 
     h3 {
       font-weight: bold;
-      color: $transparent-background;
+      color: $color-one;
       transition-property: color;
       transition-duration: $transition-duration;
+    }
+
+    .main_header {
+      margin-top: calc($base-size * 3);
+      margin-bottom: calc($base-size * 4);
     }
 
     .header_error {

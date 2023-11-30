@@ -7,19 +7,18 @@ import { faCodeCompare } from '@fortawesome/free-solid-svg-icons';
 
 const AboutPage = () => {
 
-  const myEmailLink = infoData.myEmail;
   const myGitHub = infoData.myGitHub;
   const LinkToApi = infoData.LinkToApi;
 
     return (
       <div className={styles.about}>
         <h3>Food Search App</h3>
-        <h5>Simple App written in ReactJS</h5>
-        <h5>for searching for new meal recipes</h5>
+        <h5>simple app written in ReactJS</h5>
+        <h5>helps searching for new meal recipes</h5>
         <h5>I hope you will like it</h5>
         <h5>Still under construction</h5>
         <h5>Created by piotrek.gaszczynski@gmail.com</h5>
-        <a href={myEmailLink}><p><FontAwesomeIcon icon={faEnvelope} /> send me a email</p></a>
+        <a href='mailto: piotrek.gaszczynski@gmail.com'><p><FontAwesomeIcon icon={faEnvelope} /> send me a email</p></a>
         <a href={LinkToApi} target="_blank" rel="noreferrer"><p><FontAwesomeIcon icon={faCode} /> powered by RapidApi</p></a>
         <a href={myGitHub} target="_blank" rel="noreferrer"><p><FontAwesomeIcon icon={faCodeCompare} /> my github profile</p></a>
       </div>
