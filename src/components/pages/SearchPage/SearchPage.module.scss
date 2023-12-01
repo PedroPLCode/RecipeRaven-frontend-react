@@ -12,7 +12,7 @@
 
     h3 {
       font-weight: bold;
-      color: $color-one;
+      color: $color-three;
       transition-property: color;
       transition-duration: $transition-duration;
     }
@@ -43,50 +43,50 @@
         transition-property: background-color;
         transition-duration: $transition-duration;
 
-          input {
-            width: 100%;
-            height: calc($base-size *3);
-            text-align: center;
-            color: $color-one;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            background-color: $transparent-background;
-            transition-property: border, color, background-color;
-            transition-duration: $transition-duration;   
-          }
+        input {
+          width: 100%;
+          height: calc($base-size *3);
+          text-align: center;
+          color: $color-one;
+          font-weight: bold;
+          border: none;
+          border-radius: 50px;
+          background-color: $transparent-background;
+          transition-property: border, color, background-color;
+          transition-duration: $transition-duration;   
+        }
 
-          .input_error {
-            &:focus {
-              background-color: $error-background;
-            }
-          }
-
-          input::placeholder {
-            text-align: center;
-            color: $color-one;
-          }
-
-          input:focus {
-            outline: none;
-            background-color: $color-one;
-            color: $transparent-background;
-          }
-
-          input:not(:placeholder-shown) {
-            background-color: $color-one;
-            color: $transparent-background;
-          }
-
-          input:first-of-type {
-            margin-bottom: calc($base-size * 1);
-          }
-            
-          input:last-of-type {
-            margin-bottom: calc($base-size * 1);
+        .input_error {
+          &:focus {
+            background-color: $error-background;
           }
         }
+
+        input::placeholder {
+          text-align: center;
+          color: $color-one;
+        }
+
+        input:focus {
+          outline: none;
+          background-color: $color-one;
+          color: $transparent-background;
+        }
+
+        input:not(:placeholder-shown) {
+          background-color: $color-one;
+          color: $transparent-background;
+        }
+
+        input:first-of-type {
+          margin-bottom: calc($base-size * 1);
+        }
+          
+        input:last-of-type {
+          margin-bottom: calc($base-size * 1);
+        }
       }
+    }
 
     .search_button {
       margin: calc($base-size * 1);

@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { settings } from './settings';
 import NavBar from './components/views/NavBar/NavBar'
 import Footer from './components/views/Footer/Footer';
 import AboutPage from './components/pages/AboutPage/AboutPage';
@@ -17,6 +18,10 @@ const App = () => {
   const location = useLocation();
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionStage, setTransistionStage] = useState("fadeIn");
+
+  useEffect(() => {
+    document.title = settings.title;
+  }, []);
 
   useEffect(() => {
     if (location !== displayLocation) setTransistionStage("fadeOut");

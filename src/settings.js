@@ -71,4 +71,5 @@ export const stylesParams = {
 
 export const settings = {
   delay: 1000,
+  title: 'Food Search App',
 }
