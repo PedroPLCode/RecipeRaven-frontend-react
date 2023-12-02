@@ -150,17 +150,22 @@
       @media (max-width: $media-border) {
         margin-bottom: $base-size;
         background-position: 0 100%;
+        color: $color-three;
       }
   
       i {
         margin: $base-size;
         text-align: center;
+
+        @media (max-width: $media-border) {
+          color: $color-three;
+        }
       }
   
       &:hover {
         background-position: 0 100%;
         color: $transparent-background;
-         cursor: pointer;
+        cursor: pointer;
       }
     }
   
@@ -177,9 +182,10 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      background-image: linear-gradient(90deg, $color-error 50% , $transparent-background 50%);
+      background-image: linear-gradient(90deg, $color-three 50% , $transparent-background 50%);
       background-position: 100% 0;
       background-size: 300% 300%;
+      color: $color-three;
       transition-duration: $transition-duration;
       transition-property: color, background-color, background-position;
   
@@ -196,7 +202,7 @@
 
         @media (max-width: $media-border) {
           background-position: 0 100%;
-          color: $color-two;
+          color: $color-one;
         }
       }
     }

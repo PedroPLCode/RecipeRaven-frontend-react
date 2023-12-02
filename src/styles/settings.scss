@@ -1,10 +1,18 @@
+$media-border: 720px;
+
 $color-one: #66d632;
-$color-two: #0972eb;
-$color-three: #021e42;
+$color-two: #5cf515;
+$color-three: #fc2600;
+$color-four: #021e42;
 $color-error: rgba(252, 3, 3, 0.904);
 
 $transparent-background: rgba(0, 0, 0, .5);
 $error-background: rgba(218, 31, 31, 0.5);
+
+$background-image: url(../images/back_large.jpg);
+@media (max-width: $media-border) {
+  $background-image: url(../images/back_small.jpg);
+}
 
 $font-text: 'Poppins', sans-serif;
 
@@ -12,5 +20,3 @@ $radius: 5px;
 $base-size: 12px;
 $transition-duration: .5s;
 $transition-duration-long: 3s;
-
-$media-border: 720px;

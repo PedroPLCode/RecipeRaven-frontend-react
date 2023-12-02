@@ -1,6 +1,8 @@
 @import '../../../styles/settings.scss';
 
 .favorites_bottom {
+  color: $color-one;
+
   @media (max-width: $media-border) {
     margin-top: calc($base-size * 5);
   }

@@ -15,6 +15,7 @@
   h3, h5 {
     font-weight: bold;
     color: $color-two;
+    text-align: center;
     margin: calc($base-size / 2);
   }
 
@@ -28,6 +29,7 @@
 
   .bottom {
     margin-top: calc($base-size * 2);
+    color: $color-one;
       @media (max-width: $media-border) {
         margin-top: $base-size;
       }

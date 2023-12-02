@@ -12,10 +12,11 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background-image: url(../images/background_image.jpg);
+  background: linear-gradient(rgba($color-four, .5), rgba($color-error, .5)), $background-image;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   font-family: $font-text;
   letter-spacing: 0.5px;
+  font-size: calc($base-size * 2);
 }

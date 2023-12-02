@@ -11,6 +11,7 @@
   h3, h5 {
     font-weight: bold;
     color: $color-two;
+    text-align: center;
     margin: calc($base-size / 2);
   }
 
@@ -43,6 +44,7 @@
     p {
       margin: auto;
       font-weight: bold;
+      font-size: calc($base-size * 1.5);
     }
     
     &:hover {

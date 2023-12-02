@@ -64,6 +64,7 @@ export const infoData = {
   myEmailLink: 'mailto: piotrek.gaszczynski@gmail.com',
   myGitHub: 'https://github.com/PedroPLCode/',
   LinkToApi: 'https://rapidapi.com/edamam/api/recipe-search-and-diet',
+  pexels: 'https://www.pexels.com/@monicore/',
 }
 export const stylesParams = {
   clickedButton: '0 100%',

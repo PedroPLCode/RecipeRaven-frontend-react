@@ -149,6 +149,7 @@
       @media (max-width: $media-border) {
         margin-bottom: $base-size;
         background-position: 0 100%;
+        color: $color-three;
       }
   
       i {
@@ -184,6 +185,7 @@
       background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
       background-position: 100% 0;
       background-size: 300% 300%;
+      color: $color-three;
       transition-duration: $transition-duration;
       transition-property: color, background-color, background-position;
 
@@ -194,11 +196,12 @@
       &:hover {
         background-position: 0 100%;
         color: $transparent-background;
+        color: $color-three;
         cursor: pointer;
 
         @media (max-width: $media-border) {
           background-position: 0 100%;
-          color: $color-two;
+          color: $color-three;
           margin-bottom: $base-size;
         }
       }
@@ -206,7 +209,7 @@
 
     .button_selected {
       background-position: 0 100%;
-      color: $transparent-background;
+      color: $color-three;
     }
   }
 }
