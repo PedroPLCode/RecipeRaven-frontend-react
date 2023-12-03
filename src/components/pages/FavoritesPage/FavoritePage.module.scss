@@ -9,7 +9,8 @@
   align-items: center;
 
   @media (max-width: $media-border) {
-    padding: calc($base-size * 9) $base-size calc($base-size * 3) $base-size;
+    padding-left: calc($base-size * 2);
+    padding-right: calc($base-size * 2);
   }
 
   h3, h5 {

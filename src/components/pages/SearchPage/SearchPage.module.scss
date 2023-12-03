@@ -3,7 +3,7 @@
 .searchpage {
 
   .wrapper {
-    padding-top: calc($base-size * 7);
+    padding-top: calc($base-size * 6.5);
     padding-bottom: $base-size;
     display: flex;
     flex-direction: column;
@@ -37,15 +37,23 @@
       align-items: center;
        
       .form_inner {
-        padding: $base-size;
+        padding: $base-size *2;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border: $base-size solid $transparent-background;
         border-radius: calc($radius * 6);
-        transition-property: background-color;
+        box-shadow: 
+          0 0 5px 5px $transparent-background, 
+          inset 0 0 5px 5px $transparent-background;
+        transition-property: background-color, box-shadow;
         transition-duration: $transition-duration;
+
+        @media (max-width: $media-border) {
+          margin-left: calc($base-size * 2);
+          margin-right: calc($base-size * 2);
+        }
 
         input {
           width: 100%;
@@ -56,13 +64,15 @@
           border: none;
           border-radius: 50px;
           background-color: $transparent-background;
-          transition-property: border, color, background-color;
+          box-shadow: 0 0 5px 5px $transparent-background;
+          transition-property: border, color, background-color, box-shadow;
           transition-duration: $transition-duration;   
         }
 
         .input_error {
           &:focus {
             background-color: $error-background;
+            box-shadow: 0 0 5px 5px $error-background;
           }
         }
 
@@ -80,28 +90,35 @@
           outline: none;
           background-color: $color-one;
           color: $transparent-background;
+          box-shadow: 0 0 5px 5px $color-one;
         }
 
         input:not(:placeholder-shown) {
           background-color: $color-one;
           color: $transparent-background;
+          box-shadow: 0 0 5px 5px $color-one;
         }
 
         input:first-of-type {
-          margin-bottom: calc($base-size * 1);
+          margin-bottom: calc($base-size * 2);
         }
           
         input:last-of-type {
-          margin-bottom: calc($base-size * 1);
+          margin-bottom: calc($base-size * 2);
         }
+      }
+
+      .form_error {
+        box-shadow: 
+          0 0 5px 5px $error-background, 
+          inset 0 0 5px 5px $error-background;
       }
     }
 
     .search_button {
-      margin: calc($base-size * 1);
+      margin: calc($base-size * 2);
       width: calc($base-size * 10);
       height: calc($base-size * 3);
-      background-color: $transparent-background;
       border-radius: $radius;
       color: $color-one;
       display: flex;
@@ -111,8 +128,9 @@
       background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
       background-position: 100% 0;
       background-size: 300% 300%;
+      box-shadow: 0 0 5px 5px $transparent-background;
       transition-duration: $transition-duration;
-      transition-property: color, background-color, background-position;
+      transition-property: color, background-color, background-position, box-shadow;
 
       p {
         margin: auto;
@@ -123,12 +141,14 @@
       &:hover {
       background-position: 0 100%;
       color: $transparent-background;
-        cursor: pointer;
+      box-shadow: 0 0 5px 5px $color-one;
+      cursor: pointer;
       }
 
       @media (max-width: $media-border) {
         background-position: 0 100%;
         color: $transparent-background;
+        box-shadow: 0 0 5px 5px $color-one;
       }
     }
 
@@ -146,7 +166,7 @@
   display: grid;
   grid-template-columns: repeat(3, calc($base-size * 10));
   grid-template-rows: repeat(2, calc($base-size * 3));
-  gap: $base-size;
+  gap: calc($base-size * 2);
 
   @media (max-width: $media-border) {
     grid-template-columns: repeat(2, calc($base-size * 10));
@@ -156,13 +176,14 @@
   .button {
     background-color: $transparent-background;
     border-radius: 50px;
+    box-shadow: 0 0 5px 5px $transparent-background;
     color: $color-one;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     transition-duration: $transition-duration;
-    transition-property: color, background-color;
+    transition-property: color, background-color, box-shadow;
         
     p {
       margin: auto;
@@ -181,6 +202,7 @@
     &.active {
       background-color: $color-one;
       color: $transparent-background;
+      box-shadow: 0 0 5px 5px $color-one;
     }
   }
 }

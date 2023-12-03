@@ -1,19 +1,20 @@
 @import '../../../styles/settings.scss';
 
 .single_result {
-  margin: calc($base-size * 4);
+  margin: calc($base-size * 4) calc($base-size * 3.5);
   background-color: $transparent-background;
   border-radius: calc($radius * 6);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 0 5px 5px $transparent-background;
   transition-property: opacity, filter, transform;
   transition-duration: $transition-duration-long;
   
   @media (max-width: $media-border) {
     flex-direction: column;
-    margin: $base-size;
+    margin: calc($base-size * 2);
     margin-bottom: 0px;
 
     &:last-of-type {
@@ -134,7 +135,6 @@
       padding: auto;
       height: calc($base-size * 3);
       width: 240px;
-      background-color: $transparent-background;
       border-radius: $radius;
       display: flex;
       flex-direction: row;
@@ -150,6 +150,7 @@
         margin-bottom: $base-size;
         background-position: 0 100%;
         color: $color-three;
+        box-shadow: 0 0 5px 5px $color-one;
       }
   
       i {
@@ -176,7 +177,6 @@
       padding: auto;
       height: calc($base-size * 3);
       width: 240px;
-      background-color: $transparent-background;
       border-radius: $radius;
       display: flex;
       flex-direction: row;
@@ -187,15 +187,15 @@
       background-size: 300% 300%;
       color: $color-three;
       transition-duration: $transition-duration;
-      transition-property: color, background-color, background-position;
+      transition-property: color, background-color, background-position, box-shadow;
 
       @media (max-width: $media-border) {
         margin-bottom: $base-size;
+        box-shadow: 0 0 5px 5px $transparent-background;
       }
 
       &:hover {
         background-position: 0 100%;
-        color: $transparent-background;
         color: $color-three;
         cursor: pointer;
 

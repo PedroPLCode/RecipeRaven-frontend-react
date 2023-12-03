@@ -59,7 +59,8 @@ const SearchResults = () => {
   const changeButtonStyle = id => {
     const activeButton = document.getElementById(id);
     if (activeButton !== null) {
-      activeButton.style.backgroundPosition = stylesParams.clickedButton;
+      activeButton.style.backgroundPosition = stylesParams.clickedButtonBckr;
+      activeButton.style.boxShadow = stylesParams.clickedButtonBS;
     }
   }
 

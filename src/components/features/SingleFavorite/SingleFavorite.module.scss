@@ -2,20 +2,20 @@
 
 .single_favorite {
   width: 100%;
-  margin: calc($base-size * 2);
+  margin: calc($base-size * 2.5) calc($base-size * 2);
   background-color: $transparent-background;
   border-radius: calc($radius * 6);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 0 5px 5px $transparent-background;
   transition-property: opacity, filter, transform;
   transition-duration: $transition-duration-long;
   
   @media (max-width: $media-border) {
     flex-direction: column;
-    margin: $base-size;
-    margin-bottom: 0px;
+    margin: calc($base-size) calc($base-size * 2);
 
     &:last-of-type {
       margin-bottom: calc($base-size * 3);
@@ -135,7 +135,6 @@
       padding: auto;
       height: calc($base-size * 3);
       width: 240px;
-      background-color: $transparent-background;
       border-radius: $radius;
       display: flex;
       flex-direction: row;
@@ -151,6 +150,7 @@
         margin-bottom: $base-size;
         background-position: 0 100%;
         color: $color-three;
+        box-shadow: 0 0 5px 5px $color-one;
       }
   
       i {
@@ -176,7 +176,6 @@
       padding: auto;
       height: calc($base-size * 3);
       width: 240px;
-      background-color: $transparent-background;
       border-radius: $radius;
       display: flex;
       flex-direction: row;
@@ -193,6 +192,7 @@
         background-position: 0 100%;
         color: $color-two;
         margin-bottom: $base-size;
+        box-shadow: 0 0 5px 5px $color-three;
       }
 
       &:hover {

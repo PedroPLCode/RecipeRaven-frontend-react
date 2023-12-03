@@ -22,7 +22,7 @@ const FavoritesPage = () => {
                             reload={reload} 
                             setReload={setReload} />
           ))}  
-        {favoriteKeys.length !== 0 ? <h3 className={styles.bottom}>{favoriteKeys.length} recipes saved. That's it.</h3> : ''}
+        {favoriteKeys.length !== 0 ? <h3 className={styles.bottom}>{favoriteKeys.length} recipes saved.</h3> : ''}
       </div>
     );
   } else {

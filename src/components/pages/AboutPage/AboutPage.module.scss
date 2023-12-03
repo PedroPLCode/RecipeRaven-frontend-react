@@ -33,13 +33,13 @@
     margin: calc($base-size * 1);
     width: calc($base-size * 24);
     height: calc($base-size * 3);
-    background-color: $transparent-background;
     border-radius: $radius;
+    box-shadow: 0 0 5px 5px $transparent-background;
     background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
     background-position: 100% 0;
     background-size: 300% 300%;
     transition-duration: $transition-duration;
-    transition-property: color, background-color, background-position;
+    transition-property: color, background-color, background-position, box-shadow;
 
     p {
       margin: auto;
@@ -50,11 +50,13 @@
     &:hover {
       background-position: 0 100%;
       color: $transparent-background;
+      box-shadow: 0 0 5px 5px $color-one;
       cursor: pointer;
 
       @media (max-width: $media-border) {
         color: $color-one;
         background-position: 100% 0;
+        box-shadow: 0 0 5px 5px $transparent-background;
       }
     }
   }

@@ -126,7 +126,7 @@ const SearchPage = () => {
         <div className={styles.wrapper}>
           <h3 className={clsx(styles.main_header, inputOK ? '' : styles.header_error)}>{headerString}</h3>  
           <form className={styles.form}>
-            <div className={clsx(styles.form_inner, !online ? styles.offline : '', !inputOK ? styles.offline : '')}>
+            <div className={clsx(styles.form_inner, !online ? styles.offline : '', !inputOK ? styles.offline : '', inputOK ? '' : styles.form_error)}>
               <input id="ingredients" type="text" placeholder={messages.putIngredients} 
                      title={messages.putIngredients} value={ingredients} 
                      onChange={event => handleIngredientsSet(event.target.value)} />

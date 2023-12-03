@@ -51,13 +51,13 @@ export const messages = {
   putIngredients: 'Selected ingredients...',
   putExcluded: 'Excluded ingredients...',
   noInfoProvided: 'No information provided',
-  showOnly20: 'But we wil show you only 20',
+  showOnly20: 'But we wil show only 20',
   takeALook: 'Take a look...',
   online: 'Online',
   offline: 'Offline',
   search: 'Search',
   foodSearchApp: 'Search for new recipes',
-  inputWarning: 'Warning. Use only letters and short spaces',
+  inputWarning: 'Only letters and spaces',
 }
 
 export const infoData = {
@@ -67,7 +67,8 @@ export const infoData = {
   pexels: 'https://www.pexels.com/@monicore/',
 }
 export const stylesParams = {
-  clickedButton: '0 100%',
+  clickedButtonBckr: '0 100%',
+  clickedButtonBS: '0 0 5px 5px #66d632',
 }
 
 export const settings = {
