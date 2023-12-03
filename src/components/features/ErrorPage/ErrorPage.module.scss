@@ -13,4 +13,8 @@
     color: $color-error;
     margin: calc($base-size / 2);
   }
+
+  h5:last-of-type {
+    margin-bottom: calc($base-size * 3);
+  }
 }
