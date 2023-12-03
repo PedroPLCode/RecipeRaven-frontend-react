@@ -5,6 +5,7 @@
   z-index: 10;
   height: calc($base-size * 5);
   background-color: $transparent-background;
+  box-shadow: 0 0 5px 5px $transparent-background;
   position: fixed;
   top: 0;
   opacity: 1;

@@ -51,6 +51,11 @@
       background-position: 0 100%;
       color: $transparent-background;
       cursor: pointer;
+
+      @media (max-width: $media-border) {
+        color: $color-one;
+        background-position: 100% 0;
+      }
     }
   }
 }
