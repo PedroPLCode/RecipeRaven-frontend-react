@@ -15,7 +15,7 @@
   
   @media (max-width: $media-border) {
     flex-direction: column;
-    margin: calc($base-size) calc($base-size * 2);
+    margin: calc($base-size * 1.3) calc($base-size * 2);
 
     &:last-of-type {
       margin-bottom: calc($base-size * 3);
@@ -134,7 +134,7 @@
       font-weight: bold;
       padding: auto;
       height: calc($base-size * 3);
-      width: 240px;
+      width: 280px;
       border-radius: $radius;
       display: flex;
       flex-direction: row;
@@ -147,6 +147,9 @@
       transition-property: color, background-color, background-position;
   
       @media (max-width: $media-border) {
+        width: 240px;
+        font-size: calc($base-size * 1.3);
+        margin-top: $base-size;
         margin-bottom: $base-size;
         background-position: 0 100%;
         color: $color-three;
@@ -175,7 +178,7 @@
       font-weight: bold;
       padding: auto;
       height: calc($base-size * 3);
-      width: 240px;
+      width: 280px;
       border-radius: $radius;
       display: flex;
       flex-direction: row;
@@ -189,6 +192,8 @@
       transition-property: color, background-color, background-position;
   
       @media (max-width: $media-border) {
+        width: 240px;
+        font-size: calc($base-size * 1.3);
         background-position: 0 100%;
         color: $color-two;
         margin-bottom: $base-size;

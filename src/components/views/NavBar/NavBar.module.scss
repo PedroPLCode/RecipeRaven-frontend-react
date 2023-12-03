@@ -33,6 +33,10 @@
       font-weight: bold;
       transition-property: color;
       transition-duration: $transition-duration;
+
+      @media (max-width: $media-border-small) {
+        font-size: calc($base-size * 1.7);
+      }
       
       &:hover {
         color: $color-two;

@@ -10,11 +10,16 @@
 
   h3, h5 {
     font-weight: bold;
+    text-align: center;
     color: $color-one;
     margin: calc($base-size / 2);
   }
 
   h5:nth-of-type(3), h5:nth-of-type(5) {
     color: $color-two;
+  }
+
+  h5:last-of-type {
+    margin-bottom: calc($base-size * 2);
   }
 }

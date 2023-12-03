@@ -163,13 +163,14 @@
 }
 
 .diet {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, calc($base-size * 10));
   grid-template-rows: repeat(2, calc($base-size * 3));
   gap: calc($base-size * 2);
 
   @media (max-width: $media-border) {
-    grid-template-columns: repeat(2, calc($base-size * 10));
+    grid-template-columns: repeat(2, calc(50% - ($base-size)));
     grid-template-rows: repeat(3, calc($base-size * 3));
   }
     
@@ -192,6 +193,10 @@
 
       @media (max-width: $media-border) {
         font-size: calc($base-size * 1.5);
+      }
+
+      @media (max-width: $media-border-small) {
+        font-size: calc($base-size);
       }
     }
         
