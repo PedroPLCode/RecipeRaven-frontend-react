@@ -3,7 +3,7 @@ import { PRIVATE_API_KEY } from "./API_PRIVATE_KEY.js";
 export const classNames = {
   offline: '.offline',
   selectedButtons: '.SearchPage_active__321Sw',
-  resultBoxes: '.SingleResult_hidden__TZjW1',
+  resultBoxes: '.SingleResult_single_result__y0ANe',
 }
 
 export const parametersNames = {
@@ -69,6 +69,8 @@ export const infoData = {
 export const stylesParams = {
   clickedButtonBckr: '0 100%',
   clickedButtonBS: '0 0 5px 5px #66d632',
+  resultHidden: 'saturate(0) blur(4px)',
+  resultVisible: 'saturate(1) blur(0)',
 }
 
 export const settings = {

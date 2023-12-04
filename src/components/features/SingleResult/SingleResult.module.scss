@@ -10,7 +10,8 @@
   align-items: center;
   box-shadow: 0 0 5px 5px $transparent-background;
   transition-property: opacity, filter, transform;
-  transition-duration: $transition-duration-long;
+  transition-duration: $transition-duration;
+  filter: saturate(0), blur(4px);
   
   @media (max-width: $media-border) {
     flex-direction: column;
@@ -214,16 +215,4 @@
       color: $color-three;
     }
   }
-}
-/*
-.hidden {
-  opacity: 0;
-  filter: blur(6px);
-  transform: scale(.5);
-}
-*/
-.visible {
-  opacity: 1;
-  filter: none;
-  transform: scale(1);
 }

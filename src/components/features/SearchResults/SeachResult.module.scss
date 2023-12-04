@@ -19,15 +19,3 @@
 
   }
 }
-/*
-.hidden {
-  opacity: 0;
-  filter: blur(6px);
-  transform: scale(.5);
-}
-*/
-.visible {
-  opacity: 1;
-  filter: none;
-  transform: scale(1);
-}

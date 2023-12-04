@@ -1,5 +1,4 @@
 import styles from './SingleResult.module.scss';
-import { clsx } from "clsx";
 import { updateFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +16,7 @@ const SingleResult = props => {
   }
 
   return (
-    <div className={clsx(styles.single_result, styles.hidden)}>
+    <div className={styles.single_result}>
       <div className={styles.image}>
         <a href={props.singleHit.recipe.url} target='_blank' rel="noreferrer">
           <i>Click for full receipe!</i>

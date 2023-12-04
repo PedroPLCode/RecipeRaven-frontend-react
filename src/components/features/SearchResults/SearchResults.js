@@ -26,16 +26,17 @@ const SearchResults = () => {
     let currentScrollPosition = 0;
     window.addEventListener('scroll', function (event) {
       currentScrollPosition = window.pageYOffset;
-      if (previousScrollPosition - currentScrollPosition < 0) {
-        if (resultBoxes) {
+      if (resultBoxes) {
+        if (previousScrollPosition !== currentScrollPosition) {
           for (let singleBox of resultBoxes) {
             const rect = singleBox.getBoundingClientRect();
-            if (rect.top >= 0 && rect.bottom <= ((window.innerHeight * 2) || (document.documentElement.clientHeight * 2))) {
-              singleBox.classList.remove(classNames.resultBoxes);
-              singleBox.classList.add(styles.visible);
+            if ((rect.top + (window.innerHeight / 2) ) >= 0 && rect.bottom <= (window.innerHeight * 1.5 || document.documentElement.clientHeight * 1.5)) {
+              singleBox.style.filter = stylesParams.resultVisible;
+            } else {
+              singleBox.style.filter = stylesParams.resultHidden;
             }
           }
-        }
+        } 
       }
       previousScrollPosition = currentScrollPosition;
     });
