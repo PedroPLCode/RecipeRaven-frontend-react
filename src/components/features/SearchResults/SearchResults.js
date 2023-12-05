@@ -31,9 +31,11 @@ const SearchResults = () => {
           for (let singleBox of resultBoxes) {
             const rect = singleBox.getBoundingClientRect();
             if ((rect.top + (window.innerHeight / 2) ) >= 0 && rect.bottom <= (window.innerHeight * 1.5 || document.documentElement.clientHeight * 1.5)) {
-              singleBox.style.filter = stylesParams.resultVisible;
+              singleBox.style.filter = stylesParams.resultVisible.filter;
+              singleBox.style.transform = stylesParams.resultVisible.transform;
             } else {
-              singleBox.style.filter = stylesParams.resultHidden;
+              singleBox.style.filter = stylesParams.resultHidden.filter;
+              singleBox.style.transform = stylesParams.resultHidden.transform;
             }
           }
         } 

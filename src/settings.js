@@ -66,11 +66,18 @@ export const infoData = {
   LinkToApi: 'https://rapidapi.com/edamam/api/recipe-search-and-diet',
   pexels: 'https://www.pexels.com/@monicore/',
 }
+
 export const stylesParams = {
   clickedButtonBckr: '0 100%',
   clickedButtonBS: '0 0 5px 5px #66d632',
-  resultHidden: 'saturate(0) blur(4px)',
-  resultVisible: 'saturate(1) blur(0)',
+  resultHidden: {
+    filter: 'saturate(0) blur(4px)',
+    transform: 'scale(.9)',
+  },
+  resultVisible: {
+    filter: 'saturate(1) blur(0)',
+    transform: 'scale(1)',
+  }
 }
 
 export const settings = {
