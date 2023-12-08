@@ -31,26 +31,26 @@ const App = () => {
     <main>
       <NavBar />
       <Container>
-      <div
-        className={transitionStage}
-        onAnimationEnd={() => {
-          if (transitionStage === "fadeOut") {
-            setTransistionStage("fadeIn");
-            setDisplayLocation(location);
-          }
-        }}
-      > 
-        <Routes location={displayLocation}>
-          <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="*" element={<SearchPage />} />
-          <Route path="*/errorpage" element={<ErrorPage />} />
-          <Route path="/loadingpage" element={<Loading />} />
-          <Route path="/readypage" element={<ReadyToSearch />} />
-          <Route path="/noresultspage" element={<NoResultsPage />} />
-          <Route path="/resultspage" element={<SearchResults />} />
-        </Routes>
-      </div>
+        <div
+          className={transitionStage}
+          onAnimationEnd={() => {
+            if (transitionStage === "fadeOut") {
+              setTransistionStage("fadeIn");
+              setDisplayLocation(location);
+            }
+          }}
+        > 
+          <Routes location={displayLocation}>
+            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="*" element={<SearchPage />} />
+            <Route path="*/errorpage" element={<ErrorPage />} />
+            <Route path="/loadingpage" element={<Loading />} />
+            <Route path="/readypage" element={<ReadyToSearch />} />
+            <Route path="/noresultspage" element={<NoResultsPage />} />
+            <Route path="/resultspage" element={<SearchResults />} />
+          </Routes>
+        </div>
       </Container>
       <Footer />
     </main>

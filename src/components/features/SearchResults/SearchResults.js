@@ -30,7 +30,7 @@ const SearchResults = () => {
         if (previousScrollPosition !== currentScrollPosition) {
           for (let singleBox of resultBoxes) {
             const rect = singleBox.getBoundingClientRect();
-            if ((rect.top + (window.innerHeight / 2) ) >= 0 && rect.bottom <= (window.innerHeight * 1.5 || document.documentElement.clientHeight * 1.5)) {
+            if ((rect.top + (window.innerHeight ) ) >= 0 && rect.bottom <= (window.innerHeight * 2 || document.documentElement.clientHeight * 2)) {
               singleBox.style.filter = stylesParams.resultVisible.filter;
               singleBox.style.transform = stylesParams.resultVisible.transform;
             } else {

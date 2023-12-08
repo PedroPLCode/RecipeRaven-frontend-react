@@ -20,3 +20,8 @@ body {
   letter-spacing: 0.5px;
   font-size: calc($base-size * 2);
 }
+
+.container {
+  max-width: 1248px;
+  margin: auto;
+}
