@@ -52,6 +52,9 @@ const SearchResults = () => {
       if (singleHit.recipe.dietLabels.length === 0) {
         singleHit.recipe.dietLabels.push(messages.noInfoProvided);
       }
+      if (singleHit.recipe.cautions.length === 0) {
+        singleHit.recipe.cautions.push(messages.noInfoProvided);
+      }
       singleHit.recipe.calories = parseInt(singleHit.recipe.calories);
       if (singleHit.recipe.calories === 0 || !singleHit.recipe.calories) {
         singleHit.recipe.calories = messages.noInfoProvided;

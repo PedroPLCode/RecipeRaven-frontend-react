@@ -152,12 +152,7 @@
     }
 
     .offline {
-      background-color: $color-error;
       box-shadow: 0 0 5px 5px $color-error;
-
-      @media (max-width: $media-border) {
-        background-position: 100% 0;
-      }
     }
   }
 }

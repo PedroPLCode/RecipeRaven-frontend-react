@@ -112,15 +112,25 @@
       justify-content: center;
       align-items: center;    
     }
+
+    @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+      justify-content: center;
+      gap: calc($base-size / 1.5);
+    }
   
     p, a {
       color: $color-two;
       font-size: calc($base-size * 1.5);
       text-align: right;
+
+      @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+        font-size: calc($base-size * 1.2); 
+      }
     }
   
     p {
-      margin: 0;
+      margin: 0px;
+      padding: 0px;
         
       .blue {
         color: $color-one;
@@ -128,6 +138,10 @@
   
       @media (max-width: $media-border) {
         text-align: center; 
+      }
+
+      @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+        line-height: .65;
       }
     }
   
@@ -156,10 +170,18 @@
         color: $color-three;
         box-shadow: 0 0 5px 5px $color-one;
       }
+
+      @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+        height: calc($base-size * 2);
+      }
   
       i {
         margin: $base-size;
         text-align: center;
+
+        @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+          font-size: $base-size;
+        }
       }
   
       &:hover {
@@ -198,6 +220,11 @@
         box-shadow: 0 0 5px 5px $transparent-background;
       }
 
+      @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+        font-size: $base-size;
+        height: calc($base-size * 2);
+      }
+
       &:hover {
         background-position: 0 100%;
         color: $color-three;
@@ -214,6 +241,10 @@
     .button_selected {
       background-position: 0 100%;
       color: $color-three;
+
+      @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+        font-size: $base-size;
+      }
     }
   }
 }
