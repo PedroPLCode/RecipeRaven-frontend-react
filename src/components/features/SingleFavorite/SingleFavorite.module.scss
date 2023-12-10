@@ -124,6 +124,10 @@
       @media (min-width: $media-border) and (max-width: $media-border-tablets) {
         font-size: calc($base-size * 1.2); 
       }
+
+      @media (min-width: $media-border-tablets) and (max-width: $media-border-big-tablets) {
+        font-size: calc($base-size * 1.35); 
+      }
     }
   
     p {
@@ -139,6 +143,10 @@
 
       @media (min-width: $media-border) and (max-width: $media-border-tablets) {
         line-height: .65;
+      }
+
+      @media (min-width: $media-border-tablets) and (max-width: $media-border-big-tablets) {
+        line-height: .85;
       }
     }
   

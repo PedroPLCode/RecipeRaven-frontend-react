@@ -117,6 +117,11 @@
       justify-content: center;
       gap: calc($base-size / 1.5);
     }
+
+    @media (min-width: $media-border-tablets) and (max-width: $media-border-big-tablets) {
+      justify-content: center;
+      gap: calc($base-size / 1.5);
+    }
   
     p, a {
       color: $color-two;
@@ -142,6 +147,10 @@
 
       @media (min-width: $media-border) and (max-width: $media-border-tablets) {
         line-height: .65;
+      }
+
+      @media (min-width: $media-border-tablets) and (max-width: $media-border-big-tablets) {
+        line-height: .85;
       }
     }
   
