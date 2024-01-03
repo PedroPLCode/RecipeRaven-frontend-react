@@ -1,4 +1,5 @@
 const initialState = {
+  quote: '',
   ingredients: '',
   excluded: '',
   diet: {

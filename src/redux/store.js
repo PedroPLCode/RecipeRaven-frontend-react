@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import initialState from './initialState';
+import quoteReducer from './reducers/quoteReducer';
 import ingredientsReducer from './reducers/ingredientsReducer';
 import excludedReducer from './reducers/excludedReducer';
 import dietReducer from './reducers/dietReducer';
@@ -9,6 +10,7 @@ import serverErrorReducer from './reducers/serverErrorReducer';
 import favoritesReducer from './reducers/favoritesReducer';
 
 const subreducers = {
+  quote: quoteReducer,
   ingredients: ingredientsReducer,
   excluded: excludedReducer,
   diet: dietReducer,

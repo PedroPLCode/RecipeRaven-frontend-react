@@ -11,7 +11,7 @@ import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
 import { getSearchResult, updateSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
-import { classNames, elementsNames, parametersNames, ApiSettings, messages } from '../../../settings';
+import { classNames, elementsNames, parametersNames, ReceipesApiSettings, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
@@ -75,9 +75,9 @@ const SearchPage = () => {
 
   const prepareSearchString = () => {
     let searchString = ''; 
-    searchString += `${ApiSettings.query}${ingredients.replaceAll(' ', ApiSettings.and)}`;
+    searchString += `${ReceipesApiSettings.query}${ingredients.replaceAll(' ', ReceipesApiSettings.and)}`;
     for(let singleKey of dietKeys) {
-      diet[`${singleKey}`][parametersNames.value] ? searchString += `${ApiSettings.and}${diet[`${singleKey}`][parametersNames.string]}` : searchString += '';
+      diet[`${singleKey}`][parametersNames.value] ? searchString += `${ReceipesApiSettings.and}${diet[`${singleKey}`][parametersNames.string]}` : searchString += '';
     }
     return searchString;
   }
@@ -85,7 +85,7 @@ const SearchPage = () => {
   const prepareExcludedString = () => {
     if (excluded !== undefined) {
       let excludedString = ''; 
-      excludedString += `${ApiSettings.excluded}${excluded.replaceAll(' ', ApiSettings.and)}`;
+      excludedString += `${ReceipesApiSettings.excluded}${excluded.replaceAll(' ', ReceipesApiSettings.and)}`;
       return excludedString;
     }
   }
@@ -93,10 +93,10 @@ const SearchPage = () => {
   const searchReceipes = async () => {
     const searchString = prepareSearchString(ingredients);
     const exccludedString = prepareExcludedString(excluded);
-    const url = `${ApiSettings.mainUrl}${searchString}${exccludedString}`;
+    const url = `${ReceipesApiSettings.mainUrl}${searchString}${exccludedString}`;
     const options = {
-	    method: ApiSettings.methodGET,
-	    headers: ApiSettings.headers,
+	    method: ReceipesApiSettings.methodGET,
+	    headers: ReceipesApiSettings.headers,
     }; 
     if (validateInputString(ingredients) && validateInputString(excluded)) {
       setLoading(true); 
@@ -126,7 +126,7 @@ const SearchPage = () => {
         <div className={styles.wrapper}>
           <h3 className={clsx(styles.main_header, inputOK ? '' : styles.header_error)}>{headerString}</h3>  
           <form className={styles.form}>
-            <div className={clsx(styles.form_inner, !online ? styles.offline : '', !inputOK ? styles.offline : '', inputOK ? '' : styles.form_error)}>
+            <div className={clsx(styles.form_inner, inputOK ? '' : styles.error && styles.form_error)}>
               <input id="ingredients" type="text" placeholder={messages.putIngredients} 
                      title={messages.putIngredients} value={ingredients} 
                      onChange={event => handleIngredientsSet(event.target.value)} />
@@ -144,7 +144,7 @@ const SearchPage = () => {
               </div>
             </div> 
           </form>
-          <div onClick={searchReceipes} className={clsx(styles.search_button, !online ? styles.offline : '')} variant="primary">
+          <div onClick={searchReceipes} className={clsx(styles.search_button, online ? '' : styles.offline)} variant="primary">
               <p>
                 <Online><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.search}</Online>
                 <Offline><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.offline}</Offline>

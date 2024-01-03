@@ -10,6 +10,7 @@ import styles from './SeachResult.module.scss';
 import SingleResult from '../SingleResult/SingleResult';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
+import RandomQuote from '../RandomQuote/RandomQuote';
 import FavoritesCheck from '../../features/FavoritesCheck/FavoritesCheck';
 
 const SearchResults = () => {
@@ -66,7 +67,6 @@ const SearchResults = () => {
     const activeButton = document.getElementById(id);
     if (activeButton !== null) {
       activeButton.style.backgroundPosition = stylesParams.clickedButtonBckr;
-      activeButton.style.boxShadow = stylesParams.clickedButtonBS;
     }
   }
 
@@ -93,6 +93,7 @@ const SearchResults = () => {
           <FavoritesCheck changeButtonStyle={changeButtonStyle} 
                           favorites={favorites} 
                           favoriteKeys={favoriteKeys}/>
+          <RandomQuote />
         </div>
     )}
   }

@@ -1,4 +1,5 @@
 import styles from './AboutPage.module.scss';
+import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { infoData } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faCode, faCodeCompare, faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +12,7 @@ const AboutPage = () => {
 
     return (
       <div className={styles.about}>
-        <h3>Food Search App</h3>
+        <h3>Receipes Search App</h3>
         <h5>simple app written in ReactJS</h5>
         <h5>helps searching for new meal recipes</h5>
         <h5>I hope you will like it</h5>
@@ -21,6 +22,7 @@ const AboutPage = () => {
         <a href={LinkToApi} target="_blank" rel="noreferrer"><p><FontAwesomeIcon icon={faCode} /> powered by RapidApi</p></a>
         <a href={LinkToPexels} target="_blank" rel="noreferrer"><p><FontAwesomeIcon icon={faCamera} /> background picture</p></a>
         <a href={myGitHub} target="_blank" rel="noreferrer"><p><FontAwesomeIcon icon={faCodeCompare} /> my github profile</p></a>
+        <RandomQuote />
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import styles from './FavoritePage.module.scss';
+import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { useState } from 'react';
 import { getFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -23,6 +24,7 @@ const FavoritesPage = () => {
                             setReload={setReload} />
           ))}  
         {favoriteKeys.length !== 0 ? <h3 className={styles.bottom}>{favoriteKeys.length} recipes saved.</h3> : ''}
+        <RandomQuote />
       </div>
     );
   } else {
@@ -30,6 +32,7 @@ const FavoritesPage = () => {
       <div className={styles.favorite}>
         <h3>You have no favorite recipes</h3>
         <h5>Your saved recipes will be shown here</h5>
+        <RandomQuote />
       </div>
     );
   }
