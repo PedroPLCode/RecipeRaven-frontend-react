@@ -46,12 +46,20 @@ const RandomQuote = () => {
   }, []);
   const quote = useSelector(state => getQuote(state));
 
-  return ( 
-    <div className={styles.quote}> 
-      <h6>"{quote.text}"</h6>
-      <h6>Author: {quote.author}</h6>
-    </div> 
-  ); 
+  if (quote) {
+    return ( 
+      <div className={styles.quote}> 
+        <h6>"{quote.text}"</h6>
+        <h6>{quote.author}</h6>
+      </div> 
+    ); 
+  } else {
+    return ( 
+      <div className={styles.quote}> 
+        <h6>"{QuotesApiSettings.defaultQuote}"</h6>
+      </div> 
+    ); 
+  }
 }
 
 export default RandomQuote;

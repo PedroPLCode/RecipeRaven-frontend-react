@@ -48,6 +48,7 @@ export const ReceipesApiSettings = {
 }
 
 export const QuotesApiSettings = {
+  defaultQuote: 'You are what you eat, so don’t be fast, cheap, easy, or fake.',
   selectedTopics: ['fitness', 'food', 'health'],
   mainUrl: 'https://famous-quotes4.p.rapidapi.com/random?',
   category: 'category=',
