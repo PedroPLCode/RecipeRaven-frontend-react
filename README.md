@@ -1,1 +1,1 @@
-https://BlackZebra.pl/ReceipeSearchApp/
+http://www.receipes.blackzebra.pl/
