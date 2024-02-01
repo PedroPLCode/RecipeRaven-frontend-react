@@ -70,6 +70,36 @@ const SearchResults = () => {
     }
   }
 
+
+
+  //devPedro
+  //from here
+  const sendFavoriteToAPI = async payload => {
+    const url = `http://localhost:5000/favorites`;
+    const options = {
+      method: 'POST',
+      mode: "cors",
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify(payload)
+    }; 
+    fetch(url, options)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(parsedResponse) {
+      console.log('parsed response - sendFavoriteToAPI', parsedResponse);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  //to here
+
+
+
   if (!navigator.onLine || serverError || serverResponse.headers.ok === false) {
     return <ErrorPage navigator={navigator} 
             serverResponse={serverResponse ? serverResponse : undefined}
@@ -88,7 +118,8 @@ const SearchResults = () => {
             <SingleResult key={singleHit.recipe.calories}
                           singleHit={singleHit} 
                           favorites={favorites} 
-                          changeButtonStyle={changeButtonStyle} />
+                          changeButtonStyle={changeButtonStyle} 
+                          sendFavoriteToAPI={sendFavoriteToAPI} />
           ))}  
           <FavoritesCheck changeButtonStyle={changeButtonStyle} 
                           favorites={favorites} 

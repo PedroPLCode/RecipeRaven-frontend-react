@@ -11,6 +11,30 @@ const FavoritesPage = () => {
   const favorites = useSelector(state => getFavorites(state));
   const favoriteKeys = Object.keys(favorites)
   
+
+
+//devPedro
+//from here
+const fetchFavorites = async () => {
+  const url = `http://localhost:5000/favorites`;
+  const options = {
+	  method: 'GET',
+	  //headers: '',
+  }; 
+  try {
+    const response = await fetch(url, options);
+    const result = await response.text();
+    const finalResponse = JSON.parse(result)
+    console.log(result)
+    return result;
+  } catch (error) {
+    console.log(error)
+  }
+}
+//to here
+
+
+
   if (favorites.length !== 0 && favoriteKeys.length !== 0) {
     return (
       <div className={styles.favorite}>

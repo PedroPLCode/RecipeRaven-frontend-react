@@ -13,6 +13,7 @@ const SingleResult = props => {
     props.favorites[props.singleHit.recipe.label] = props.singleHit;
     dispatch(updateFavorites(props.favorites));
     props.changeButtonStyle(props.singleHit.recipe.calories);
+    props.sendFavoriteToAPI(props.singleHit);
   }
 
   return (
