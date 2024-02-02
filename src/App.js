@@ -5,6 +5,7 @@ import { settings } from './settings';
 import NavBar from './components/views/NavBar/NavBar'
 import Footer from './components/views/Footer/Footer';
 import AboutPage from './components/pages/AboutPage/AboutPage';
+import LoginPage from './components/pages/LoginPage/LoginPage';
 import FavoritesPage from './components/pages/FavoritesPage/FavoritesPage';
 import SearchPage from './components/pages/SearchPage/SearchPage';
 import ErrorPage from './components/features/ErrorPage/ErrorPage';
@@ -43,6 +44,7 @@ const App = () => {
           <Routes location={displayLocation}>
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<SearchPage />} />
             <Route path="*/errorpage" element={<ErrorPage />} />
             <Route path="/loadingpage" element={<Loading />} />
