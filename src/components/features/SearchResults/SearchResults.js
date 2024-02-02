@@ -73,12 +73,13 @@ const SearchResults = () => {
 
 
   //devPedro
+  //CORS PROBLEM - solved
   //from here
   const sendFavoriteToAPI = async payload => {
     const url = `http://localhost:5000/favorites`;
     const options = {
       method: 'POST',
-      mode: "cors",
+      mode: "no-cors",
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -87,10 +88,11 @@ const SearchResults = () => {
     }; 
     fetch(url, options)
     .then(function(response) {
-      return response.json();
+      console.log(response);
+      return response;
     })
     .then(function(parsedResponse) {
-      console.log('parsed response - sendFavoriteToAPI', parsedResponse);
+      console.log(parsedResponse);
     })
     .catch((error) => {
       console.log(error);

@@ -1,15 +1,17 @@
 import styles from './FavoritePage.module.scss';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
+import { useDispatch } from "react-redux";
 import { useState } from 'react';
-import { getFavorites } from '../../../redux/reducers/favoritesReducer';
+import { getFavorites, updateFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import SingleFavorite from '../../features/SingleFavorite/SingleFavorite';
 
 const FavoritesPage = () => {
 
+  const dispatch = useDispatch();
   const [reload, setReload] = useState(false);
-  const favorites = useSelector(state => getFavorites(state));
-  const favoriteKeys = Object.keys(favorites)
+//  const favorites = useSelector(state => getFavorites(state));
+//  const favoriteKeys = Object.keys(favorites);
   
 
 
@@ -24,13 +26,29 @@ const fetchFavorites = async () => {
   try {
     const response = await fetch(url, options);
     const result = await response.text();
-    const finalResponse = JSON.parse(result)
-    console.log(result)
-    return result;
+    const finalResponse = await JSON.parse(result)
+    //console.log(finalResponse)
+    dispatch(updateFavorites(finalResponse));
+    return finalResponse;
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    return error;
   }
 }
+
+//console.log(favorites)
+const loadedFavorites = fetchFavorites();
+//console.log(loadedFavorites)
+const favorites = useSelector(state => getFavorites(state));
+const favoriteKeys = Object.keys(favorites)
+//console.log(favorites)
+//console.log(favoriteKeys)
+//if (loadedFavorites) {
+  for (let singleKey in favoriteKeys) {
+//    favorites[singleLoad['recipe']['recipe']['label']] = singleLoad['recipe']['recipe']
+    console.log(favorites[singleKey])
+  }
+//}
 //to here
 
 
