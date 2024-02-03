@@ -70,12 +70,7 @@ const SearchResults = () => {
     }
   }
 
-
-
-  //devPedro
-  //CORS PROBLEM - solved
-  //from here
-  const sendFavoriteToAPI = async payload => {
+  const addFavoriteToAPI = async payload => {
     const url = `http://localhost:5000/favorites`;
     const options = {
       method: 'POST',
@@ -88,19 +83,14 @@ const SearchResults = () => {
     }; 
     fetch(url, options)
     .then(function(response) {
-      console.log(response);
       return response;
     })
     .then(function(parsedResponse) {
-      console.log(parsedResponse);
     })
     .catch((error) => {
       console.log(error);
     });
   }
-  //to here
-
-
 
   if (!navigator.onLine || serverError || serverResponse.headers.ok === false) {
     return <ErrorPage navigator={navigator} 
@@ -121,7 +111,7 @@ const SearchResults = () => {
                           singleHit={singleHit} 
                           favorites={favorites} 
                           changeButtonStyle={changeButtonStyle} 
-                          sendFavoriteToAPI={sendFavoriteToAPI} />
+                          addFavoriteToAPI={addFavoriteToAPI} />
           ))}  
           <FavoritesCheck changeButtonStyle={changeButtonStyle} 
                           favorites={favorites} 
