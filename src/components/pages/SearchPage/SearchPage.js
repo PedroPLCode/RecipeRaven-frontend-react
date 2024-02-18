@@ -11,7 +11,7 @@ import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
 import { getSearchResult, updateSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
-import { classNames, elementsNames, parametersNames, ReceipesApiSettings, messages } from '../../../settings';
+import { classNames, elementsNames, parametersNames, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
@@ -73,30 +73,37 @@ const SearchPage = () => {
     }
   }
 
-  const prepareSearchString = () => {
-    let searchString = ''; 
-    searchString += `${ReceipesApiSettings.query}${ingredients.replaceAll(' ', ReceipesApiSettings.and)}`;
-    for(let singleKey of dietKeys) {
-      diet[`${singleKey}`][parametersNames.value] ? searchString += `${ReceipesApiSettings.and}${diet[`${singleKey}`][parametersNames.string]}` : searchString += '';
+  const prepareArrayFromStringInput = string => {
+    const resultArray = []
+    for(let element of string.split(" ")) {
+      resultArray.push(element);
     }
-    return searchString;
+    return resultArray
   }
 
-  const prepareExcludedString = () => {
-    if (excluded !== undefined) {
-      let excludedString = ''; 
-      excludedString += `${ReceipesApiSettings.excluded}${excluded.replaceAll(' ', ReceipesApiSettings.and)}`;
-      return excludedString;
+  const prepareDietArray = () => {
+    const dietArray = []
+    for(let singleKey of dietKeys) {
+      if (diet[singleKey]['value']) {
+        dietArray.push(diet[`${singleKey}`][parametersNames.string]);
+      }
     }
+    return dietArray
   }
 
   const searchReceipes = async () => {
-    const searchString = prepareSearchString(ingredients);
-    const exccludedString = prepareExcludedString(excluded);
-    const url = `${ReceipesApiSettings.mainUrl}${searchString}${exccludedString}`;
+    const preparedRequestBody = {
+      ingredients: prepareArrayFromStringInput(ingredients),
+      excluded: prepareArrayFromStringInput(excluded),
+      diet: prepareDietArray(),
+    }
+    const url = 'http://localhost:5000/search'
     const options = {
-	    method: ReceipesApiSettings.methodGET,
-	    headers: ReceipesApiSettings.headers,
+	    method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(preparedRequestBody),
     }; 
     if (validateInputString(ingredients) && validateInputString(excluded)) {
       setLoading(true); 

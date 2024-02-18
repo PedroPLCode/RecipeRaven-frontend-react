@@ -1,5 +1,3 @@
-import { PRIVATE_API_KEY } from "./API_PRIVATE_KEY.js";
-
 export const classNames = {
   offline: '.offline',
   selectedButtons: '.SearchPage_active__321Sw',
@@ -32,32 +30,6 @@ export const elementsNames = {
   root: 'root',
   input: 'input',
   favorites: '/favorites',
-}
-
-export const ReceipesApiSettings = {
-  mainUrl: 'https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public',
-  query: '&q=',
-  excluded: '&excluded%5B0%5D=',
-  and: '%20',
-  methodGET: 'GET',
-  headers: {
-    'Accept-Language': 'en',
-    'X-RapidAPI-Key': PRIVATE_API_KEY,
-    'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
-  }
-}
-
-export const QuotesApiSettings = {
-  defaultQuote: 'You are what you eat, so don’t be fast, cheap, easy, or fake.',
-  selectedTopics: ['fitness', 'food', 'health'],
-  mainUrl: 'https://famous-quotes4.p.rapidapi.com/random?',
-  category: 'category=',
-  count: '&count=1',
-  methodGET: 'GET',
-  headers: {
-    'X-RapidAPI-Key': PRIVATE_API_KEY,
-    'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com'
-  }
 }
 
 export const messages = {
