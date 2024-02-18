@@ -31,6 +31,9 @@ const NavBar = () => {
           <Nav.Link className={styles.link} as={NavLink} to="/favorites">
             Favorite
           </Nav.Link>
+          <Nav.Link className={styles.link} as={NavLink} to="/board">
+            Board
+          </Nav.Link>
           <Nav.Link className={styles.link} as={NavLink} to="/about">
             About
           </Nav.Link>

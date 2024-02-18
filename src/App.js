@@ -7,6 +7,7 @@ import Footer from './components/views/Footer/Footer';
 import AboutPage from './components/pages/AboutPage/AboutPage';
 import UserAccountPage from './components/pages/UserAccountPage/UserAccountPage';
 import FavoritesPage from './components/pages/FavoritesPage/FavoritesPage';
+import BoardPage from './components/pages/BoardPage/BoardPage'
 import SearchPage from './components/pages/SearchPage/SearchPage';
 import ErrorPage from './components/features/ErrorPage/ErrorPage';
 import Loading from './components/features/Loading/Loading';
@@ -47,6 +48,7 @@ const App = () => {
           <Routes location={displayLocation}>
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/board" element={<BoardPage />} />
             <Route path="/login" element={<UserAccountPage />} />
             <Route exact path="/profile" element={<Profile token={token} setToken={setToken} />} />
             <Route path="*" element={<SearchPage />} />
