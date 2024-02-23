@@ -36,8 +36,8 @@ const FavoritesCheck = props => {
   const checkIfAlreadyInFavorites = favorites => {
     for (let singleHit of searchResult.hits) {
       for (let singleKey of favoriteKeys) {
-        if ((favorites[singleKey]['data']) && (singleHit.recipe.calories === favorites[singleKey]['data'][parametersNames.recipe][parametersNames.calories])) {
-          props.changeButtonStyle(singleHit.recipe.calories);
+        if ((favorites[singleKey]['data']) && (singleHit.calories === favorites[singleKey]['data'][parametersNames.calories])) {
+          props.changeButtonStyle(singleHit.calories);
         }
       }
     }

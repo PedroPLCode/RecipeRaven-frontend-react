@@ -44,6 +44,7 @@ const initialState = {
   serverResponse: '',
   serverError: '',
   favorites: {},
+  linkNextPage: '',
 };
     
 export default initialState;

@@ -28,37 +28,37 @@ const SingleFavorite = props => {
   return (
     <div className={clsx(styles.single_favorite, styles.hidden)}>
       <div className={styles.image}>
-        <a href={SingleFavoriteObject[parametersNames.recipe][parametersNames.url]} target='_blank' rel="noreferrer">
+        <a href={SingleFavoriteObject[parametersNames.url]} target='_blank' rel="noreferrer">
           <i>Click for full receipe!</i>
-          <img src={SingleFavoriteObject[parametersNames.recipe][parametersNames.images][parametersNames.SMALL][parametersNames.url]} 
-               alt={SingleFavoriteObject[parametersNames.recipe][parametersNames.images][parametersNames.REGULAR][parametersNames.url]} 
+          <img src={SingleFavoriteObject[parametersNames.image_SMALL]} 
+               alt={SingleFavoriteObject[parametersNames.image_REGULAR]} 
                width='400' height='400' />
         </a>
       </div>  
       <div className={styles.description}>
-        <p><strong className={styles.blue}>{SingleFavoriteObject[parametersNames.recipe][parametersNames.label]}</strong></p>
+        <p><strong className={styles.blue}>{SingleFavoriteObject[parametersNames.label]}</strong></p>
         <p><span className={styles.blue}>Dist Type: </span> 
-          <strong>{SingleFavoriteObject[parametersNames.recipe][parametersNames.dishType]} / {SingleFavoriteObject[parametersNames.recipe][parametersNames.mealType]}</strong>
+          <strong>{SingleFavoriteObject[parametersNames.dishType]} / {SingleFavoriteObject[parametersNames.mealType]}</strong>
         </p>
         <p><span className={styles.blue}>Cuisine Type: </span>  
-          <strong>{SingleFavoriteObject[parametersNames.recipe][parametersNames.cuisineType]}</strong>
+          <strong>{SingleFavoriteObject[parametersNames.cuisineType]}</strong>
         </p>
         <p><span className={styles.blue}>Cautions:</span>  
-          <strong>{SingleFavoriteObject[parametersNames.recipe][parametersNames.cautions].map(singleCaution => ` ${singleCaution},`)}</strong>
+          <strong>{SingleFavoriteObject[parametersNames.cautions].map(singleCaution => ` ${singleCaution},`)}</strong>
         </p>
         <p><span className={styles.blue}>Prep Time: </span>  
-          <strong>{SingleFavoriteObject[parametersNames.recipe][parametersNames.totalTime]} min</strong>
+          <strong>{SingleFavoriteObject[parametersNames.totalTime]} min</strong>
         </p>
         <p><span className={styles.blue}>Diet Info: </span>  
-          <strong>{SingleFavoriteObject[parametersNames.recipe][parametersNames.dietLabels]}</strong>
+          <strong>{SingleFavoriteObject[parametersNames.dietLabels]}</strong>
         </p>
         <p><span className={styles.blue}>Health Info:</span> 
-          <strong>{SingleFavoriteObject[parametersNames.recipe][parametersNames.healthLabels].map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong>
+          <strong>{SingleFavoriteObject[parametersNames.healthLabels].map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong>
         </p>
         <p><span className={styles.blue}>Calories per one portion: </span> 
-          <strong>{SingleFavoriteObject[parametersNames.recipe][parametersNames.calories]}</strong>
+          <strong>{SingleFavoriteObject[parametersNames.calories]}</strong>
         </p>
-          <a href={SingleFavoriteObject[parametersNames.recipe][parametersNames.url]} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
+          <a href={SingleFavoriteObject[parametersNames.url]} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
           <div onClick={handleRemoveFavorites} className={styles.button_remove}><i>Remove from favorites <FontAwesomeIcon icon={faTrashCan} /></i></div>
       </div>
     </div>

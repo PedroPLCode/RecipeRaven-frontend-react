@@ -16,5 +16,13 @@
       }
     }
 
+    &.next_page {
+      width: auto;
+      border: 2px solid $color-three;
+      &:hover {
+        cursor: pointer;
+        color: $color-three;
+      }
+    }
   }
 }

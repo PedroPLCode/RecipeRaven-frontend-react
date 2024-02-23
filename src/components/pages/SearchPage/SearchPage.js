@@ -9,6 +9,7 @@ import { updateIngredients, getIngredients } from '../../../redux/reducers/ingre
 import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
 import { getSearchResult, updateSearchResult } from '../../../redux/reducers/searchResultReducer';
+import { updateLinkNextPage, getLinkNextPage } from '../../../redux/reducers/nextResultsPageReducer';
 import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
 import { classNames, elementsNames, parametersNames, messages } from '../../../settings';
@@ -113,6 +114,7 @@ const SearchPage = () => {
         const result = await response.text();
         const searchResponse = JSON.parse(result)
         dispatch(updateSearchResult(searchResponse));
+        dispatch(updateLinkNextPage(searchResponse._links.next));
         setLoading(false); 
         setSuccess(true); 
         return result;

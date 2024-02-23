@@ -21,8 +21,8 @@ export const parametersNames = {
   healthLabels: 'healthLabels',
   calories: 'calories',
   images: 'images',
-  SMALL: 'SMALL',
-  REGULAR: 'REGULAR',
+  image_SMALL: 'image_SMALL_url',
+  image_REGULAR: 'image_REGULAR_url',
   regexString: /^[A-Za-z\s]*$/,
 }
 
