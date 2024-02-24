@@ -24,3 +24,15 @@
     transform: scale(1);
   }
 }
+
+@keyframes loading_more_results {
+  from {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0 100%;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}

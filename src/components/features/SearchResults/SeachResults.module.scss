@@ -1,4 +1,5 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/keyframes.scss';
 
 .results_wrapper {
   margin-top: $base-size;
@@ -16,13 +17,53 @@
       }
     }
 
-    &.next_page {
-      width: auto;
-      border: 2px solid $color-three;
-      &:hover {
-        cursor: pointer;
-        color: $color-three;
+    &.button_nextpage {
+      margin: auto;
+      margin-top: calc($base-size * 7);
+      color: $color-two;
+      font-size: calc($base-size * 1.4);
+      font-weight: bold;
+      padding: auto;
+      height: calc($base-size * 3);
+      width: 240px;
+      border-radius: $radius;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
+      background-position: 100% 0;
+      background-size: 300% 300%;
+      color: $color-three;
+      transition-duration: $transition-duration;
+      transition-property: color, background-color, background-position, box-shadow;
+
+      @media (max-width: $media-border) {
+        margin-bottom: $base-size;
+        box-shadow: 0 0 5px 5px $transparent-background;
       }
+
+      @media (min-width: $media-border) and (max-width: $media-border-tablets) {
+        font-size: $base-size;
+        height: calc($base-size * 2);
+      }
+
+      &:hover {
+        background-position: 0 100%;
+        color: $color-three;
+        cursor: pointer;
+
+        @media (max-width: $media-border) {
+          background-position: 0 100%;
+          color: $color-three;
+          margin-bottom: $base-size;
+        }
+      }
+    }
+
+    &.loading {
+      color: $transparent-background;
+      animation: 3s 1s loading_more_results infinite;
     }
   }
 }

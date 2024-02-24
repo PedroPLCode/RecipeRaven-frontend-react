@@ -43,6 +43,9 @@ export const messages = {
   search: 'Search',
   foodSearchApp: 'Search for new recipes',
   inputWarning: 'Only letters and spaces',
+  defalutQuote: {
+    text: 'Bla blabla tra lalala.'
+  }
 }
 
 export const infoData = {

@@ -111,10 +111,13 @@ const SearchPage = () => {
       try {
         const response = await fetch(url, options);
         dispatch(updateServerResponse(response));
+        console.log(response)
         const result = await response.text();
+        console.log(result)
         const searchResponse = JSON.parse(result)
+        console.log(searchResponse)
         dispatch(updateSearchResult(searchResponse));
-        dispatch(updateLinkNextPage(searchResponse._links.next));
+        dispatch(updateLinkNextPage(searchResponse._links.next ? searchResponse._links.next : null));
         setLoading(false); 
         setSuccess(true); 
         return result;

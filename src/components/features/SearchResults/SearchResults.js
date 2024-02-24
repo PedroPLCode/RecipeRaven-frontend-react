@@ -6,9 +6,10 @@ import { updateLinkNextPage, getLinkNextPage } from '../../../redux/reducers/nex
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { messages } from '../../../settings';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { stylesParams, classNames } from '../../../settings';
 import styles from './SeachResults.module.scss';
+import clsx from 'clsx';
 import SingleResult from '../SingleResult/SingleResult';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
@@ -18,6 +19,8 @@ import FavoritesCheck from '../../features/FavoritesCheck/FavoritesCheck';
 const SearchResults = () => {
 
   const dispatch = useDispatch();
+  const [changeIndicator, setChangeIndicator] = useState(false)
+  const [loading, setLoading] = useState(false);
   const searchResult = useSelector(state => getSearchResult(state));
   const serverResponse = useSelector(state => getServerResponse(state));
   const serverError = useSelector(state => getServerError(state));
@@ -27,27 +30,32 @@ const SearchResults = () => {
 
   useEffect(() => {
     const resultBoxes = document.querySelectorAll(classNames.resultBoxes);
+    checkAndChangeResultBoxesVisibility(resultBoxes);
     let previousScrollPosition = 0;
     let currentScrollPosition = 0;
     window.addEventListener('scroll', function (event) {
       currentScrollPosition = window.pageYOffset;
       if (resultBoxes) {
         if (previousScrollPosition !== currentScrollPosition) {
-          for (let singleBox of resultBoxes) {
-            const rect = singleBox.getBoundingClientRect();
-            if ((rect.top + (window.innerHeight ) ) >= 0 && rect.bottom <= (window.innerHeight * 2 || document.documentElement.clientHeight * 2)) {
-              singleBox.style.filter = stylesParams.resultVisible.filter;
-              singleBox.style.transform = stylesParams.resultVisible.transform;
-            } else {
-              singleBox.style.filter = stylesParams.resultHidden.filter;
-              singleBox.style.transform = stylesParams.resultHidden.transform;
-            }
-          }
+          checkAndChangeResultBoxesVisibility(resultBoxes);
         } 
       }
       previousScrollPosition = currentScrollPosition;
     });
-  }, []);
+  }, [changeIndicator]);
+
+  const checkAndChangeResultBoxesVisibility = resultBoxes => {
+    for (let singleBox of resultBoxes) {
+      const rect = singleBox.getBoundingClientRect();
+      if ((rect.top + (window.innerHeight ) ) >= 0 && rect.bottom <= (window.innerHeight * 2 || document.documentElement.clientHeight * 2)) {
+        singleBox.style.filter = stylesParams.resultVisible.filter;
+        singleBox.style.transform = stylesParams.resultVisible.transform;
+      } else {
+        singleBox.style.filter = stylesParams.resultHidden.filter;
+        singleBox.style.transform = stylesParams.resultHidden.transform;
+      }
+    }
+  }
   
   const prepDishesInfo = () => {
     for(let singleHit of searchResult.hits) {
@@ -98,6 +106,7 @@ const SearchResults = () => {
 
 
   const fetchMoreReceipes = async () => {
+    setLoading(true);
     const preparedRequestBody = {
       link_next_page: link_next_page,
     }
@@ -115,19 +124,21 @@ const SearchResults = () => {
       dispatch(updateServerResponse(response));
       const result = await response.text();
       const searchResponse = JSON.parse(result);
-      console.log(searchResponse)
       searchResult['hits'].push(...searchResponse['hits']);
       searchResult['_links'] = searchResponse['_links'];
       searchResult['headers'] = searchResponse['headers'];
       dispatch(updateSearchResult(searchResult));
-      dispatch(updateLinkNextPage(searchResponse._links.next));
+      dispatch(updateLinkNextPage(searchResponse._links.next ? searchResponse._links.next : null));
+      setChangeIndicator(!changeIndicator);
+      setLoading(false);
       return result;
     } catch (error) {
       dispatch(updateServerError(error));
+      setLoading(false);
     }
   }
 
-  console.log(searchResult)
+  const bottomButtonText = loading ? 'Loading...' : 'Click to load more!';
 
   if (!navigator.onLine || serverError || serverResponse.headers.ok === false) {
     return <ErrorPage navigator={navigator} 
@@ -141,7 +152,6 @@ const SearchResults = () => {
       return (
         <div className={styles.results_wrapper}>
           <h3>Found {searchResult.count} receipes..</h3>
-          {searchResult.count >= 21 ? <h3>{messages.showOnly20}</h3> : ''}
           <h3>{messages.takeALook}</h3>
           {searchResult.hits.map(singleHit => (
             <SingleResult key={singleHit.calories}
@@ -149,8 +159,10 @@ const SearchResults = () => {
                           favorites={favorites} 
                           changeButtonStyle={changeButtonStyle} 
                           addFavoriteToAPI={addFavoriteToAPI} />
-          ))}  
-          <h3 className={styles.next_page} onClick={fetchMoreReceipes}>Check for more..</h3>
+          ))}
+          {searchResult.count > searchResult.hits.length ?
+            <h3 className={clsx(styles.button_nextpage, loading ? styles.loading : '')} 
+              onClick={fetchMoreReceipes}>{bottomButtonText}</h3> : ''}
           <FavoritesCheck changeButtonStyle={changeButtonStyle} 
                           favorites={favorites} 
                           favoriteKeys={favoriteKeys}/>
