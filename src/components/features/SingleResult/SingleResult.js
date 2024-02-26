@@ -55,7 +55,7 @@ const SingleResult = props => {
 }
 
 SingleResult.propTypes = {
-  favorites: PropTypes.object.isRequired,
+  favorites: PropTypes.array.isRequired,
   singleHit: PropTypes.object.isRequired,
   changeButtonStyle: PropTypes.func.isRequired,
 };

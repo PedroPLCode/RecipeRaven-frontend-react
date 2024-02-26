@@ -96,7 +96,7 @@ const SearchPage = () => {
     const preparedRequestBody = {
       ingredients: prepareArrayFromStringInput(ingredients),
       excluded: prepareArrayFromStringInput(excluded),
-      diet: prepareDietArray(),
+      params: prepareDietArray(),
     }
     const url = 'http://localhost:5000/search'
     const options = {

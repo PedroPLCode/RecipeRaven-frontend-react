@@ -43,8 +43,9 @@ const initialState = {
   searchResult: '',
   serverResponse: '',
   serverError: '',
-  favorites: {},
+  favorites: [],
   linkNextPage: '',
+  board: [],
 };
     
 export default initialState;

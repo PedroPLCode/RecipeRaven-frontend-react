@@ -35,6 +35,10 @@ export const elementsNames = {
 export const messages = {
   putIngredients: 'Selected ingredients...',
   putExcluded: 'Excluded ingredients...',
+  newPost: {
+    text: 'Write new post on out board...',
+    author: 'Author field',
+  },
   noInfoProvided: 'No information provided',
   showOnly20: 'But we wil show only 20',
   takeALook: 'Take a look...',
@@ -44,7 +48,7 @@ export const messages = {
   foodSearchApp: 'Search for new recipes',
   inputWarning: 'Only letters and spaces',
   defalutQuote: {
-    text: 'Bla blabla tra lalala.'
+    text: "You are what you eat, so don't be fast, cheap, easy, or fake."
   }
 }
 

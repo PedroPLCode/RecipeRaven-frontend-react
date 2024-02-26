@@ -110,7 +110,7 @@ const SearchResults = () => {
     const preparedRequestBody = {
       link_next_page: link_next_page,
     }
-    const url = 'http://localhost:5000/more'
+    const url = 'http://localhost:5000/search'
     const options = {
 	    method: 'POST',
       headers: {

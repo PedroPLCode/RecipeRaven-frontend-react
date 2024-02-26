@@ -9,6 +9,7 @@ import serverResponseReducer from './reducers/serverResponseReducer';
 import serverErrorReducer from './reducers/serverErrorReducer';
 import favoritesReducer from './reducers/favoritesReducer';
 import nextResultsPageReducer from './reducers/nextResultsPageReducer';
+import boardReducer from './reducers/boardReducer';
 
 const subreducers = {
   quote: quoteReducer,
@@ -20,6 +21,7 @@ const subreducers = {
   serverError: serverErrorReducer,
   favorites: favoritesReducer,
   linkNextPage: nextResultsPageReducer,
+  board: boardReducer,
 }
 
 const reducer = combineReducers(subreducers);
