@@ -14,16 +14,13 @@ const SingleFavorite = props => {
   const navigate = useNavigate();
 
   const handleRemoveFavorites = () => {
-    props.removeFavoriteFromAPI(props.favorites[props.singleKey]['id']);
-    delete props.favorites[`${props.singleKey}`];
+    props.removeFavoriteFromAPI(props.favorite.id);
     dispatch(updateFavorites(props.favorites));
-    props.setReload(true);
+    props.setReload(!props.reload);
     navigate(elementsNames.favorites);
   }
 
-  const SingleFavoriteObject = props.favorites[props.singleKey]['data'] ? 
-    props.favorites[props.singleKey]['data'] : 
-    props.favorites[props.singleKey];
+  const SingleFavoriteObject = props.favorite['data'];
 
   return (
     <div className={clsx(styles.single_favorite, styles.hidden)}>

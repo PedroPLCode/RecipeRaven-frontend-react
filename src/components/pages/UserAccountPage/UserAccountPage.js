@@ -7,6 +7,8 @@ import Profile from '../../features/Profile/Profile.js'
 import LoginHeader from '../../features/LoginHeader/LoginHeader.js'
 import useToken from '../../features/useToken/useToken.js'
 
+import CreateUser from '../../features/CreateUser/CreateUser';
+
 const LoginPage = () => {
 
   const { token, removeToken, setToken } = useToken();
@@ -24,6 +26,9 @@ const LoginPage = () => {
         )}
       </div>
       <h5>still under construction</h5>
+
+      <CreateUser />
+      
       <h5>any problems - mail me</h5>
       <a href='mailto: piotrek.gaszczynski@gmail.com'><p><FontAwesomeIcon icon={faEnvelope} /> send me a email</p></a>
       <RandomQuote />

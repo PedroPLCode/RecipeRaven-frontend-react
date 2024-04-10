@@ -13,6 +13,7 @@ const SingleResult = props => {
     props.favorites[props.singleHit.label] = props.singleHit;
     dispatch(updateFavorites(props.favorites));
     props.changeButtonStyle(props.singleHit.calories);
+    props.singleHit['user_id'] = localStorage.user_id
     props.addFavoriteToAPI(props.singleHit);
   }
 

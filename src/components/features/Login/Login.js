@@ -4,7 +4,7 @@ import axios from "axios";
 const Login = props => {
 
   const [loginForm, setloginForm] = useState({
-    email: "",
+    login: "",
     password: ""
   })
 
@@ -14,12 +14,12 @@ const Login = props => {
       url:"/token",
       baseURL: 'http://127.0.0.1:5000',
       data:{
-        email: loginForm.email,
+        login: loginForm.login,
         password: loginForm.password
        }
     })
     .then((response) => {
-      props.setToken(response.data.access_token)
+      props.setToken(response.data)
     })
     .catch((error) => {
       if (error.response) {
@@ -30,7 +30,7 @@ const Login = props => {
     })
   
     setloginForm(({
-      email: "",
+      login: "",
       password: ""}))
       event.preventDefault()
     }
@@ -46,11 +46,11 @@ const Login = props => {
       <h1>Login</h1>
       <form className="login">
         <input onChange={handleChange} 
-               type="email"
-               text={loginForm.email} 
-               name="email" 
-               placeholder="Email" 
-               value={loginForm.email} />
+               type="login"
+               text={loginForm.login} 
+               name="login" 
+               placeholder="Login" 
+               value={loginForm.login} />
         <input onChange={handleChange} 
                type="password"
                text={loginForm.password} 

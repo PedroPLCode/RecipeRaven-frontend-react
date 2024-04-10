@@ -15,13 +15,16 @@ const FavoritesPage = () => {
     const url = `http://localhost:5000/favorites`;
     const options = {
       method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.token
+      }
     }; 
     try {
       const response = await fetch(url, options);
       const result = await response.text();
       const finalResponse = await JSON.parse(result)
       dispatch(updateFavorites(finalResponse));
-      return finalResponse;
+      return result;
     } catch (error) {
       console.log(error);
       return error;
@@ -36,8 +39,8 @@ const FavoritesPage = () => {
     try {
       const response = await fetch(url, options);
       const result = await response.text();
-      const finalResponse = await JSON.parse(result)
-      return finalResponse;
+      const finalResult = await JSON.parse(result)
+      return finalResult;
     } catch (error) {
       console.log(error);
       return error;
@@ -46,24 +49,26 @@ const FavoritesPage = () => {
 
   useEffect(() => {
     fetchFavorites();
-  }, []);
+  }, [reload]);
   const favorites = useSelector(state => getFavorites(state));
-  const favoriteKeys = Object.keys(favorites)
+  console.log(favorites)
+  //const favoriteKeys = Object.keys(favorites)
 
-  if (favorites.length !== 0 && favoriteKeys.length !== 0) {
+  if (favorites.length !== 0 && favorites.length !== 0) {
     return (
       <div className={styles.favorite}>
         <h3>Yours favorite recipes</h3>
-        <h5>You have {favoriteKeys.length} saved recipes</h5>
-          {favoriteKeys.map(singleKey => (
-            <SingleFavorite key={singleKey} 
+        <h5>You have {favorites.length} saved recipes</h5>
+          {favorites.map(favorite => (
+            <SingleFavorite key={favorite.id} 
+                            favorite={favorite}
                             favorites={favorites} 
-                            singleKey={singleKey} 
                             reload={reload} 
                             setReload={setReload}
-                            removeFavoriteFromAPI={removeFavoriteFromAPI} />
+                            removeFavoriteFromAPI={removeFavoriteFromAPI} 
+                            fetchFavorites={fetchFavorites} />
           ))}  
-        {favoriteKeys.length !== 0 ? <h3 className={styles.bottom}>{favoriteKeys.length} recipes saved.</h3> : ''}
+        {favorites.length !== 0 ? <h3 className={styles.bottom}>{favorites.length} recipes saved.</h3> : ''}
         <RandomQuote />
       </div>
     );

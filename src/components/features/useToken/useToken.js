@@ -9,9 +9,10 @@ const useToken = () => {
 
   const [token, setToken] = useState(getToken());
 
-  const saveToken = userToken => {
-    localStorage.setItem('token', userToken);
-    setToken(userToken);
+  const saveToken = data => {
+    localStorage.setItem('token', data.access_token);
+    localStorage.setItem('user_id', data.user_id)
+    setToken(data);
   };
 
   const removeToken = () => {

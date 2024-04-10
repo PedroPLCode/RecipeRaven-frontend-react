@@ -15,7 +15,7 @@ const Profile = props => {
       }
     })
     .then((response) => {
-      const res =response.data
+      const res = response.data
       res.access_token && props.setToken(res.access_token)
       setProfileData(({
         profile_name: res.name,
@@ -27,6 +27,8 @@ const Profile = props => {
         console.log(error.response.headers)
         }
     })}
+
+    console.log(localStorage)
 
   return (
     <div className="Profile">

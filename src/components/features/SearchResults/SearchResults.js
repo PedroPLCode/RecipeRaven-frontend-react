@@ -90,6 +90,7 @@ const SearchResults = () => {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
+        Authorization: 'Bearer ' + localStorage.token,
       },
       body: JSON.stringify(payload)
     }; 
