@@ -19,7 +19,7 @@ const Login = props => {
        }
     })
     .then((response) => {
-      props.setToken(response.data)
+      props.setToken(response.data.access_token)
     })
     .catch((error) => {
       if (error.response) {

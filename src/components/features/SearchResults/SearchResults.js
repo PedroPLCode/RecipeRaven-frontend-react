@@ -86,24 +86,23 @@ const SearchResults = () => {
     const url = `http://localhost:5000/favorites`;
     const options = {
       method: 'POST',
-      mode: "no-cors",
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        Authorization: 'Bearer ' + localStorage.token,
+        'Authorization': 'Bearer ' + localStorage.token,
       },
       body: JSON.stringify(payload)
     }; 
-    fetch(url, options)
-    .then(function(response) {
-      return response;
-    })
-    .then(function(parsedResponse) {
-    })
-    .catch((error) => {
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      return data;
+    } catch (error) {
       console.log(error);
-    });
-  }
+      return { msg: 'Failed to add favorite' };
+    }
+  };
+  
 
 
   const fetchMoreReceipes = async () => {

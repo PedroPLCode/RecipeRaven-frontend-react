@@ -16,7 +16,7 @@ const FavoritesPage = () => {
     const options = {
       method: 'GET',
       headers: {
-        Authorization: 'Bearer ' + localStorage.token
+        'Authorization': 'Bearer ' + localStorage.token,
       }
     }; 
     try {
@@ -35,6 +35,11 @@ const FavoritesPage = () => {
     const url = `http://localhost:5000/favorites/${favoriteId}`;
     const options = {
       method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.token,
+      },
     }; 
     try {
       const response = await fetch(url, options);
