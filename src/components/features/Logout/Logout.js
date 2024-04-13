@@ -1,6 +1,7 @@
+import styles from './Logout.module.scss'
 import axios from "axios";
 
-const Header = props => {
+const Logout = props => {
 
   const logMeOut = () => {
     axios({
@@ -10,6 +11,7 @@ const Header = props => {
     })
     .then((response) => {
        props.token()
+       window.location.reload();
     }).catch((error) => {
       if (error.response) {
         console.log(error.response)
@@ -19,12 +21,12 @@ const Header = props => {
     })}
 
   return(
-    <header className="App-header">
+    <div className={styles.logout}>
       <button onClick={logMeOut}> 
         Logout
       </button>
-    </header>
+    </div>
   )
 }
 
-export default Header;
+export default Logout;

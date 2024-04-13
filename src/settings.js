@@ -36,7 +36,8 @@ export const messages = {
   putIngredients: 'Selected ingredients...',
   putExcluded: 'Excluded ingredients...',
   newPost: {
-    text: 'Write new post on out board...',
+    title: 'New post title',
+    content: 'Write new post on out board',
     author: 'Author field',
   },
   noInfoProvided: 'No information provided',

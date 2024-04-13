@@ -1,29 +1,14 @@
 @import '../../../styles/settings.scss';
 
-.account {
-  padding-top: calc($base-size * 9);
+.delete {
   padding-bottom: $base-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  h3, h5 {
-    font-weight: bold;
-    color: $color-two;
-    text-align: center;
-    margin: calc($base-size / 2);
-  }
-
-  h3 {
-    color: $color-three;
-  }
-
-  h5:last-of-type {
-    margin-bottom: calc($base-size * 3);
-  }
-    
-  a {
+  button {
+    border: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,12 +25,6 @@
     background-size: 300% 300%;
     transition-duration: $transition-duration;
     transition-property: color, background-color, background-position, box-shadow;
-
-    p {
-      margin: auto;
-      font-weight: bold;
-      font-size: calc($base-size * 1.5);
-    }
     
     &:hover {
       background-position: 0 100%;

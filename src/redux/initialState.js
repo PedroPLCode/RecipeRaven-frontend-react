@@ -45,7 +45,9 @@ const initialState = {
   serverError: '',
   favorites: [],
   linkNextPage: '',
-  board: [],
+  posts: [],
+  comments: [],
+  user: null,
 };
     
 export default initialState;

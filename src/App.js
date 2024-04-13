@@ -16,6 +16,7 @@ import NoResultsPage from './components/features/NoResultsPage/NoResultsPage';
 import SearchResults from './components/features/SearchResults/SearchResults';
 import Profile from './components/features/Profile/Profile.js'
 import useToken from './components/features/useToken/useToken.js'
+import CreateUser from './components/pages/UserPage/UserPage';
 
 const App = () => {
 
@@ -26,6 +27,7 @@ const App = () => {
 
   useEffect(() => {
     document.title = settings.title;
+    //window.location.reload();
   }, []);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const App = () => {
 
   return (
     <main>
-      <NavBar />
+      <NavBar token={token} setToken={setToken} />
       <Container>
         <div
           className={transitionStage}
@@ -46,17 +48,18 @@ const App = () => {
           }}
         > 
           <Routes location={displayLocation}>
-            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/favorites" element={<FavoritesPage token={token} setToken={setToken} />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/board" element={<BoardPage />} />
             <Route path="/login" element={<UserAccountPage />} />
             <Route exact path="/profile" element={<Profile token={token} setToken={setToken} />} />
-            <Route path="*" element={<SearchPage />} />
+            <Route path="/user" element={<CreateUser token={token} setToken={setToken} />} />
             <Route path="*/errorpage" element={<ErrorPage />} />
             <Route path="/loadingpage" element={<Loading />} />
             <Route path="/readypage" element={<ReadyToSearch />} />
             <Route path="/noresultspage" element={<NoResultsPage />} />
             <Route path="/resultspage" element={<SearchResults />} />
+            <Route path="*" element={<SearchPage />} />
           </Routes>
         </div>
       </Container>

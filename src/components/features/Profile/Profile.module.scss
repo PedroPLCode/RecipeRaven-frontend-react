@@ -1,6 +1,6 @@
 @import '../../../styles/settings.scss';
 
-.account {
+.profile {
   padding-top: calc($base-size * 9);
   padding-bottom: $base-size;
   display: flex;
@@ -23,7 +23,18 @@
     margin-bottom: calc($base-size * 3);
   }
     
-  a {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    border: none;
+  }
+
+  a, button {
     display: flex;
     flex-direction: column;
     justify-content: center;

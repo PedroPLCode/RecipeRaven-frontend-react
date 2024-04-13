@@ -1,7 +1,11 @@
+import styles from './Login.module.scss'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const Login = props => {
+
+  const navigate = useNavigate();
 
   const [loginForm, setloginForm] = useState({
     login: "",
@@ -19,7 +23,8 @@ const Login = props => {
        }
     })
     .then((response) => {
-      props.setToken(response.data.access_token)
+      props.setToken(response.data.access_token);
+      window.location.reload();
     })
     .catch((error) => {
       if (error.response) {
@@ -32,7 +37,8 @@ const Login = props => {
     setloginForm(({
       login: "",
       password: ""}))
-      event.preventDefault()
+      event.preventDefault();
+
     }
   
   const handleChange = event => {
@@ -42,8 +48,7 @@ const Login = props => {
     )}
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className={styles.login}>
       <form className="login">
         <input onChange={handleChange} 
                type="login"
@@ -57,7 +62,7 @@ const Login = props => {
                name="password" 
                placeholder="Password" 
                value={loginForm.password} />
-        <button onClick={logMeIn}>Submit</button>
+        <button onClick={logMeIn}>Login</button>
       </form>
     </div>
   );

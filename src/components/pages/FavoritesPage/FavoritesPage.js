@@ -6,7 +6,7 @@ import { getFavorites, updateFavorites } from '../../../redux/reducers/favorites
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import SingleFavorite from '../../features/SingleFavorite/SingleFavorite';
 
-const FavoritesPage = () => {
+const FavoritesPage = props => {
 
   const dispatch = useDispatch();
   const [reload, setReload] = useState(false);
@@ -58,6 +58,15 @@ const FavoritesPage = () => {
   const favorites = useSelector(state => getFavorites(state));
   console.log(favorites)
   //const favoriteKeys = Object.keys(favorites)
+
+  if (!props.token) 
+    return (
+      <div className={styles.favorite}>
+        <h3>You must login to save favorite recipes</h3>
+        <h5>Your saved recipes will be shown here</h5>
+        <RandomQuote />
+      </div>
+    )
 
   if (favorites.length !== 0 && favorites.length !== 0) {
     return (

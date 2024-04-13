@@ -1,12 +1,22 @@
 import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { getFavorites, updateFavorites } from '../../../redux/reducers/favoritesReducer';
 import clsx from 'clsx';
 import styles from './NavBar.module.scss';
 
-const NavBar = () => {
+const NavBar = props => {
 
   const [show, setShow] = useState(true);
+
+  const favorites = useSelector(state => getFavorites(state));
+  const favoriteKeys = Object.keys(favorites);
+
+  const getItemsLength = items => {
+    return items.length;
+  }
 
   useEffect(() => {
     let previousScrollPosition = 0;
@@ -29,7 +39,7 @@ const NavBar = () => {
             Search
           </Nav.Link>
           <Nav.Link className={styles.link} as={NavLink} to="/favorites">
-            Favorite
+            Favorites { props.token ? "(" + getItemsLength(favoriteKeys) + ")" : null }
           </Nav.Link>
           <Nav.Link className={styles.link} as={NavLink} to="/board">
             Board
@@ -38,7 +48,7 @@ const NavBar = () => {
             About
           </Nav.Link>
           <Nav.Link className={styles.link} as={NavLink} to="/login">
-            Login
+            { props.token ? "User" : "Login" }
           </Nav.Link>
         </div>
     </div>
