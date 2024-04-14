@@ -53,7 +53,7 @@ const App = () => {
             <Route path="/board" element={<BoardPage />} />
             <Route path="/login" element={<UserAccountPage />} />
             <Route exact path="/profile" element={<Profile token={token} setToken={setToken} />} />
-            <Route path="/user" element={<CreateUser token={token} setToken={setToken} />} />
+            <Route path="/createuser" element={<CreateUser token={token} setToken={setToken} />} />
             <Route path="*/errorpage" element={<ErrorPage />} />
             <Route path="/loadingpage" element={<Loading />} />
             <Route path="/readypage" element={<ReadyToSearch />} />

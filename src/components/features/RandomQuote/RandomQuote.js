@@ -4,23 +4,13 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getQuote, updateQuote } from '../../../redux/reducers/quoteReducer';
 import { messages } from '../../../settings';
+import { fetchQuote} from '../../utils/quote'
 
 const RandomQuote = () => {
   const dispatch = useDispatch();
-
-  const fetchQuote = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/quote');
-      const result = await response.text();
-      const quoteResult = JSON.parse(result);
-      dispatch(updateQuote(quoteResult[0] ? quoteResult[0] : messages.defalutQuote));
-    } catch (error) {
-      return error;
-    }     
-  }  
  
   useEffect(() => {
-    fetchQuote();
+    fetchQuote(dispatch);
   }, []);
   const quote = useSelector(state => getQuote(state));
 

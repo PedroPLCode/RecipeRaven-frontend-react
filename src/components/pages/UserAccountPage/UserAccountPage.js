@@ -20,7 +20,7 @@ const LoginPage = () => {
         {!token || token ==="" || token === undefined ?  
         <div>
           <Login setToken={setToken} />
-          <a href="/user">or create new user</a>
+          <a href="/createuser">or create new user</a>
         </div>
         :(
         <div>

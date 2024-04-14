@@ -1,12 +1,12 @@
-import styles from './Post.models.scss'
+import styles from './Post.module.scss'
 
 const Post = props => {
   
     return (
       <div className={styles.post}>
-        <p>{props.post.title}</p>
+        <strong>{props.post.title}</strong>
         <p>{props.post.content}</p>
-        <p>{props.post.author}</p>
+        <p>Author: {props.post.author}</p>
       </div>
     );
   }

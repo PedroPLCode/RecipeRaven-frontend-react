@@ -8,34 +8,14 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
+import { getUserData, createUser } from '../../utils/users'
+
 const UserPage = () => {
 
   const dispatch = useDispatch();
 
-  const fetchUser = async () => {
-    const url = `http://localhost:5000/user`;
-    const options = {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.token,
-      },
-    }; 
-    try {
-      const response = await fetch(url, options);
-      const result = await response.text();
-      const finalResponse = await JSON.parse(result)
-      dispatch(updateUser(finalResponse));
-      return finalResponse;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
-
   useEffect(() => {
-    fetchUser();
+    getUserData(dispatch);
   }, []);
   const userData = useSelector(state => getUser(state));
   console.log(userData)
@@ -47,50 +27,16 @@ const UserPage = () => {
     name: "",
     about: "",
   })
-
-  const createUser = event => {
-    if (createUserForm.password == createUserForm.confirmPassword) {
-      axios({
-        method: "POST",
-        url:"/user",
-        baseURL: 'http://127.0.0.1:5000',
-        data: {
-          login: createUserForm.login,
-          password: createUserForm.password,
-          email: createUserForm.email,
-          name: createUserForm.name,
-          about: createUserForm.about,
-        }
-        })
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-          }
-        })
-        
-      setCreateUserForm(({
-        login: "",
-        password: "",
-        email: "",
-        name: "",
-        about: "",
-      }))
-      event.preventDefault()
-    } else {
-
-    }
-  }
   
   const handleChange = event => {
     const {value, name} = event.target
     setCreateUserForm(prevNote => ({
         ...prevNote, [name]: value})
     )}
+
+  const handleCreateUser = (event, createUserForm, setCreateUserForm) => {
+    createUser(event, createUserForm, setCreateUserForm)
+  }
 
   return (
     <div className={styles.user}>
@@ -134,7 +80,7 @@ const UserPage = () => {
                 name="about" 
                 placeholder="About" 
                 value={ userData ? userData.about : createUserForm.about } />
-          <button onClick={createUser}>{ userData ? "Change User Details" : "Create New User" }</button>
+          <button onClick={handleCreateUser}>{ userData ? "Change User Details" : "Create New User" }</button>
         </form>
         <a href="/login">login existing user</a>
       </div>

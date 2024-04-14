@@ -8,6 +8,7 @@ import { getUser, updateUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { messages } from '../../../settings';
 import Post from '../../features/Post/Post';
+import { fetchPosts, createPost } from '../../utils/posts';
 
 const BoardPage = () => {
 
@@ -19,8 +20,6 @@ const BoardPage = () => {
   const [newPostAuthor, setNewPostAuthor] = useState(userData ? userData.name : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
 
-  console.log(userData)
-
   const handleSendNewPost = () => {
     const newPost = {
       title: newPostTitle,
@@ -29,55 +28,15 @@ const BoardPage = () => {
     }
     posts.push(newPost);
     dispatch(updatePosts(posts));
-    addNewPostToAPI(newPost);
+    createPost(newPost);
     setNewPostTitle('');
     setNewPostContent('');
     setNewPostAuthor('');
     setReloadTrigger(!reloadTrigger);
   }
 
-  const fetchBoard = async () => {
-    const url = `http://localhost:5000/posts`;
-    const options = {
-      method: 'GET',
-    }; 
-    try {
-      const response = await fetch(url, options);
-      const result = await response.text();
-      const finalResponse = await JSON.parse(result)
-      dispatch(updatePosts(finalResponse));
-      console.log(finalResponse)
-      return finalResponse;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
-
-  const addNewPostToAPI = async payload => {
-    const url = `http://localhost:5000/posts`;
-    const options = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.token,
-      },
-      body: JSON.stringify(payload)
-    }; 
-    fetch(url, options)
-    .then(function(response) {
-      return response;
-    })
-    .then(function(parsedResponse) {
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
-
   useEffect(() => {
-    fetchBoard();
+    fetchPosts(dispatch);
   }, [reloadTrigger]);
 
   return (

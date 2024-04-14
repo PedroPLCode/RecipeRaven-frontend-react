@@ -6,6 +6,7 @@ import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { parametersNames, settings } from '../../../settings';
 import PropTypes from "prop-types";
+import { fetchFavorites } from '../../utils/favorites'
 
 const FavoritesCheck = props => {
 
@@ -16,23 +17,6 @@ const FavoritesCheck = props => {
 
   const sleep = ms => {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  const fetchFavorites = async () => {
-    const url = `http://localhost:5000/favorites`;
-    const options = {
-      method: 'GET',
-    }; 
-    try {
-      const response = await fetch(url, options);
-      const result = await response.text();
-      const finalResponse = await JSON.parse(result)
-      dispatch(updateFavorites(finalResponse));
-      return finalResponse;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
   }
 
   const checkIfAlreadyInFavorites = favorites => {

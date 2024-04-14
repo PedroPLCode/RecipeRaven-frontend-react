@@ -15,6 +15,8 @@ import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
 import { classNames, elementsNames, parametersNames, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { validateInputString } from '../../utils/recipes'
+import { fetchReceipes } from '../../utils/recipes'
 
 const SearchPage = () => {
 
@@ -30,31 +32,13 @@ const SearchPage = () => {
   const [success, setSuccess] = useState(searchResult ? true : false);
 
   const handleIngredientsSet = value => {
-    validateInputString(value);
+    validateInputString(value, setInputOK);
     dispatch(updateIngredients(value));
   }
 
   const handleExcludedSet = value => {
-    validateInputString(value);
+    validateInputString(value, setInputOK);
     dispatch(updateExcluded(value));
-  }
-
-  const validateInputString = input => {
-    const inputFields = document.querySelectorAll(elementsNames.input);
-    let regex = parametersNames.regexString; 
-    if (!regex.test(input) || input.includes('  ')) {
-      setInputOK(false);
-      for (let singleInput of inputFields) {
-        singleInput.classList.add(styles.input_error);
-      }
-      return false;
-    } else {
-      for (let singleInput of inputFields) {
-        singleInput.classList.remove(styles.input_error);
-      }
-      setInputOK(true);
-      return true;
-    }
   }
 
   const handleDietClick = element => {
@@ -74,60 +58,9 @@ const SearchPage = () => {
     }
   }
 
-  const prepareArrayFromStringInput = string => {
-    const resultArray = []
-    for(let element of string.split(" ")) {
-      resultArray.push(element);
-    }
-    return resultArray
-  }
-
-  const prepareDietArray = () => {
-    const dietArray = []
-    for(let singleKey of dietKeys) {
-      if (diet[singleKey]['value']) {
-        dietArray.push(diet[`${singleKey}`][parametersNames.string]);
-      }
-    }
-    return dietArray
-  }
-
-  const searchReceipes = async () => {
-    const preparedRequestBody = {
-      ingredients: prepareArrayFromStringInput(ingredients),
-      excluded: prepareArrayFromStringInput(excluded),
-      params: prepareDietArray(),
-    }
-    const url = 'http://localhost:5000/search'
-    const options = {
-	    method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(preparedRequestBody),
-    }; 
-    if (validateInputString(ingredients) && validateInputString(excluded)) {
-      setLoading(true); 
-      try {
-        const response = await fetch(url, options);
-        dispatch(updateServerResponse(response));
-        console.log(response)
-        const result = await response.text();
-        console.log(result)
-        const searchResponse = JSON.parse(result)
-        console.log(searchResponse)
-        dispatch(updateSearchResult(searchResponse));
-        dispatch(updateLinkNextPage(searchResponse._links.next ? searchResponse._links.next : null));
-        setLoading(false); 
-        setSuccess(true); 
-        return result;
-      } catch (error) {
-        dispatch(updateServerError(error));
-        setLoading(false); 
-        setSuccess(true); 
-      }
-    }
-  }
+  const handleSearchReceipes = () => {
+    fetchReceipes(ingredients, excluded, diet, dietKeys, setLoading, setSuccess, dispatch, setInputOK);
+  };
 
   const headerString = inputOK ? messages.foodSearchApp : messages.inputWarning;
 
@@ -156,7 +89,7 @@ const SearchPage = () => {
               </div>
             </div> 
           </form>
-          <div onClick={searchReceipes} className={clsx(styles.search_button, online ? '' : styles.offline)} variant="primary">
+          <div onClick={handleSearchReceipes} className={clsx(styles.search_button, online ? '' : styles.offline)} variant="primary">
               <p>
                 <Online><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.search}</Online>
                 <Offline><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.offline}</Offline>

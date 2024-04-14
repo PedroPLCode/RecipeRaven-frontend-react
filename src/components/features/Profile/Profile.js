@@ -9,7 +9,7 @@ const Profile = props => {
   const getData = () => {
     axios({
       method: "GET",
-      url:"/user",
+      url:"/api/users",
       baseURL: 'http://127.0.0.1:5000',
       headers: {
         Authorization: 'Bearer ' + props.token
@@ -43,7 +43,7 @@ const Profile = props => {
               <p>About me: {profileData.about}</p>
               <p>Creation Date: {profileData.creationDate}</p>
               <p>Last Login: {profileData.creationDate}</p>
-              <a href="/user">Change user details</a>
+              <a href="/createuser">Change user details</a>
             </div>
         }
     </div>

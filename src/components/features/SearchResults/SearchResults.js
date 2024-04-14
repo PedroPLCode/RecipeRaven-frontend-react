@@ -15,6 +15,8 @@ import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 import RandomQuote from '../RandomQuote/RandomQuote';
 import FavoritesCheck from '../../features/FavoritesCheck/FavoritesCheck';
+import { createFavorite } from '../../utils/favorites';
+import { fetchMoreReceipes } from '../../utils/recipes';
 
 const SearchResults = () => {
 
@@ -82,60 +84,8 @@ const SearchResults = () => {
     }
   }
 
-  const addFavoriteToAPI = async payload => {
-    const url = `http://localhost:5000/favorites`;
-    const options = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.token,
-      },
-      body: JSON.stringify(payload)
-    }; 
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-      return { msg: 'Failed to add favorite' };
-    }
-  };
-  
-
-
-  const fetchMoreReceipes = async () => {
-    setLoading(true);
-    const preparedRequestBody = {
-      link_next_page: link_next_page,
-    }
-    const url = 'http://localhost:5000/search'
-    const options = {
-	    method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify(preparedRequestBody),
-      }; 
-    try {
-      const response = await fetch(url, options);
-      dispatch(updateServerResponse(response));
-      const result = await response.text();
-      const searchResponse = JSON.parse(result);
-      searchResult['hits'].push(...searchResponse['hits']);
-      searchResult['_links'] = searchResponse['_links'];
-      searchResult['headers'] = searchResponse['headers'];
-      dispatch(updateSearchResult(searchResult));
-      dispatch(updateLinkNextPage(searchResponse._links.next ? searchResponse._links.next : null));
-      setChangeIndicator(!changeIndicator);
-      setLoading(false);
-      return result;
-    } catch (error) {
-      dispatch(updateServerError(error));
-      setLoading(false);
-    }
+  const handlefetchMoreReceipes = (dispatch, setLoading, changeIndicator, setChangeIndicator, searchResult, link_next_page) => {
+    fetchMoreReceipes(dispatch, setLoading, changeIndicator, setChangeIndicator, searchResult, link_next_page)
   }
 
   const bottomButtonText = loading ? 'Loading...' : 'Click to load more!';
@@ -158,11 +108,11 @@ const SearchResults = () => {
                           singleHit={singleHit} 
                           favorites={favorites} 
                           changeButtonStyle={changeButtonStyle} 
-                          addFavoriteToAPI={addFavoriteToAPI} />
+                          createFavorite={createFavorite} />
           ))}
           {searchResult.count > searchResult.hits.length ?
             <h3 className={clsx(styles.button_nextpage, loading ? styles.loading : '')} 
-              onClick={fetchMoreReceipes}>{bottomButtonText}</h3> : ''}
+              onClick={handlefetchMoreReceipes}>{bottomButtonText}</h3> : ''}
           <FavoritesCheck changeButtonStyle={changeButtonStyle} 
                           favorites={favorites} 
                           favoriteKeys={favoriteKeys}/>

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
+import { createFavorite } from '../../utils/favorites';
 
 const SingleResult = props => {
 
@@ -14,7 +15,7 @@ const SingleResult = props => {
     dispatch(updateFavorites(props.favorites));
     props.changeButtonStyle(props.singleHit.calories);
     props.singleHit['user_id'] = localStorage.user_id
-    props.addFavoriteToAPI(props.singleHit);
+    createFavorite(props.singleHit);
   }
 
   return (

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
+import { deleteFavorite } from '../../utils/favorites'
 
 const SingleFavorite = props => {
 
@@ -14,7 +15,7 @@ const SingleFavorite = props => {
   const navigate = useNavigate();
 
   const handleRemoveFavorites = () => {
-    props.removeFavoriteFromAPI(props.favorite.id);
+    deleteFavorite(props.favorite.id);
     dispatch(updateFavorites(props.favorites));
     props.setReload(!props.reload);
     navigate(elementsNames.favorites);
