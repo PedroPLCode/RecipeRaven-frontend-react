@@ -1,28 +1,20 @@
 import styles from './Logout.module.scss'
 import axios from "axios";
+import { logOut } from '../../utils/users';
+import { useNavigate } from 'react-router-dom';
 
 const Logout = props => {
 
-  const logMeOut = () => {
-    axios({
-      method: "POST",
-      url:"/logout",
-      baseURL: 'http://127.0.0.1:5000',
-    })
-    .then((response) => {
-       props.token()
-       window.location.reload();
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })}
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    logOut(props);
+    navigate('/login');
+  }
 
   return(
     <div className={styles.logout}>
-      <button onClick={logMeOut}> 
+      <button onClick={handleLogOut}> 
         Logout
       </button>
     </div>

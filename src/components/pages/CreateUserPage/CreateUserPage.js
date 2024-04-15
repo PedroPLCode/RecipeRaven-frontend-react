@@ -1,4 +1,4 @@
-import styles from './UserPage.module.scss';
+import styles from './CreateUserPage.module.scss';
 import { useState, useEffect } from 'react';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,13 +10,16 @@ import axios from "axios";
 
 import { getUserData, createUser } from '../../utils/users'
 
-const UserPage = () => {
+const CreateUserPage = () => {
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getUserData(dispatch);
+    if (localStorage.token) {
+      getUserData(dispatch);
+    }
   }, []);
+  
   const userData = useSelector(state => getUser(state));
   console.log(userData)
 
@@ -34,7 +37,7 @@ const UserPage = () => {
         ...prevNote, [name]: value})
     )}
 
-  const handleCreateUser = (event, createUserForm, setCreateUserForm) => {
+  const handleCreateUser = (event) => {
     createUser(event, createUserForm, setCreateUserForm)
   }
 
@@ -57,7 +60,7 @@ const UserPage = () => {
                 placeholder="Password" 
                 value={createUserForm.password} />
           <input onChange={handleChange} 
-                type="confirmPassword"
+                type="password"
                 text={createUserForm.confirmPassword} 
                 name="confirmPassword" 
                 placeholder="Confirm Password" 
@@ -92,4 +95,4 @@ const UserPage = () => {
   );
 }
       
-export default UserPage;
+export default CreateUserPage;

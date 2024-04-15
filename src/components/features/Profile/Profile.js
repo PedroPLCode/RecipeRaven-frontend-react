@@ -19,6 +19,7 @@ const Profile = props => {
       const res = response.data
       res.access_token && props.setToken(res.access_token)
       setProfileData(({
+        login: res.login,
         profile_name: res.name,
         email: res.email,
         about: res.about,
@@ -38,12 +39,14 @@ const Profile = props => {
     <div className={styles.profile}>
       <p>Your profile details: </p>
         {profileData && <div>
-              <p>Profile name: {profileData.profile_name}</p>
+              <p>Login: {profileData.login}</p>
+              <p>Name: {profileData.profile_name}</p>
               <p>Email: {profileData.email}</p>
               <p>About me: {profileData.about}</p>
               <p>Creation Date: {profileData.creationDate}</p>
               <p>Last Login: {profileData.creationDate}</p>
-              <a href="/createuser">Change user details</a>
+              <a href="/changeuserdetails">Change user details</a>
+              <a href="/changeuserpassword">Change user password</a>
             </div>
         }
     </div>

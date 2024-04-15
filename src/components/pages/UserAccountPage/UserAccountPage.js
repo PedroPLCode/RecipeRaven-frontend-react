@@ -14,8 +14,8 @@ const LoginPage = () => {
 
   return (
     <div className={styles.account}>
-      <h3>User Account form</h3>
-      <h5>will allow login or create account</h5>
+      <h3>User Account Page</h3>
+      <h5>login or create new account</h5>
       <div>
         {!token || token ==="" || token === undefined ?  
         <div>

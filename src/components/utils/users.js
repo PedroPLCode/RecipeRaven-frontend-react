@@ -64,7 +64,87 @@ export const createUser = (event, createUserForm, setCreateUserForm)  => {
 }
 }
 
-export const deleteUser = () => {
+export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm) => {
+  event.preventDefault();
+  
+  const url = 'http://localhost:5000/api/users';
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.token,
+    },
+    body: JSON.stringify(changeUserDetailsForm),
+  }; 
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result);
+    setChangeUserDetailsForm({
+      email: "",
+      name: "",
+      about: "",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const changeUserPassword = (event, changeUserPasswordForm, setChangeUserPasswordForm)  => {
+  if (changeUserPasswordForm.password == changeUserPasswordForm.confirmPassword) {
+    axios({
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.token,
+      },
+      url:"/api/users",
+      baseURL: 'http://127.0.0.1:5000',
+      data: {
+          oldPassword: changeUserPasswordForm.oldPassword,
+          newPassword: changeUserPasswordForm.newPassword,
+      }
+      })
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.log(error.response)
+        console.log(error.response.status)
+        console.log(error.response.headers)
+        }
+      })
+        
+    setChangeUserPasswordForm(({
+      oldPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
+    }))
+    event.preventDefault()
+  } else {
+}
+}
+
+export const logOut = props => {
+  axios({
+    method: "POST",
+    url:"/logout",
+    baseURL: 'http://127.0.0.1:5000',
+  })
+  .then((response) => {
+     props.token()
+     window.location.reload();
+  }).catch((error) => {
+    if (error.response) {
+      console.log(error.response)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+      }
+  })}
+
+export const deleteUser = props => {
   axios({
     method: "DELETE",
     url:"/api/users",
@@ -74,8 +154,8 @@ export const deleteUser = () => {
     }
   })
   .then((response) => {
-    const res = response.data
-    return res
+    props.token()
+    window.location.reload();
   }).catch((error) => {
     if (error.response) {
       console.log(error.response)
