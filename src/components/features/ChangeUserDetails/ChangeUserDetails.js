@@ -23,7 +23,6 @@ const ChangeUserDetails = () => {
   }, []);
   
   const userData = useSelector(state => getUser(state));
-  console.log(userData);
 
   const [changeUserDetailsForm, setChangeUserDetailsForm] = useState({
     email: "",

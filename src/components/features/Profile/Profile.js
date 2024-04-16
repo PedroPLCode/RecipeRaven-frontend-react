@@ -1,9 +1,13 @@
 import styles from './Profile.module.scss'
 import { useState } from 'react'
 import axios from "axios";
+import { getUserData } from '../../utils/users';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 const Profile = props => {
 
+  const dispatch = useDispatch();
   const [profileData, setProfileData] = useState(null)
   
   const getData = () => {
@@ -33,7 +37,10 @@ const Profile = props => {
         }
     })}
 
-  getData()
+  useEffect(() => {
+    const res = getUserData(dispatch, props, setProfileData);
+  }, []);
+  //getData()
   
   return (
     <div className={styles.profile}>

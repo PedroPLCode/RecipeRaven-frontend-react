@@ -46,3 +46,7 @@ export const createPost = async payload => {
     console.log(error);
   });
 }
+
+//PUT
+
+//DELETE

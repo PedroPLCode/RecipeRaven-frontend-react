@@ -2,9 +2,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateUser } from '../../redux/reducers/userReducer';
 
-export const getUserData = async dispatch => {
-
-  console.log(localStorage)
+export const getUserData = async (dispatch, props=null, setProfileData=null) => {
   
   const url = `http://localhost:5000/api/users`;
   const options = {
@@ -19,7 +17,23 @@ export const getUserData = async dispatch => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
+
+    if (props) {
+      finalResponse.access_token && props.setToken(finalResponse.access_token)
+    }
+    
     dispatch(updateUser(finalResponse));
+
+    if (setProfileData) {
+      setProfileData({
+        login: finalResponse.login,
+        profile_name: finalResponse.name,
+        email: finalResponse.email,
+        about: finalResponse.about,
+        creationDate: finalResponse.creation_date,
+        lastLogin: finalResponse.last_login});
+    }
+
     return finalResponse;
   } catch (error) {
     console.log(error);

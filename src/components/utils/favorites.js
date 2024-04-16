@@ -5,7 +5,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 //import dispatch from '../pages/FavoritesPage/FavoritesPage'
 
 export const fetchFavorites = async dispatch => {
-  const url = `http://localhost:5000/api/favorites/`;
+  const url = `http://localhost:5000/api/favorites`;
   const options = {
     method: 'GET',
     headers: {
@@ -25,7 +25,7 @@ export const fetchFavorites = async dispatch => {
 }
 
 export const createFavorite = async payload => {
-  const url = `http://localhost:5000/api/favorites/`;
+  const url = `http://localhost:5000/api/favorites`;
   const options = {
     method: 'POST',
     mode: 'cors',
