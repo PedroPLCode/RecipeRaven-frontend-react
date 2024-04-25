@@ -13,7 +13,6 @@ import { fetchPosts, createPost } from '../../utils/posts';
 const BoardPage = () => {
 
   const dispatch = useDispatch();
-  const posts = useSelector(state => getPosts(state));
   const userData = useSelector(state => getUser(state));
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
@@ -38,31 +37,41 @@ const BoardPage = () => {
   useEffect(() => {
     fetchPosts(dispatch);
   }, [reloadTrigger]);
+  const posts = useSelector(state => getPosts(state));
+  
+  if (posts) {    
+    return (
+      <div className={styles.board}>
+        <h3>BoardPage component</h3>
 
-  return (
-    <div className={styles.board}>
-      <h3>BoardPage component</h3>
+        {posts.map(post => (
+          <Post post={post} />
+        ))}
 
-      {posts.map(post => (
-        <Post post={post} />
-      ))}
+        <input id="new-post-title" type="text" placeholder={messages.newPost.title} 
+              title={messages.newPost.text} value={newPostTitle} 
+              onChange={event => setNewPostTitle(event.target.value)} />
+        <input id="new-post-content" type="text" placeholder={messages.newPost.content} 
+              title={messages.newPost.text} value={newPostContent} 
+              onChange={event => setNewPostContent(event.target.value)} />
+        {userData ? `Author: ${userData.name}` : 
+              <input id="new-post-author" type="text" placeholder={messages.newPost.author} 
+                    title={messages.newPost.author} value={""} 
+                    onChange={event => setNewPostAuthor(event.target.value)} />
+        } 
+        <div onClick={handleSendNewPost}>send post</div>
 
-      <input id="new-post-title" type="text" placeholder={messages.newPost.title} 
-             title={messages.newPost.text} value={newPostTitle} 
-             onChange={event => setNewPostTitle(event.target.value)} />
-      <input id="new-post-content" type="text" placeholder={messages.newPost.content} 
-             title={messages.newPost.text} value={newPostContent} 
-             onChange={event => setNewPostContent(event.target.value)} />
-      {userData ? `Author: ${userData.name}` : 
-            <input id="new-post-author" type="text" placeholder={messages.newPost.author} 
-                  title={messages.newPost.author} value={""} 
-                  onChange={event => setNewPostAuthor(event.target.value)} />
-      } 
-      <div onClick={handleSendNewPost}>send post</div>
+        <RandomQuote />
+      </div>
+    );
+  } else {
+    return (
+      <div className={styles.board}>
+        <h3>BoardPage component</h3>
+        <h5>No posts found</h5>
+      </div>
+    )
+  }
+}    
 
-      <RandomQuote />
-    </div>
-  );
-}
-    
 export default BoardPage;

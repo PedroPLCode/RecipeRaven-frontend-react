@@ -7,8 +7,8 @@ import { getUser, updateUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-
-import { getUserData, createUser } from '../../utils/users'
+import { validateLogin, validatePasswordInput, passwordAndConfirmPasswordMatch, validateEmail } from '../../utils/users';
+import { getUserData, createUser } from '../../utils/users';
 
 const CreateUserPage = () => {
 
@@ -21,24 +21,54 @@ const CreateUserPage = () => {
   }, []);
   
   const userData = useSelector(state => getUser(state));
-  console.log(userData)
 
   const [createUserForm, setCreateUserForm] = useState({
     login: "",
     password: "",
+    confirmPassword: "",
     email: "",
     name: "",
     about: "",
   })
   
-  const handleChange = event => {
-    const {value, name} = event.target
-    setCreateUserForm(prevNote => ({
-        ...prevNote, [name]: value})
-    )}
+  const handleChange = (event) => {
+    const { value, name } = event.target;
 
-  const handleCreateUser = (event) => {
-    createUser(event, createUserForm, setCreateUserForm)
+    if (name === 'login') {
+      validateLogin(value);
+    } else if (name === 'email') {
+      validateEmail(value);
+    } else if (name === 'password') {
+      validatePasswordInput(value, 'password');
+    } else if (name === 'confirmPassword') {
+      //validatePasswordInput(value, 'confirmPassword');
+      passwordAndConfirmPasswordMatch(createUserForm.password, value);
+    }
+
+    setCreateUserForm(prevNote => ({
+      ...prevNote, 
+      [name]: value,
+      //confirmPassword: name === 'password' ? value : prevNote.confirmPassword
+    }));
+  }
+
+  const handleCreateUser = async (event) => {
+    event.preventDefault();
+
+    const createUserValidators = [
+      validateLogin(createUserForm.login),
+      validatePasswordInput(createUserForm.password, 'password'),
+      validatePasswordInput(createUserForm.confirmPassword, 'confirm_password'),
+      passwordAndConfirmPasswordMatch(createUserForm.password, createUserForm.confirmPassword),
+      validateEmail(createUserForm.email),
+    ]
+
+    if (createUserValidators.every(valid => valid)) {
+      createUser(event, createUserForm, setCreateUserForm);
+    } else {
+      // Handle errors
+      console.log('Validation failed');
+    }
   }
 
   return (
@@ -47,43 +77,57 @@ const CreateUserPage = () => {
       <h5>will allow login or create account</h5>
       <div>
         <form className="login">
-          <input onChange={handleChange} 
-                type="login"
-                text={createUserForm.login} 
-                name="login" 
-                placeholder="Login" 
-                value={createUserForm.login} />
-          <input onChange={handleChange} 
-                type="password"
-                text={createUserForm.password} 
-                name="password" 
-                placeholder="Password" 
-                value={createUserForm.password} />
-          <input onChange={handleChange} 
-                type="password"
-                text={createUserForm.confirmPassword} 
-                name="confirmPassword" 
-                placeholder="Confirm Password" 
-                value={createUserForm.confirmPassword} />
-          <input onChange={handleChange} 
-                type="email"
-                text={createUserForm.email} 
-                name="email" 
-                placeholder="Email" 
-                value={ userData ? userData.email : createUserForm.email } />
-          <input onChange={handleChange} 
-                type="name"
-                text={createUserForm.name} 
-                name="name" 
-                placeholder="Name" 
-                value={ userData ? userData.name : createUserForm.name } />
-          <input onChange={handleChange} 
-                type="about"
-                text={createUserForm.about} 
-                name="about" 
-                placeholder="About" 
-                value={ userData ? userData.about : createUserForm.about } />
-          <button onClick={handleCreateUser}>{ userData ? "Change User Details" : "Create New User" }</button>
+          <input 
+            onChange={handleChange} 
+            id="login"
+            type="text"
+            name="login" 
+            placeholder="Login" 
+            value={createUserForm.login} 
+          />
+          <input 
+            onChange={handleChange} 
+            id="password"
+            type="password"
+            name="password" 
+            placeholder="Password" 
+            value={createUserForm.password} 
+          />
+          <input 
+            onChange={handleChange} 
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword" 
+            placeholder="Confirm Password" 
+            value={createUserForm.confirmPassword} 
+          />
+          <input 
+            onChange={handleChange} 
+            id="email"
+            type="email"
+            name="email" 
+            placeholder="Email" 
+            value={userData ? userData.email : createUserForm.email} 
+          />
+          <input 
+            onChange={handleChange} 
+            id="name"
+            type="text"
+            name="name" 
+            placeholder="Name" 
+            value={userData ? userData.name : createUserForm.name} 
+          />
+          <input 
+            onChange={handleChange} 
+            id="about"
+            type="text"
+            name="about" 
+            placeholder="About" 
+            value={userData ? userData.about : createUserForm.about} 
+          />
+          <button onClick={handleCreateUser}>
+            {userData ? "Change User Details" : "Create New User"}
+          </button>
         </form>
         <a href="/login">login existing user</a>
       </div>
@@ -94,5 +138,5 @@ const CreateUserPage = () => {
     </div>
   );
 }
-      
+
 export default CreateUserPage;

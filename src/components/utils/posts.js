@@ -8,7 +8,7 @@ import { messages } from '../../settings';
 import Post from '../features/Post/Post';
 
 export const fetchPosts = async dispatch => {
-  const url = `http://localhost:5000/posts`;
+  const url = `http://localhost:5000/api/posts`;
   const options = {
     method: 'GET',
   };
@@ -26,7 +26,7 @@ export const fetchPosts = async dispatch => {
 }
 
 export const createPost = async payload => {
-  const url = `http://localhost:5000/posts`;
+  const url = `http://localhost:5000/api/posts`;
   const options = {
     method: 'POST',
     mode: 'cors',

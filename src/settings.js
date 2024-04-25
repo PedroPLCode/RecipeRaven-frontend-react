@@ -23,7 +23,6 @@ export const parametersNames = {
   images: 'images',
   image_SMALL: 'image_SMALL_url',
   image_REGULAR: 'image_REGULAR_url',
-  regexString: /^[A-Za-z\s]*$/,
 }
 
 export const elementsNames = {
@@ -75,5 +74,8 @@ export const stylesParams = {
 
 export const settings = {
   delay: 1000,
+  regexIngredientsString: /^[A-Za-z\s]*$/,
+  regexLoginString: /^[a-zA-Z0-9]{1,10}$/,
+  regexPasswordString: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
   title: 'Receipes Search App',
 }

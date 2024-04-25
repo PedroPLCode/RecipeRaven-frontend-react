@@ -16,29 +16,29 @@ const ChangeUserDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [profileData, setProfileData] = useState(null)
+
   useEffect(() => {
     if (localStorage.token) {
-      getUserData(dispatch);
+      getUserData(dispatch, setProfileData);
     }
-  }, []);
-  
-  const userData = useSelector(state => getUser(state));
 
+    if (userData) {
+      setChangeUserDetailsForm({
+        email: profileData.email,
+        name: profileData.name,
+        about: profileData.about,
+      });
+    }
+  }, [profileData]);
+
+  const userData = useSelector(state => getUser(state));
+  
   const [changeUserDetailsForm, setChangeUserDetailsForm] = useState({
     email: "",
     name: "",
     about: "",
   })
-  
-  useEffect(() => {
-    if (userData) {
-      setChangeUserDetailsForm({
-        email: userData.email,
-        name: userData.name,
-        about: userData.about,
-      });
-    }
-  }, [userData]);
 
   const handleChange = event => {
     const {value, name} = event.target

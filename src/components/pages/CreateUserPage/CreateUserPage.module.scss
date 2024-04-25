@@ -34,6 +34,31 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      input {
+        width: 100%;
+        height: calc($base-size *3);
+        text-align: center;
+        color: $color-one;
+        font-weight: bold;
+        border: none;
+        background-color: $transparent-background;
+        
+        transition-property: border, color, background-color, box-shadow;
+        transition-duration: $transition-duration;   
+      }
+
+      .input_error {
+        &:focus {
+          background-color: $error-background;
+        }
+      }
+
+      .input_ok {
+        &:focus {
+          background-color: green;
+        }
+      }
     }
   }
 

@@ -9,7 +9,7 @@ import { getSearchResult, updateSearchResult } from '../../redux/reducers/search
 import { updateLinkNextPage, getLinkNextPage } from '../../redux/reducers/nextResultsPageReducer';
 import { updateServerResponse } from '../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../redux/reducers/serverErrorReducer'
-import { classNames, elementsNames, parametersNames, messages } from '../../settings';
+import { classNames, elementsNames, parametersNames, messages, settings } from '../../settings';
 //import { setLoading, setSuccess } from '../pages/SearchPage/SearchPage'
 
 const prepareArrayFromStringInput = string => {
@@ -39,7 +39,7 @@ const prepareDietArray = (diet, dietKeys, parametersNames) => {
 
 export const validateInputString = (input, setInputOK) => {
   const inputFields = document.querySelectorAll(elementsNames.input);
-  let regex = parametersNames.regexString; 
+  const regex = settings.regexIngredientsString; 
   if (!regex.test(input) || input.includes('  ')) {
     setInputOK(false);
     for (let singleInput of inputFields) {

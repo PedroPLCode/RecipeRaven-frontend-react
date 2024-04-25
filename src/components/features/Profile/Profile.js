@@ -9,38 +9,10 @@ const Profile = props => {
 
   const dispatch = useDispatch();
   const [profileData, setProfileData] = useState(null)
-  
-  const getData = () => {
-    axios({
-      method: "GET",
-      url:"/api/users",
-      baseURL: 'http://127.0.0.1:5000',
-      headers: {
-        Authorization: 'Bearer ' + props.token
-      }
-    })
-    .then((response) => {
-      const res = response.data
-      res.access_token && props.setToken(res.access_token)
-      setProfileData(({
-        login: res.login,
-        profile_name: res.name,
-        email: res.email,
-        about: res.about,
-        creationDate: res.creation_date,
-        lastLogin: res.last_login}))
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })}
 
   useEffect(() => {
-    const res = getUserData(dispatch, props, setProfileData);
+    getUserData(dispatch, props, setProfileData);
   }, []);
-  //getData()
   
   return (
     <div className={styles.profile}>

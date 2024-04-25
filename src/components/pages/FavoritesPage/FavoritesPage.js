@@ -13,7 +13,9 @@ const FavoritesPage = props => {
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
-    fetchFavorites(dispatch);
+    if (props.token) {
+      fetchFavorites(dispatch);
+    }
   }, [reload]);
   const favorites = useSelector(state => getFavorites(state));
   //const favoriteKeys = Object.keys(favorites)
