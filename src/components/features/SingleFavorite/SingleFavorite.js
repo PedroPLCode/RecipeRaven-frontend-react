@@ -25,14 +25,7 @@ const SingleFavorite = props => {
 
   return (
     <div className={clsx(styles.single_favorite, styles.hidden)}>
-      <div className={styles.image}>
-        <a href={SingleFavoriteObject[parametersNames.url]} target='_blank' rel="noreferrer">
-          <i>Click for full receipe!</i>
-          <img src={SingleFavoriteObject[parametersNames.image_SMALL]} 
-               alt={SingleFavoriteObject[parametersNames.image_REGULAR]} 
-               width='400' height='400' />
-        </a>
-      </div>  
+      
       <div className={styles.description}>
         <p><strong className={styles.blue}>{SingleFavoriteObject[parametersNames.label]}</strong></p>
         <p><span className={styles.blue}>Dist Type: </span> 

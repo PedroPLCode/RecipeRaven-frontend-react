@@ -56,12 +56,14 @@ const CreateUserPage = () => {
     event.preventDefault();
 
     const createUserValidators = [
-      validateLogin(createUserForm.login),
+      await validateLogin(createUserForm.login),
       validatePasswordInput(createUserForm.password, 'password'),
-      validatePasswordInput(createUserForm.confirmPassword, 'confirm_password'),
+      //validatePasswordInput(createUserForm.confirmPassword, 'confirm_password'),
       passwordAndConfirmPasswordMatch(createUserForm.password, createUserForm.confirmPassword),
       validateEmail(createUserForm.email),
     ]
+
+    console.log(createUserValidators)
 
     if (createUserValidators.every(valid => valid)) {
       createUser(event, createUserForm, setCreateUserForm);

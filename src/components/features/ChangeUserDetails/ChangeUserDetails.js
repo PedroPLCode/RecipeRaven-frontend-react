@@ -8,7 +8,6 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-
 import { getUserData, createUser, changeUserDetails } from '../../utils/users'
 
 const ChangeUserDetails = () => {
@@ -16,29 +15,39 @@ const ChangeUserDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [profileData, setProfileData] = useState(null)
-
-  useEffect(() => {
-    if (localStorage.token) {
-      getUserData(dispatch, setProfileData);
-    }
-
-    if (userData) {
-      setChangeUserDetailsForm({
-        email: profileData.email,
-        name: profileData.name,
-        about: profileData.about,
-      });
-    }
-  }, [profileData]);
-
-  const userData = useSelector(state => getUser(state));
-  
   const [changeUserDetailsForm, setChangeUserDetailsForm] = useState({
     email: "",
     name: "",
     about: "",
   })
+
+  let userData = null
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (localStorage.token) {
+          userData = await getUserData(dispatch);
+        }
+        if (userData) {
+          setChangeUserDetailsForm({
+            email: userData.email,
+            name: userData.name,
+            about: userData.about,
+          });
+          console.log(userData);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+  const sleep = ms => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   const handleChange = event => {
     const {value, name} = event.target

@@ -14,6 +14,7 @@ export const validateLogin = async login => {
     return true;
   } 
   inputField.classList.add(styles.input_error);
+  console.log('Validation login failed');
   return false;
 }
 
@@ -21,24 +22,33 @@ export const validatePasswordInput = (password, field_id) => {
   // min 6 znakow, litery, cyfry, duze litery, znak specjalny
   const regex = settings.regexPasswordString;
   const passwordInputField = document.getElementById(field_id);
-  if (!regex.test(password) && (passwordInputField)) {
-    passwordInputField.classList.remove(styles.input_ok);
-    return false
-  }     
-  passwordInputField.classList.add(styles.input_ok);
-  return true;
+  if (passwordInputField) {
+    if (!regex.test(password)) {
+      passwordInputField.classList.remove(styles.input_ok);
+      console.log('Validation passwd failed');
+      return false
+    } else {
+      passwordInputField.classList.add(styles.input_ok);
+      return true;
+    }
+  }
 }
 
 export const passwordAndConfirmPasswordMatch = (password, confirmPassword) => {
   const passwordInputField = document.getElementById('password');
   const confirmPasswordInputField = document.getElementById('confirmPassword');
   if (password !== confirmPassword) {
-    passwordInputField.classList.remove(styles.input_ok);
-    confirmPasswordInputField.classList.remove(styles.input_ok);
+    if (passwordInputField && confirmPasswordInputField) {
+      passwordInputField.classList.remove(styles.input_ok);
+      confirmPasswordInputField.classList.remove(styles.input_ok);
+    }
+    console.log('Validation passwd match failed');
     return false
   }
-  passwordInputField.classList.add(styles.input_ok);
-  confirmPasswordInputField.classList.add(styles.input_ok);
+  if (passwordInputField && confirmPasswordInputField) {
+    passwordInputField.classList.add(styles.input_ok);
+    confirmPasswordInputField.classList.add(styles.input_ok);
+  }
   return true
 }
 
@@ -51,6 +61,7 @@ export const validateEmail = email => {
   } else {
     // Obsługa ramki czerwonej i ostrzeżenia
     inputField.classList.remove(styles.input_ok);
+    console.log('Validation email failed');
     return false;
   }
 };
@@ -64,9 +75,8 @@ export const fetchCheckUserLogin = async loginToCheck => {
     const response = await fetch(url, options);
     
     if (response.ok) {
-      const data = await response.json();
-      const loginAlreadyExists = data[loginToCheck];
-      return loginAlreadyExists
+      const loginStatus = await response.json();
+      return loginStatus['login_status']
     } else {
       console.error("Error fetching logins:", response.statusText);
     }
@@ -109,7 +119,7 @@ export const getUserData = async (dispatch, props = null, setProfileData = null)
       });
     }
 
-    return finalResponse;
+    return userData;
   } catch (error) {
     console.error("Error fetching user data:", error);
     return error;
