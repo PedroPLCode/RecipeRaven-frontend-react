@@ -86,7 +86,7 @@ export const fetchCheckUserLogin = async loginToCheck => {
   }
 };
 
-export const getUserData = async (dispatch, props = null, setProfileData = null) => {
+export const getUserData = async (dispatch, props = null) => {
   const url = `http://localhost:5000/api/users`;
   const options = {
     method: 'GET',
@@ -106,18 +106,8 @@ export const getUserData = async (dispatch, props = null, setProfileData = null)
       props.setToken(finalResponse.access_token);
     }
 
-    dispatch(updateUser(finalResponse));
-
-    if (setProfileData) {
-      setProfileData({
-        login: userData.login,
-        profile_name: userData.name,
-        email: userData.email,
-        about: userData.about,
-        creationDate: userData.creation_date,
-        lastLogin: userData.last_login,
-      });
-    }
+    dispatch(updateUser(userData));
+    //console.log(finalResponse)
 
     return userData;
   } catch (error) {
@@ -161,18 +151,32 @@ export const createUser = (event, createUserForm, setCreateUserForm)  => {
   event.preventDefault()
 }
 
-export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm) => {
+export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch) => {
   event.preventDefault();
   
+  // Create a FormData object
+  const formData = new FormData();
+  formData.append('email', changeUserDetailsForm.email);
+  formData.append('name', changeUserDetailsForm.name);
+  formData.append('about', changeUserDetailsForm.about);
+  if (changeUserDetailsForm.picture) {
+    formData.append('picture', changeUserDetailsForm.picture);
+  }
+  //console.log(formData)
+  //console.log(changeUserDetailsForm.picture)
+
   const url = 'http://localhost:5000/api/users';
   const options = {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.token,
     },
-    body: JSON.stringify(changeUserDetailsForm),
+    body: formData,
   }; 
+
+  for (var pair of formData.entries()) {
+    console.log(pair[0]+ ', ' + pair[1]);
+  }
 
   try {
     const response = await fetch(url, options);
@@ -182,47 +186,59 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
       email: "",
       name: "",
       about: "",
+      picture: null,
     });
+    getUserData(dispatch)
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
-export const changeUserPassword = (event, changeUserPasswordForm, setChangeUserPasswordForm)  => {
-  if (passwordAndConfirmPasswordMatch(changeUserPasswordForm.password, changeUserPasswordForm.confirmPassword)) {
-    axios({
-      method: "PUT",
+
+export const changeUserPassword = async (event, changeUserPasswordForm, setChangeUserPasswordForm) => {
+  event.preventDefault();
+
+  if (passwordAndConfirmPasswordMatch(changeUserPasswordForm.newPassword, changeUserPasswordForm.confirmNewPassword)) {
+    const formData = new FormData();
+    formData.append('oldPassword', changeUserPasswordForm.oldPassword);
+    formData.append('newPassword', changeUserPasswordForm.newPassword);
+
+    const url = 'http://127.0.0.1:5000/api/users';
+    const options = {
+      method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.token,
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
       },
-      url:"/api/users",
-      baseURL: 'http://127.0.0.1:5000',
-      data: {
-          oldPassword: changeUserPasswordForm.oldPassword,
-          newPassword: changeUserPasswordForm.newPassword,
+      body: formData,
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok) {
+        // Handle successful response here
+      } else {
+        // Handle error response here
+        console.error(result);
       }
-      })
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-      })
-        
-    setChangeUserPasswordForm(({
-      oldPassword: "",
-      newPassword: "",
-      confirmNewPassword: "",
-    }))
-    event.preventDefault()
+
+      setChangeUserPasswordForm({
+        oldPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+      });
+    } catch (error) {
+      console.error(error);
+      // Handle other errors here
+    }
   } else {
+    // Handle password mismatch case here
+    console.log("Passwords do not match");
+  }
 }
-}
+
 
 export const logOut = props => {
   axios({

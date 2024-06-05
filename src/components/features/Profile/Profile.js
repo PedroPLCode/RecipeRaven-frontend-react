@@ -4,26 +4,36 @@ import axios from "axios";
 import { getUserData } from '../../utils/users';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { updateUser, getUser } from '../../../redux/reducers/userReducer';
 
 const Profile = props => {
 
-  const dispatch = useDispatch();
-  const [profileData, setProfileData] = useState(null)
+  const userData = useSelector(state => getUser(state));
+  console.log(userData)
 
-  useEffect(() => {
-    getUserData(dispatch, props, setProfileData);
-  }, []);
-  
+  //const dispatch = useDispatch();
+
+  //useEffect(() => {
+  //  getUserData(dispatch, props);
+  //}, []);
+  console.log(userData)
+
   return (
     <div className={styles.profile}>
       <p>Your profile details: </p>
-        {profileData && <div>
-              <p>Login: {profileData.login}</p>
-              <p>Name: {profileData.profile_name}</p>
-              <p>Email: {profileData.email}</p>
-              <p>About me: {profileData.about}</p>
-              <p>Creation Date: {profileData.creationDate}</p>
-              <p>Last Login: {profileData.creationDate}</p>
+        {userData && <div>
+              <img src={`http://localhost:5000/static/profile_pictures/${userData.picture}`} alt="profile picture"/>
+              <p>Login: {userData.login}</p>
+              <p>Name: {userData.name}</p>
+              <p>Email: {userData.email}</p>
+              <p>About me: {userData.about}</p>
+              <p>Creation Date: {userData.creation_date}</p>
+              <p>Last Login: {userData.last_login}</p>
+              <p>Last API Activity: {userData.last_api_activity}</p>
+              <p>Favorites: link {userData.favorites_count}</p>
+              <p>Posts: link {userData.posts_count}</p>
+              <p>Comments: link {userData.comments_count}</p>
               <a href="/changeuserdetails">Change user details</a>
               <a href="/changeuserpassword">Change user password</a>
             </div>

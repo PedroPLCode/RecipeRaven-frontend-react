@@ -9,16 +9,28 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { getUserData, createUser, changeUserDetails } from '../../utils/users'
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
 const ChangeUserDetails = () => {
 
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleConfirm = (event) => {
+    setShowModal(false);
+    handleChangeUserDetails(event);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
 
   const [changeUserDetailsForm, setChangeUserDetailsForm] = useState({
     email: "",
     name: "",
     about: "",
+    picture: null, // Dodaj pole na zdjęcie
   })
 
   let userData = null
@@ -56,8 +68,19 @@ const ChangeUserDetails = () => {
     )}
 
   const handleChangeUserDetails = (event) => {
-    changeUserDetails(event, changeUserDetailsForm, setChangeUserDetailsForm);
+    changeUserDetails(event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch);
+
+    console.log(changeUserDetailsForm)
+
     navigate('/login')
+  }
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setChangeUserDetailsForm(prevNote => ({
+      ...prevNote,
+      picture: file
+    }));
   }
 
   return (
@@ -84,7 +107,18 @@ const ChangeUserDetails = () => {
                 name="about" 
                 placeholder="About" 
                 value={changeUserDetailsForm.about} />
-          <button onClick={handleChangeUserDetails}>Change User Details</button>
+          <input 
+            onChange={handleFileChange} 
+            id="picture"
+            type="file"
+            name="picture" 
+          />
+          <button type="button" onClick={() => setShowModal(true)}>Change User Details</button>
+          <ConfirmationModal 
+            show={showModal} 
+            onClose={handleCancel} 
+            onConfirm={handleConfirm} 
+          />
         </form>
         <a href="/login">back</a>
       </div>

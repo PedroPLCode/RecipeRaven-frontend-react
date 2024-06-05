@@ -29,7 +29,8 @@ const CreateUserPage = () => {
     email: "",
     name: "",
     about: "",
-  })
+    picture: null, // Dodaj pole na zdjęcie
+  });
   
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -52,26 +53,60 @@ const CreateUserPage = () => {
     }));
   }
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setCreateUserForm(prevNote => ({
+      ...prevNote,
+      picture: file
+    }));
+  }
+
   const handleCreateUser = async (event) => {
     event.preventDefault();
-
+  
     const createUserValidators = [
       await validateLogin(createUserForm.login),
       validatePasswordInput(createUserForm.password, 'password'),
       //validatePasswordInput(createUserForm.confirmPassword, 'confirm_password'),
       passwordAndConfirmPasswordMatch(createUserForm.password, createUserForm.confirmPassword),
       validateEmail(createUserForm.email),
-    ]
-
-    console.log(createUserValidators)
-
+    ];
+  
+    console.log(createUserValidators);
+  
     if (createUserValidators.every(valid => valid)) {
-      createUser(event, createUserForm, setCreateUserForm);
+      const formData = new FormData();
+      formData.append('login', createUserForm.login);
+      formData.append('password', createUserForm.password);
+      formData.append('confirmPassword', createUserForm.confirmPassword);
+      formData.append('email', createUserForm.email);
+      formData.append('name', createUserForm.name);
+      formData.append('about', createUserForm.about);
+      if (createUserForm.picture) {
+        formData.append('picture', createUserForm.picture);
+      }
+  
+      await axios.post('/api/create_user', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
+      setCreateUserForm({
+        login: "",
+        password: "",
+        confirmPassword: "",
+        email: "",
+        name: "",
+        about: "",
+        picture: null,
+      });
     } else {
       // Handle errors
       console.log('Validation failed');
     }
   }
+  
 
   return (
     <div className={styles.user}>
@@ -126,6 +161,12 @@ const CreateUserPage = () => {
             name="about" 
             placeholder="About" 
             value={userData ? userData.about : createUserForm.about} 
+          />
+          <input 
+            onChange={handleFileChange} 
+            id="picture"
+            type="file"
+            name="picture" 
           />
           <button onClick={handleCreateUser}>
             {userData ? "Change User Details" : "Create New User"}
