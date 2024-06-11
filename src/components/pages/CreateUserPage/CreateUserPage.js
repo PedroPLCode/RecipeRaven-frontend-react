@@ -72,7 +72,7 @@ const CreateUserPage = () => {
       validateEmail(createUserForm.email),
     ];
   
-    console.log(createUserValidators);
+    //console.log(createUserValidators);
   
     if (createUserValidators.every(valid => valid)) {
       const formData = new FormData();
@@ -86,21 +86,8 @@ const CreateUserPage = () => {
         formData.append('picture', createUserForm.picture);
       }
   
-      await axios.post('/api/create_user', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-  
-      setCreateUserForm({
-        login: "",
-        password: "",
-        confirmPassword: "",
-        email: "",
-        name: "",
-        about: "",
-        picture: null,
-      });
+      createUser(event, createUserForm, setCreateUserForm)
+      
     } else {
       // Handle errors
       console.log('Validation failed');

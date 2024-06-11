@@ -1,5 +1,6 @@
 import axios from "axios";
-import styles from '../../components/pages/CreateUserPage/CreateUserPage.module.scss'
+import stylesCreateUser from '../../components/pages/CreateUserPage/CreateUserPage.module.scss'
+import stylesChangePassword from '../../components/features/ChangeUserPassword/ChangeUserPassword.module.scss'
 import { classNames, elementsNames, parametersNames, messages, settings } from '../../settings';
 import { useDispatch } from "react-redux";
 import { updateUser } from '../../redux/reducers/userReducer';
@@ -10,10 +11,10 @@ export const validateLogin = async login => {
   const regex = settings.regexLoginString
   //inny nizpozostale , niepowtarzalny, max 10 znaków
   if ((!await loginExists) && regex.test(login)) {
-    inputField.classList.remove(styles.input_error);
+    inputField.classList.remove(stylesCreateUser.input_error);
     return true;
   } 
-  inputField.classList.add(styles.input_error);
+  inputField.classList.add(stylesCreateUser.input_error);
   console.log('Validation login failed');
   return false;
 }
@@ -24,11 +25,13 @@ export const validatePasswordInput = (password, field_id) => {
   const passwordInputField = document.getElementById(field_id);
   if (passwordInputField) {
     if (!regex.test(password)) {
-      passwordInputField.classList.remove(styles.input_ok);
+      passwordInputField.classList.remove(stylesCreateUser.input_ok);
+      passwordInputField.classList.remove(stylesChangePassword.input_ok);
       console.log('Validation passwd failed');
       return false
     } else {
-      passwordInputField.classList.add(styles.input_ok);
+      passwordInputField.classList.add(stylesCreateUser.input_ok);
+      passwordInputField.classList.add(stylesChangePassword.input_ok);
       return true;
     }
   }
@@ -39,15 +42,19 @@ export const passwordAndConfirmPasswordMatch = (password, confirmPassword) => {
   const confirmPasswordInputField = document.getElementById('confirmPassword');
   if (password !== confirmPassword) {
     if (passwordInputField && confirmPasswordInputField) {
-      passwordInputField.classList.remove(styles.input_ok);
-      confirmPasswordInputField.classList.remove(styles.input_ok);
+      passwordInputField.classList.remove(stylesCreateUser.input_ok);
+      confirmPasswordInputField.classList.remove(stylesCreateUser.input_ok);
+      passwordInputField.classList.remove(stylesChangePassword.input_ok);
+      confirmPasswordInputField.classList.remove(stylesChangePassword.input_ok);
     }
     console.log('Validation passwd match failed');
     return false
   }
   if (passwordInputField && confirmPasswordInputField) {
-    passwordInputField.classList.add(styles.input_ok);
-    confirmPasswordInputField.classList.add(styles.input_ok);
+    passwordInputField.classList.add(stylesCreateUser.input_ok);
+    confirmPasswordInputField.classList.add(stylesCreateUser.input_ok);
+    passwordInputField.classList.add(stylesChangePassword.input_ok);
+    confirmPasswordInputField.classList.add(stylesChangePassword.input_ok);
   }
   return true
 }
@@ -56,11 +63,11 @@ export const validateEmail = email => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const inputField = document.getElementById('email');
   if (regex.test(email)) {
-    inputField.classList.add(styles.input_ok);
+    inputField.classList.add(stylesCreateUser.input_ok);
     return true;
   } else {
     // Obsługa ramki czerwonej i ostrzeżenia
-    inputField.classList.remove(styles.input_ok);
+    inputField.classList.remove(stylesCreateUser.input_ok);
     console.log('Validation email failed');
     return false;
   }
@@ -117,48 +124,89 @@ export const getUserData = async (dispatch, props = null) => {
 };
 
 
-export const createUser = (event, createUserForm, setCreateUserForm)  => {
-  axios({
-    method: "POST",
-    url: "/api/users",
-    baseURL: 'http://127.0.0.1:5000',
-    data: {
-      login: createUserForm.login,
-      password: createUserForm.password,
-      email: createUserForm.email,
-      name: createUserForm.name,
-      about: createUserForm.about,
-    }
-  })
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-      }
-    })
+export const checkUserPassword = async (form) => {
+  const formData = new FormData();
+  formData.append('password', form.oldPassword);
 
-  setCreateUserForm(({
-    login: "",
-    password: "",
-    email: "",
-    name: "",
-    about: "",
-  }))
-  event.preventDefault()
+  const url = 'http://127.0.0.1:5000/api/userpasswdcheck';
+  const options = {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    },
+    body: formData,
+  };
+
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log(result);
+    return result.passwd_check === true; // Zwraca true lub false w zależności od wyniku
+  } catch (error) {
+    console.error('Error:', error);
+    return false; // Możesz zwrócić false lub przekazać błąd dalej, w zależności od potrzeb
+  }
+};
+
+
+export const createUser = async (event, createUserForm, setCreateUserForm) => {
+  event.preventDefault();
+
+  const formData = new FormData();
+  formData.append('login', createUserForm.login);
+  formData.append('password', createUserForm.password);
+  formData.append('email', createUserForm.email);
+  formData.append('name', createUserForm.name);
+  formData.append('about', createUserForm.about);
+  if (createUserForm.picture) {
+    formData.append('picture', createUserForm.picture);
+  }
+
+  const url = 'http://localhost:5000/api/users';
+  const options = {
+    method: 'POST',
+    body: formData,
+  };
+
+  console.log(options)
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result);
+    setCreateUserForm({
+      login: "",
+      password: "",
+      email: "",
+      name: "",
+      about: "",
+      picture: null,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
+
 
 export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch) => {
   event.preventDefault();
   
   // Create a FormData object
   const formData = new FormData();
-  formData.append('email', changeUserDetailsForm.email);
-  formData.append('name', changeUserDetailsForm.name);
-  formData.append('about', changeUserDetailsForm.about);
+  if (changeUserDetailsForm.email) {
+    formData.append('email', changeUserDetailsForm.email);
+  }
+  if (changeUserDetailsForm.name) {
+    formData.append('name', changeUserDetailsForm.name);
+  }
+  if (changeUserDetailsForm.about) {
+    formData.append('about', changeUserDetailsForm.about);
+  }
   if (changeUserDetailsForm.picture) {
     formData.append('picture', changeUserDetailsForm.picture);
   }
@@ -201,7 +249,7 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
   if (passwordAndConfirmPasswordMatch(changeUserPasswordForm.newPassword, changeUserPasswordForm.confirmNewPassword)) {
     const formData = new FormData();
     formData.append('oldPassword', changeUserPasswordForm.oldPassword);
-    formData.append('newPassword', changeUserPasswordForm.newPassword);
+    formData.append('newPassword', changeUserPasswordForm.password);
 
     const url = 'http://127.0.0.1:5000/api/users';
     const options = {

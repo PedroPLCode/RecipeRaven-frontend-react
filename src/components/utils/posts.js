@@ -25,27 +25,35 @@ export const fetchPosts = async dispatch => {
   }
 }
 
-export const createPost = async payload => {
+export const createPost = async (payload) => {
   const url = `http://localhost:5000/api/posts`;
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  if (localStorage.token) {
+    headers['Authorization'] = 'Bearer ' + localStorage.token;
+  }
+
   const options = {
     method: 'POST',
     mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.token,
-    },
-    body: JSON.stringify(payload)
+    headers: headers,
+    body: JSON.stringify(payload),
   };
-  fetch(url, options)
-  .then(function (response) {
-    return response;
-  })
-  .then(function (parsedResponse) {
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-}
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const parsedResponse = await response.json();
+    return parsedResponse;
+  } catch (error) {
+    console.error('Error creating post:', error);
+  }
+};
+
 
 //PUT
 

@@ -13,21 +13,24 @@ import { getUserData, createUser, changeUserDetails } from '../../utils/users'
 
 const BoardPage = () => {
 
-  let userData = null
+  //let userData = null
 
   const dispatch = useDispatch();
+  const posts = useSelector(state => getPosts(state));
+  const userData = useSelector(state => getUser(state));
   //const userData = useSelector(state => getUser(state));
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
-  const [newPostAuthor, setNewPostAuthor] = useState(userData ? userData.name : "");
+  const [newPostAuthor, setNewPostAuthor] = useState(userData ? `${userData.name ? userData.name : userData.login}` : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
 
   const handleSendNewPost = () => {
     const newPost = {
       title: newPostTitle,
       content: newPostContent,
-      author: userData ? userData.name : newPostAuthor,
+      guest_author: newPostAuthor,
     }
+    console.log(newPost)
     posts.push(newPost);
     dispatch(updatePosts(posts));
     createPost(newPost);
@@ -41,9 +44,9 @@ const BoardPage = () => {
     const fetchData = async () => {
       try {
         if (localStorage.token) {
-          userData = await getUserData(dispatch);
+          //userData = await getUserData(dispatch);
           console.log(userData)
-          setNewPostAuthor(await userData.name ? userData.name : userData.login)
+          //setNewPostAuthor(await userData ? `${userData.name ? userData.name : userData.login}` : newPostAuthor)
         }
         
         fetchPosts(dispatch);
@@ -55,8 +58,6 @@ const BoardPage = () => {
 
     fetchData();
   }, [reloadTrigger]);
-
-  const posts = useSelector(state => getPosts(state));
 
   console.log(userData)
 
@@ -77,10 +78,13 @@ const BoardPage = () => {
               onChange={event => setNewPostContent(event.target.value)} />
         {userData ? `Author: ${userData.name ? userData.name : userData.login}` : 
               <input id="new-post-author" type="text" placeholder={messages.newPost.author} 
-                    title={messages.newPost.author} value={""} 
+                    title={messages.newPost.author} value={newPostAuthor} 
                     onChange={event => setNewPostAuthor(event.target.value)} />
         } 
-        <div onClick={handleSendNewPost}>send post</div>
+
+        <button onClick={handleSendNewPost}>
+        Send post
+      </button>
 
         <RandomQuote />
       </div>
@@ -99,10 +103,14 @@ const BoardPage = () => {
               onChange={event => setNewPostContent(event.target.value)} />
         {userData ? `Author: ${userData.name ? userData.name : userData.login}` : 
               <input id="new-post-author" type="text" placeholder={messages.newPost.author} 
-                    title={messages.newPost.author} value={""} 
+                    title={messages.newPost.author} value={newPostAuthor} 
                     onChange={event => setNewPostAuthor(event.target.value)} />
         } 
-        <div onClick={handleSendNewPost}>send post</div>
+
+        <button onClick={handleSendNewPost}>
+        Send post
+      </button>
+
 
         <RandomQuote />
       </div>

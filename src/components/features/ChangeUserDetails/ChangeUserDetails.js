@@ -75,14 +75,6 @@ const ChangeUserDetails = () => {
     navigate('/login')
   }
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setChangeUserDetailsForm(prevNote => ({
-      ...prevNote,
-      picture: file
-    }));
-  }
-
   return (
     <div className={styles.user}>
       <h3>User Account form</h3>
@@ -107,14 +99,9 @@ const ChangeUserDetails = () => {
                 name="about" 
                 placeholder="About" 
                 value={changeUserDetailsForm.about} />
-          <input 
-            onChange={handleFileChange} 
-            id="picture"
-            type="file"
-            name="picture" 
-          />
           <button type="button" onClick={() => setShowModal(true)}>Change User Details</button>
           <ConfirmationModal 
+            text="User details change"
             show={showModal} 
             onClose={handleCancel} 
             onConfirm={handleConfirm} 

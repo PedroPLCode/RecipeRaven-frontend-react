@@ -5,7 +5,6 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Login from '../../features/Login/Login.js'
 import Profile from '../../features/Profile/Profile.js'
 import Logout from '../../features/Logout/Logout.js'
-import DeleteUser from '../../features/DeleteUser/DeleteUser.js'
 import useToken from '../../features/useToken/useToken.js'
 
 const LoginPage = () => {
@@ -26,7 +25,6 @@ const LoginPage = () => {
         <div>
           <Profile token={token} setToken={setToken}/>
           <Logout token={removeToken}/>
-          <DeleteUser token={token}/>
         </div>
         )}
       </div>

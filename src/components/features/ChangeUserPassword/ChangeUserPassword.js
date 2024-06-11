@@ -8,11 +8,13 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
-import { getUserData, createUser, changeUserPassword } from '../../utils/users'
+import { getUserData, createUser, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../utils/users'
 
 const ChangeUserPassword = () => {
 
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,12 +29,56 @@ const ChangeUserPassword = () => {
 
   const [changeUserPasswordForm, setChangeUserPasswordForm] = useState({
     oldPassword: "",
-    newPassword: "",
-    confirmNewPassword: "",
+    password: "",
+    confirmPassword: "",
   })
+
+  const handleClickChangePassword = () => {
+    if (!changeUserPasswordForm.oldPassword) {
+      alert('enter current password to confirm')
+    } else if (!changeUserPasswordForm.password) {
+      alert('enter new password')
+    } else if (!changeUserPasswordForm.confirmPassword) {
+      alert('confirm new password')
+    } else if (!validatePasswordInput(changeUserPasswordForm.password, 'password')) {
+      alert('passwords too short')
+    } else if (!passwordAndConfirmPasswordMatch(changeUserPasswordForm.password, changeUserPasswordForm.confirmPassword)) {
+      alert('passwords not match')
+    } else {
+      setShowModal(true);
+    }
+  };
   
+  const handleConfirm = async (event) => {
+    event.preventDefault(); // Zapobieganie domyślnej akcji formularza, jeśli używasz formularza
+    setShowModal(false);
+    
+    try {
+      const passwdCheck = await checkUserPassword(changeUserPasswordForm);
+      if (passwdCheck) {
+        handleChangeUserPassword(event);
+      } else {
+        alert('Error: wrong password');
+      }
+    } catch (error) {
+      console.error('Error during password check:', error);
+      alert('Error: something went wrong');
+    }
+  };
+  
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
   const handleChange = event => {
-    const {value, name} = event.target
+    const { value, name } = event.target;
+
+    if (name === 'password') {
+      validatePasswordInput(value, 'password');
+    } else if (name === 'confirmPassword') {
+      //validatePasswordInput(value, 'confirmPassword');
+      passwordAndConfirmPasswordMatch(changeUserPasswordForm.password, value);
+    }
     setChangeUserPasswordForm(prevNote => ({
         ...prevNote, [name]: value})
     )}
@@ -49,27 +95,35 @@ const ChangeUserPassword = () => {
       <div>
         <form className="login">
           <input onChange={handleChange} 
-                type="oldPassword"
+                type="password"
                 text={changeUserPasswordForm.oldPassword} 
                 name="oldPassword" 
                 placeholder="Old Password" 
                 value={changeUserPasswordForm.oldPassword} />          
           
           <input onChange={handleChange} 
-                type="newPassword"
-                text={changeUserPasswordForm.newPassword} 
-                name="newPassword" 
+                id="password"
+                type="password"
+                text={changeUserPasswordForm.password} 
+                name="password" 
                 placeholder="New Password" 
-                value={changeUserPasswordForm.newPassword} />
+                value={changeUserPasswordForm.password} />
 
           <input onChange={handleChange} 
-                type="confirmNewPassword"
-                text={changeUserPasswordForm.confirmNewPassword} 
-                name="confirmNewPassword" 
+                id="confirmPassword"
+                type="password"
+                text={changeUserPasswordForm.confirmPassword} 
+                name="confirmPassword" 
                 placeholder="Confirm New Password" 
-                value={changeUserPasswordForm.confirmNewPassword} />
+                value={changeUserPasswordForm.confirmPassword} />
           
-          <button onClick={handleChangeUserPassword}>Change User Password</button>
+          <button type="button" onClick={() => handleClickChangePassword()}>Change User Password</button>
+          <ConfirmationModal 
+            text="User password change"
+            show={showModal} 
+            onClose={handleCancel} 
+            onConfirm={handleConfirm} 
+          />
         </form>
         <a href="/login">back</a>
       </div>

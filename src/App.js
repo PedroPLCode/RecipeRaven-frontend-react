@@ -18,7 +18,9 @@ import Profile from './components/features/Profile/Profile.js'
 import useToken from './components/features/useToken/useToken.js'
 import CreateUserPage from './components/pages/CreateUserPage/CreateUserPage';
 import ChangeUserDetails from './components/features/ChangeUserDetails/ChangeUserDetails';
+import ChangeUserPicture from './components/features/ChangeUserPicture/ChangeUserPicture';
 import ChangeUserPassword from './components/features/ChangeUserPassword/ChangeUserPassword';
+import DeleteUserPage from './components/features/DeleteUserPage/DeleteUserPage';
 
 const App = () => {
 
@@ -57,7 +59,9 @@ const App = () => {
             <Route exact path="/profile" element={<Profile token={token} setToken={setToken} />} />
             <Route path="/createuser" element={<CreateUserPage token={token} setToken={setToken} />} />
             <Route path="/changeuserdetails" element={<ChangeUserDetails token={token} setToken={setToken} />} />
+            <Route path="/changeuserpicture" element={<ChangeUserPicture token={token} setToken={setToken} />} />
             <Route path="/changeuserpassword" element={<ChangeUserPassword token={token} setToken={setToken} />} />
+            <Route path="/deleteuserpage" element={<DeleteUserPage token={token} setToken={setToken} />} />
             <Route path="*/errorpage" element={<ErrorPage />} />
             <Route path="/loadingpage" element={<Loading />} />
             <Route path="/readypage" element={<ReadyToSearch />} />
