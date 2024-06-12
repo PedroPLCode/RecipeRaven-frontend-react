@@ -67,7 +67,9 @@ const BoardPage = () => {
         <h3>BoardPage component</h3>
 
         {posts.map(post => (
-          <Post post={post} />
+          <Post post={post} 
+                posts={posts} 
+                userData={userData} />
         ))}
 
         <input id="new-post-title" type="text" placeholder={messages.newPost.title} 
@@ -83,7 +85,7 @@ const BoardPage = () => {
         } 
 
         <button onClick={handleSendNewPost}>
-        Send post
+        Add post
       </button>
 
         <RandomQuote />
@@ -108,7 +110,7 @@ const BoardPage = () => {
         } 
 
         <button onClick={handleSendNewPost}>
-        Send post
+        Add post
       </button>
 
 
