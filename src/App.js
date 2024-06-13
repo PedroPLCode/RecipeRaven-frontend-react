@@ -21,6 +21,8 @@ import ChangeUserDetails from './components/features/ChangeUserDetails/ChangeUse
 import ChangeUserPicture from './components/features/ChangeUserPicture/ChangeUserPicture';
 import ChangeUserPassword from './components/features/ChangeUserPassword/ChangeUserPassword';
 import DeleteUserPage from './components/features/DeleteUserPage/DeleteUserPage';
+import UserPosts from './components/pages/UserPosts/UserPosts.js';
+import UserComments from './components/pages/UserComments/UserComments.js';
 
 const App = () => {
 
@@ -57,6 +59,8 @@ const App = () => {
             <Route path="/board" element={<BoardPage />} />
             <Route path="/login" element={<UserAccountPage />} />
             <Route exact path="/profile" element={<Profile token={token} setToken={setToken} />} />
+            <Route path="/userposts" element={<UserPosts token={token} setToken={setToken} />} />
+            <Route path="/usercomments" element={<UserComments token={token} setToken={setToken} />} />
             <Route path="/createuser" element={<CreateUserPage token={token} setToken={setToken} />} />
             <Route path="/changeuserdetails" element={<ChangeUserDetails token={token} setToken={setToken} />} />
             <Route path="/changeuserpicture" element={<ChangeUserPicture token={token} setToken={setToken} />} />

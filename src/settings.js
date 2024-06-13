@@ -39,6 +39,9 @@ export const messages = {
     content: 'Write new post on out board',
     author: 'Author field',
   },
+  newComment: {
+    content: 'Write new comment to this post..',
+  },
   noInfoProvided: 'No information provided',
   showOnly20: 'But we wil show only 20',
   takeALook: 'Take a look...',

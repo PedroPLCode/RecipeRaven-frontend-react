@@ -31,9 +31,9 @@ const Profile = props => {
           <p>Creation Date: {userData.creation_date}</p>
           <p>Last Login: {userData.last_login}</p>
           <p>Last API Activity: {userData.last_api_activity}</p>
-          <p>Favorites: link {userData.favorites_count}</p>
-          <p>Posts: link {userData.posts_count}</p>
-          <p>Comments: link {userData.comments_count}</p>
+          <a href="/favorites">Favorites: {userData.favorites_count}</a>
+          <a href="/userposts">Posts: {userData.posts_count}</a>
+          <a href="/usercomments">Comments: {userData.comments_count}</a>
           <a href="/changeuserdetails">Change user details</a>
           <a href="/changeuserpicture">Change user picture</a>
           <a href="/changeuserpassword">Change user password</a>

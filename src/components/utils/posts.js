@@ -57,4 +57,23 @@ export const createPost = async (payload) => {
 
 //PUT
 
-//DELETE
+export const deletePost = async postId => {
+  const url = `http://localhost:5000/api/posts/${postId}`;
+  const options = {
+    method: 'DELETE',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.token,
+    },
+  }; 
+  try {
+    const response = await fetch(url, options);
+    const result = await response.text();
+    const finalResult = await JSON.parse(result)
+    return finalResult;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}

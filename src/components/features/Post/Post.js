@@ -6,13 +6,21 @@ import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { createComment } from '../../utils/comments';
 import { messages } from '../../../settings';
 import Comment from '../Comment/Comment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { deletePost } from '../../utils/posts';
 
 const Post = (props) => {
   const dispatch = useDispatch();
+  const [showComments, setShowComments] = useState(false);
   const [newCommentId, setNewCommentId] = useState(props.post.id);
   const [newCommentContent, setNewCommentContent] = useState('');
   const [newCommentAuthor, setNewCommentAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
+
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
 
   const handleSendNewComment = (event) => {
     event.preventDefault();
@@ -32,45 +40,79 @@ const Post = (props) => {
     setReloadTrigger(!reloadTrigger);
   };
 
+  const handleDeletePost = () => {
+    if (props.post.comments.length <= 1) {
+      deletePost(props.post.id);
+      const updatedPosts = props.posts.filter(post => post.id !== props.post.id);
+      dispatch(updatePosts(updatedPosts));
+    } else {
+      alert('Post have comments already')
+    }
+  };
+
   return (
     <div className={styles.post}>
       <strong>{props.post.title}</strong>
+
+      {props.post.user_id === props.userData.id ? 
+      <div onClick={handleDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
+       : ''}
+
       <p>{props.post.content}</p>
       <p>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</p>
       <img src={`http://localhost:5000/static/profile_pictures/${props.post.author ? props.post.author_picture : 'anonymous.jpg'}`} alt="profile" />
       
-      {props.post.comments ? 
-        props.post.comments.map((comment, index) => (
-          <Comment key={index} comment={comment} />
-        )) :
-        <p>No comments to this post. Be first</p>
-      }
+      <button onClick={toggleComments}>
+      {showComments ? (
+  <span>Hide Comments</span>
+) : (
+  <span>{props.post.comments.length} Comments - Show</span>
+)}
+      </button>
 
-      <div>
+      {showComments && (
+  <>
+    {props.post.comments && props.post.comments.length > 0 ? (
+      props.post.comments.map((comment, index) => (
+        <Comment key={index} comment={comment} post={props.post} posts={props.posts} userData={props.userData} />
+      ))
+    ) : (
+      <p>No comments to this post. Be the first!</p>
+    )}
+
+    <div>
+      <input 
+        id="new-comment-content" 
+        type="text" 
+        placeholder="Enter your comment" 
+        value={newCommentContent} 
+        onChange={event => setNewCommentContent(event.target.value)} 
+      />
+      
+      {props.userData ? (
+        <p>Author: {props.userData.name ? props.userData.name : props.userData.login}</p>
+      ) : (
         <input 
-          id="new-post-content" 
+          id="new-comment-author" 
           type="text" 
-          placeholder={messages.newPost.content} 
-          title={messages.newPost.text} 
-          value={newCommentContent} 
-          onChange={event => setNewCommentContent(event.target.value)} 
+          placeholder="Your name" 
+          value={newCommentAuthor} 
+          onChange={event => setNewCommentAuthor(event.target.value)} 
         />
-        {props.userData ? 
-          `Author: ${props.userData.name ? props.userData.name : props.userData.login}` : 
-          <input 
-            id="new-post-author" 
-            type="text" 
-            placeholder={messages.newPost.author} 
-            title={messages.newPost.author} 
-            value={newCommentAuthor} 
-            onChange={event => setNewCommentAuthor(event.target.value)} 
-          />
-        } 
+      )}
 
-        <button onClick={(event) => handleSendNewComment(event)}>
-          Add comment
-        </button>
-      </div>
+      <button onClick={handleSendNewComment}>
+      {props.post.comments.length > 0 ? (
+  <span>Add Comment</span>
+) : (
+  <span>Add First Comment</span>
+)}
+      </button>
+    </div>
+  </>
+)}
+
+
     </div>
   );
 };

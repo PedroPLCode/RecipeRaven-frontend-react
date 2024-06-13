@@ -40,4 +40,24 @@ export const createComment = async (payload) => {
   
   //PUT
   
-  //DELETE
+  export const deleteComment = async commentId => {
+    const url = `http://localhost:5000/api/comments/${commentId}`;
+    const options = {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.token,
+      },
+    }; 
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text();
+      const finalResult = await JSON.parse(result)
+      return finalResult;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+  
