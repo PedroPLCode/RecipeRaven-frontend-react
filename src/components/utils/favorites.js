@@ -17,6 +17,7 @@ export const fetchFavorites = async dispatch => {
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
     dispatch(updateFavorites(finalResponse));
+    console.log(finalResponse)
     return result;
   } catch (error) {
     console.log(error);

@@ -18,6 +18,7 @@ const FavoritesPage = props => {
     }
   }, [reload]);
   const favorites = useSelector(state => getFavorites(state));
+  console.log(favorites)
   //const favoriteKeys = Object.keys(favorites)
 
   if (!props.token) {
