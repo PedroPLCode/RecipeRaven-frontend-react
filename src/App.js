@@ -23,6 +23,8 @@ import ChangeUserPassword from './components/features/ChangeUserPassword/ChangeU
 import DeleteUserPage from './components/features/DeleteUserPage/DeleteUserPage';
 import UserPosts from './components/pages/UserPosts/UserPosts.js';
 import UserComments from './components/pages/UserComments/UserComments.js';
+import AddEditPost from './components/features/AddEditPost/AddEditPost.js';
+import EditComment from './components/features/EditComment/EditComment.js';
 
 const App = () => {
 
@@ -60,6 +62,9 @@ const App = () => {
             <Route path="/login" element={<UserAccountPage />} />
             <Route exact path="/profile" element={<Profile token={token} setToken={setToken} />} />
             <Route path="/userposts" element={<UserPosts token={token} setToken={setToken} />} />
+            <Route path="/addeditpost" element={<AddEditPost token={token} setToken={setToken} />} />
+            <Route path="/addeditpost/:postId" element={<AddEditPost token={token} setToken={setToken} />} />
+            <Route path="/editcomment/:commentId" element={<EditComment token={token} setToken={setToken} />} />
             <Route path="/usercomments" element={<UserComments token={token} setToken={setToken} />} />
             <Route path="/createuser" element={<CreateUserPage token={token} setToken={setToken} />} />
             <Route path="/changeuserdetails" element={<ChangeUserDetails token={token} setToken={setToken} />} />

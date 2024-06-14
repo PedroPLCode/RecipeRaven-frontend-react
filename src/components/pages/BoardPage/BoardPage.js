@@ -72,21 +72,7 @@ const BoardPage = () => {
                 userData={userData} />
         ))}
 
-        <input id="new-post-title" type="text" placeholder={messages.newPost.title} 
-              title={messages.newPost.text} value={newPostTitle} 
-              onChange={event => setNewPostTitle(event.target.value)} />
-        <input id="new-post-content" type="text" placeholder={messages.newPost.content} 
-              title={messages.newPost.text} value={newPostContent} 
-              onChange={event => setNewPostContent(event.target.value)} />
-        {userData ? `Author: ${userData.name ? userData.name : userData.login}` : 
-              <input id="new-post-author" type="text" placeholder={messages.newPost.author} 
-                    title={messages.newPost.author} value={newPostAuthor} 
-                    onChange={event => setNewPostAuthor(event.target.value)} />
-        } 
-
-        <button onClick={handleSendNewPost}>
-        Add post
-      </button>
+      <a href="/addeditpost">New Post</a>
 
         <RandomQuote />
       </div>

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { deleteComment } from '../../utils/comments';
+import { Link } from 'react-router-dom';
 
 const Comment = props => {
 
@@ -29,7 +30,10 @@ const Comment = props => {
       <div className={styles.comment}>
 
       {props.comment.user_id === props.userData.id ? 
+      <div>
       <div onClick={handleDeleteComment} className={styles.button_remove}><i>Delete Comment <FontAwesomeIcon icon={faTrashCan} /></i></div>
+      <Link to={`/editcomment/${props.comment.id}`}>Edit comment</Link>
+      </div>
        : ''}
 
         <p>{props.comment.content}</p>

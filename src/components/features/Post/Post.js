@@ -2,21 +2,30 @@ import styles from './Post.module.scss';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
-import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { createComment } from '../../utils/comments';
 import { messages } from '../../../settings';
 import Comment from '../Comment/Comment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { deletePost } from '../../utils/posts';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { getUser, updateUser } from '../../../redux/reducers/userReducer';
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { getPosts, updatePosts } from '../../../redux/reducers/postsReducer';
 
 const Post = (props) => {
   const dispatch = useDispatch();
+  const posts = useSelector(state => getPosts(state));
+  const userData = useSelector(state => getUser(state));
+  const navigate = useNavigate();
   const [showComments, setShowComments] = useState(false);
   const [newCommentId, setNewCommentId] = useState(props.post.id);
   const [newCommentContent, setNewCommentContent] = useState('');
   const [newCommentAuthor, setNewCommentAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
+
+const post = posts.find(post => post.id === props.post.id);
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -46,7 +55,7 @@ const Post = (props) => {
       const updatedPosts = props.posts.filter(post => post.id !== props.post.id);
       dispatch(updatePosts(updatedPosts));
     } else {
-      alert('Post have comments already')
+      alert(`Post have ${props.post.comments.length} comments already`)
     }
   };
 
@@ -54,20 +63,29 @@ const Post = (props) => {
     <div className={styles.post}>
       <strong>{props.post.title}</strong>
 
-      {props.post.user_id === props.userData.id ? 
+      {props.userData ?  
+      (props.post.user_id === props.userData.id ? 
+      <div>
       <div onClick={handleDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
-       : ''}
+      <Link to={`/addeditpost/${props.post.id}`}>Edit post</Link>
+      </div>
+       : '')
+       : 
+      ''}
 
       <p>{props.post.content}</p>
       <p>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</p>
       <img src={`http://localhost:5000/static/profile_pictures/${props.post.author ? props.post.author_picture : 'anonymous.jpg'}`} alt="profile" />
-      
+
       <button onClick={toggleComments}>
-      {showComments ? (
-  <span>Hide Comments</span>
-) : (
-  <span>{props.post.comments.length} Comments - Show</span>
-)}
+      {props.post.comments ? 
+      (showComments ? (
+        <span>Hide Comments</span>
+      ) : (
+        <span>{props.post.comments.length} Comments - Show</span>
+      ))
+      : ''}
+      
       </button>
 
       {showComments && (

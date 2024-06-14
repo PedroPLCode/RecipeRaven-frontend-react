@@ -55,7 +55,35 @@ export const createPost = async (payload) => {
 };
 
 
-//PUT
+export const updatePost = async (postId, payload) => {
+  const url = `http://localhost:5000/api/posts/${postId}`;
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  if (localStorage.token) {
+    headers['Authorization'] = 'Bearer ' + localStorage.token;
+  }
+
+  const options = {
+    method: 'PUT',
+    mode: 'cors',
+    headers: headers,
+    body: JSON.stringify(payload),
+  };
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const parsedResponse = await response.json();
+    return parsedResponse;
+  } catch (error) {
+    console.error('Error updating post:', error);
+  }
+};
+
 
 export const deletePost = async postId => {
   const url = `http://localhost:5000/api/posts/${postId}`;
