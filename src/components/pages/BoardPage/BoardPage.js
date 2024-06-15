@@ -24,6 +24,26 @@ const BoardPage = () => {
   const [newPostAuthor, setNewPostAuthor] = useState(userData ? `${userData.name ? userData.name : userData.login}` : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
 
+  const [filterPostsString, setFilterPostsString] = useState('');
+  const [filterAuthorsString, setFilterAuthorsString] = useState('');
+  const [sortByNewest, setSortByNewest] = useState(true);
+
+  const handleSortPosts = () => {
+    setSortByNewest(!sortByNewest)
+  }
+  
+  const handleFilterPosts = () => {
+    return posts.filter(post => {
+      const titleMatch = post.title.toLowerCase().includes(filterPostsString.toLowerCase());
+      const contentMatch = post.content.toLowerCase().includes(filterPostsString.toLowerCase());
+      const authorMatch = (post.author && post.author.toLowerCase().includes(filterAuthorsString.toLowerCase())) ||
+                          (post.guest_author && post.guest_author.toLowerCase().includes(filterAuthorsString.toLowerCase()));
+  
+      return (titleMatch || contentMatch) && authorMatch;
+    });
+  };
+  
+
   const handleSendNewPost = () => {
     const newPost = {
       title: newPostTitle,
@@ -66,11 +86,24 @@ const BoardPage = () => {
       <div className={styles.board}>
         <h3>BoardPage component</h3>
 
-        {posts.map(post => (
-          <Post post={post} 
-                posts={posts} 
-                userData={userData} />
-        ))}
+        <input id="filter" type="text" placeholder='filter posts' 
+                     title='filter posts' value={filterPostsString} 
+                     onChange={event => setFilterPostsString(event.target.value)} />
+        <input id="authors" type="text" placeholder='filter authors' 
+                     title='filter authors' value={filterAuthorsString} 
+                     onChange={event => setFilterAuthorsString(event.target.value)} />
+        <button onClick={handleSortPosts}>
+        Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
+        </button>
+
+      <a href="/addeditpost">New Post</a>
+
+      {handleFilterPosts()
+      .slice()
+      .sort(sortByNewest ? (a, b) => new Date(b.creation_date) - new Date(a.creation_date) : (a, b) => new Date(a.creation_date) - new Date(b.creation_date))
+      .map(post => (
+        <Post key={post.id} post={post} posts={posts} userData={userData} />
+      ))}
 
       <a href="/addeditpost">New Post</a>
 

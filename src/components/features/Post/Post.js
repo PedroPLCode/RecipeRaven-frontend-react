@@ -35,8 +35,10 @@ const post = posts.find(post => post.id === props.post.id);
     event.preventDefault();
     const newComment = {
       content: newCommentContent,
-      guest_author: newCommentAuthor,
       post_id: props.post.id,
+      guest_author: localStorage.token ? null : newCommentAuthor,
+      author: localStorage.token ? (props.userData.name ? props.userData.name : props.userData.login) : null,
+      user_id: localStorage.token ? props.userData.id : null,
     };
     console.log(newComment);
     const updatedPosts = props.posts.map(post => 
@@ -73,6 +75,8 @@ const post = posts.find(post => post.id === props.post.id);
        : 
       ''}
 
+      <p>Created {props.post.creation_date}</p>
+      { props.post.last_update ? <p>Modified {props.post.last_update}</p> : '' }
       <p>{props.post.content}</p>
       <p>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</p>
       <img src={`http://localhost:5000/static/profile_pictures/${props.post.author ? props.post.author_picture : 'anonymous.jpg'}`} alt="profile" />
