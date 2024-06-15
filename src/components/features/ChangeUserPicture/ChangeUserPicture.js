@@ -1,14 +1,13 @@
 import styles from './ChangeUserPicture.module.scss';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import RandomQuote from '../RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { getUser, updateUser } from '../../../redux/reducers/userReducer';
+import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
-import { getUserData, createUser, changeUserDetails } from '../../utils/users'
+import { changeUserDetails } from '../../utils/users'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
 const ChangeUserPicture = () => {

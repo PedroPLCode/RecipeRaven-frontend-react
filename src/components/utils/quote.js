@@ -1,6 +1,4 @@
-import { useDispatch } from 'react-redux';
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { getQuote, updateQuote } from '../../redux/reducers/quoteReducer';
+import { updateQuote } from '../../redux/reducers/quoteReducer';
 import { messages } from '../../settings';
 
 export const fetchQuote = async dispatch => {

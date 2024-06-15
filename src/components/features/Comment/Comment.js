@@ -2,7 +2,6 @@ import styles from './Comment.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { deleteComment } from '../../utils/comments';
 import { Link } from 'react-router-dom';

@@ -7,7 +7,7 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { messages } from '../../../settings';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { fetchPosts, createPost, updatePost } from '../../utils/posts'; // Dodaj updatePost do importów
+import { fetchPosts, createPost, updatePost } from '../../utils/posts';
 
 const AddEditPost = () => {
   const { postId } = useParams();
@@ -54,10 +54,10 @@ const AddEditPost = () => {
         post.id === parseInt(postId) ? { ...post, ...newPost } : post
       );
       dispatch(updatePosts(updatedPosts));
-      updatePost(postId, newPost); // Zaktualizuj istniejący post na serwerze
+      updatePost(postId, newPost);
     } else {
       dispatch(updatePosts([...posts, newPost]));
-      createPost(newPost); // Utwórz nowy post na serwerze
+      createPost(newPost);
     }
 
     navigate(-1)

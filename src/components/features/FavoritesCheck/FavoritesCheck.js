@@ -1,7 +1,6 @@
 import styles from './FavoritesCheck.module.scss';
 import { useEffect } from 'react';
-import { useDispatch } from "react-redux";
-import { getFavorites, updateFavorites } from '../../../redux/reducers/favoritesReducer';
+import { getFavorites } from '../../../redux/reducers/favoritesReducer';
 import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { parametersNames, settings } from '../../../settings';
@@ -10,7 +9,6 @@ import { fetchFavorites } from '../../utils/favorites'
 
 const FavoritesCheck = props => {
 
-  const dispatch = useDispatch();
   const searchResult = useSelector(state => getSearchResult(state));
 
   console.log(searchResult)

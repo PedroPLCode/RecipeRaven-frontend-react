@@ -1,31 +1,20 @@
 import styles from './Post.module.scss';
-import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createComment } from '../../utils/comments';
-import { messages } from '../../../settings';
 import Comment from '../Comment/Comment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { deletePost } from '../../utils/posts';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { getUser, updateUser } from '../../../redux/reducers/userReducer';
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { getPosts, updatePosts } from '../../../redux/reducers/postsReducer';
+import { updatePosts } from '../../../redux/reducers/postsReducer';
 
 const Post = (props) => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => getPosts(state));
-  const userData = useSelector(state => getUser(state));
-  const navigate = useNavigate();
   const [showComments, setShowComments] = useState(false);
-  const [newCommentId, setNewCommentId] = useState(props.post.id);
   const [newCommentContent, setNewCommentContent] = useState('');
   const [newCommentAuthor, setNewCommentAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
-
-const post = posts.find(post => post.id === props.post.id);
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -86,7 +75,7 @@ const post = posts.find(post => post.id === props.post.id);
       (showComments ? (
         <span>Hide Comments</span>
       ) : (
-        <span>{props.post.comments.length} Comments - Show</span>
+        <span>{props.post.comments && props.post.comments.length > 0 ? `${props.post.comments.length} Comments - Show` : 'Add Comment'}</span>
       ))
       : ''}
       

@@ -2,7 +2,7 @@ import styles from './FavoritePage.module.scss';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
-import { getFavorites, updateFavorites } from '../../../redux/reducers/favoritesReducer';
+import { getFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import SingleFavorite from '../../features/SingleFavorite/SingleFavorite';
 import { fetchFavorites, deleteFavorite } from '../../utils/favorites';
@@ -12,6 +12,8 @@ const FavoritesPage = props => {
   const dispatch = useDispatch();
   const [reload, setReload] = useState(false);
 
+  const [filterFavoritesString, setFilterFavoritesString] = useState('');
+
   useEffect(() => {
     if (props.token) {
       fetchFavorites(dispatch);
@@ -19,7 +21,15 @@ const FavoritesPage = props => {
   }, [reload]);
   const favorites = useSelector(state => getFavorites(state));
   console.log(favorites)
-  //const favoriteKeys = Object.keys(favorites)
+
+  const handleFilterFavorites = () => {
+    return favorites.filter(favorite => {
+      const labelMatch = favorite.data.label.toLowerCase().includes(filterFavoritesString.toLowerCase());
+      const commentMatch = favorite.note.content.toLowerCase().includes(filterFavoritesString.toLowerCase());
+  
+      return labelMatch || commentMatch;
+    });
+  };
 
   if (!props.token) {
     return (
@@ -35,7 +45,12 @@ const FavoritesPage = props => {
         <div className={styles.favorite}>
           <h3>Yours favorite recipes</h3>
           <h5>You have {favorites.length} saved recipes</h5>
-            {favorites.map(favorite => (
+
+          <input id="filter" type="text" placeholder='filter by label or note' 
+                     title='filter by label or note' value={filterFavoritesString} 
+                     onChange={event => setFilterFavoritesString(event.target.value)} />
+
+            {handleFilterFavorites().map(favorite => (
               <SingleFavorite key={favorite.id} 
                               favorite={favorite}
                               favorites={favorites} 

@@ -3,12 +3,9 @@ import { useState, useEffect } from 'react';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { getUser, updateUser } from '../../../redux/reducers/userReducer';
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
-import { getUserData, createUser, changeUserDetails } from '../../utils/users'
+import { getUserData, changeUserDetails } from '../../utils/users'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
 const ChangeUserDetails = () => {
@@ -30,7 +27,7 @@ const ChangeUserDetails = () => {
     email: "",
     name: "",
     about: "",
-    picture: null, // Dodaj pole na zdjęcie
+    picture: null,
   })
 
   let userData = null

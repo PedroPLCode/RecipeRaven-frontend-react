@@ -1,26 +1,31 @@
 import axios from "axios";
 import stylesCreateUser from '../../components/pages/CreateUserPage/CreateUserPage.module.scss'
 import stylesChangePassword from '../../components/features/ChangeUserPassword/ChangeUserPassword.module.scss'
-import { classNames, elementsNames, parametersNames, messages, settings } from '../../settings';
-import { useDispatch } from "react-redux";
+import { settings } from '../../settings';
 import { updateUser } from '../../redux/reducers/userReducer';
 
-export const validateLogin = async login => {
-  const loginExists = await fetchCheckUserLogin(login);
+export const validateLogin = async (login) => {
   const inputField = document.getElementById('login');
-  const regex = settings.regexLoginString
-  //inny nizpozostale , niepowtarzalny, max 10 znaków
-  if ((!await loginExists) && regex.test(login)) {
-    inputField.classList.remove(stylesCreateUser.input_error);
-    return true;
-  } 
-  inputField.classList.add(stylesCreateUser.input_error);
-  console.log('Validation login failed');
-  return false;
+  const regex = settings.regexLoginString;
+  if (!regex.test(login)) {
+    inputField.classList.add(stylesCreateUser.input_error);
+    console.log('Validation login failed: does not match regex');
+    return false;
+  }
+
+  const loginExists = await fetchCheckUserLogin(login);
+  if (loginExists) {
+    inputField.classList.add(stylesCreateUser.input_error);
+    console.log('Validation login failed: login already exists');
+    return false;
+  }
+
+  inputField.classList.remove(stylesCreateUser.input_error);
+  return true;
 }
 
+
 export const validatePasswordInput = (password, field_id) => {
-  // min 6 znakow, litery, cyfry, duze litery, znak specjalny
   const regex = settings.regexPasswordString;
   const passwordInputField = document.getElementById(field_id);
   if (passwordInputField) {
@@ -66,7 +71,6 @@ export const validateEmail = email => {
     inputField.classList.add(stylesCreateUser.input_ok);
     return true;
   } else {
-    // Obsługa ramki czerwonej i ostrzeżenia
     inputField.classList.remove(stylesCreateUser.input_ok);
     console.log('Validation email failed');
     return false;
@@ -114,7 +118,6 @@ export const getUserData = async (dispatch, props = null) => {
     }
 
     dispatch(updateUser(userData));
-    //console.log(finalResponse)
 
     return userData;
   } catch (error) {
@@ -146,10 +149,10 @@ export const checkUserPassword = async (form) => {
 
     const result = await response.json();
     console.log(result);
-    return result.passwd_check === true; // Zwraca true lub false w zależności od wyniku
+    return result.passwd_check === true;
   } catch (error) {
     console.error('Error:', error);
-    return false; // Możesz zwrócić false lub przekazać błąd dalej, w zależności od potrzeb
+    return false; 
   }
 };
 
@@ -160,9 +163,15 @@ export const createUser = async (event, createUserForm, setCreateUserForm) => {
   const formData = new FormData();
   formData.append('login', createUserForm.login);
   formData.append('password', createUserForm.password);
-  formData.append('email', createUserForm.email);
-  formData.append('name', createUserForm.name);
-  formData.append('about', createUserForm.about);
+  if (createUserForm.email !== undefined) {
+    formData.append('email', createUserForm.email);
+  }
+  if (createUserForm.name !== undefined) {
+    formData.append('name', createUserForm.name);
+  }
+  if (createUserForm.about !== undefined) {
+    formData.append('about', createUserForm.about);
+  }
   if (createUserForm.picture) {
     formData.append('picture', createUserForm.picture);
   }
@@ -196,22 +205,19 @@ export const createUser = async (event, createUserForm, setCreateUserForm) => {
 export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch) => {
   event.preventDefault();
   
-  // Create a FormData object
   const formData = new FormData();
-  if (changeUserDetailsForm.email) {
+  if (changeUserDetailsForm.email !== undefined) {
     formData.append('email', changeUserDetailsForm.email);
   }
-  if (changeUserDetailsForm.name) {
+  if (changeUserDetailsForm.name !== undefined) {
     formData.append('name', changeUserDetailsForm.name);
   }
-  if (changeUserDetailsForm.about) {
+  if (changeUserDetailsForm.about !== undefined) {
     formData.append('about', changeUserDetailsForm.about);
   }
   if (changeUserDetailsForm.picture) {
     formData.append('picture', changeUserDetailsForm.picture);
   }
-  //console.log(formData)
-  //console.log(changeUserDetailsForm.picture)
 
   const url = 'http://localhost:5000/api/users';
   const options = {
@@ -279,10 +285,8 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
       });
     } catch (error) {
       console.error(error);
-      // Handle other errors here
     }
   } else {
-    // Handle password mismatch case here
     console.log("Passwords do not match");
   }
 }

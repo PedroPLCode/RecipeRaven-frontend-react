@@ -1,17 +1,8 @@
 import styles from './Login.module.scss'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useDispatch } from "react-redux";
-import { updateUser, getUser } from '../../../redux/reducers/userReducer';
 import axios from "axios";
 
 const Login = props => {
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const userData = useSelector(state => getUser(state));
 
   const [loginForm, setloginForm] = useState({
     login: "",

@@ -1,8 +1,5 @@
-import { useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
-import { getFavorites, updateFavorites } from '../../redux/reducers/favoritesReducer';
-import { useSelector } from "react-redux/es/hooks/useSelector";
-//import dispatch from '../pages/FavoritesPage/FavoritesPage'
+import { updateFavorites } from '../../redux/reducers/favoritesReducer';
+
 
 export const fetchFavorites = async dispatch => {
   const url = `http://localhost:5000/api/favorites`;
@@ -66,4 +63,3 @@ export const deleteFavorite = async favoriteId => {
     return error;
   }
 }
-

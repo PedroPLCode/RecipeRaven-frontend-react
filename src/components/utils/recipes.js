@@ -1,16 +1,9 @@
 import styles from '../../components/pages/SearchPage/SearchPage.module.scss'
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { clsx } from "clsx";
-import { updateIngredients, getIngredients } from '../../redux/reducers/ingredientsReducer';
-import { updateExcluded, getExcluded } from '../../redux/reducers/excludedReducer';
-import { updateDiet, getDiet } from "../../redux/reducers/dietReducer";
-import { getSearchResult, updateSearchResult } from '../../redux/reducers/searchResultReducer';
-import { updateLinkNextPage, getLinkNextPage } from '../../redux/reducers/nextResultsPageReducer';
+import { updateSearchResult } from '../../redux/reducers/searchResultReducer';
+import { updateLinkNextPage } from '../../redux/reducers/nextResultsPageReducer';
 import { updateServerResponse } from '../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../redux/reducers/serverErrorReducer'
-import { classNames, elementsNames, parametersNames, messages, settings } from '../../settings';
-//import { setLoading, setSuccess } from '../pages/SearchPage/SearchPage'
+import { elementsNames, settings } from '../../settings';
 
 const prepareArrayFromStringInput = string => {
   if (typeof string !== 'string') {

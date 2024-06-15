@@ -2,8 +2,7 @@ import styles from './RandomQuote.module.scss';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { getQuote, updateQuote } from '../../../redux/reducers/quoteReducer';
-import { messages } from '../../../settings';
+import { getQuote } from '../../../redux/reducers/quoteReducer';
 import { fetchQuote} from '../../utils/quote'
 
 const RandomQuote = () => {

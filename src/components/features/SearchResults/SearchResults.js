@@ -1,10 +1,9 @@
-import { addMoreSearchResults, updateSearchResult, getSearchResult } from '../../../redux/reducers/searchResultReducer';
-import { updateServerResponse, getServerResponse } from '../../../redux/reducers/serverResponseReducer';
-import { updateServerError, getServerError } from '../../../redux/reducers/serverErrorReducer';
+import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
+import { getServerResponse } from '../../../redux/reducers/serverResponseReducer';
+import { getServerError } from '../../../redux/reducers/serverErrorReducer';
 import { getFavorites } from '../../../redux/reducers/favoritesReducer';
-import { updateLinkNextPage, getLinkNextPage } from '../../../redux/reducers/nextResultsPageReducer';
+import { getLinkNextPage } from '../../../redux/reducers/nextResultsPageReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useDispatch } from "react-redux";
 import { messages } from '../../../settings';
 import { useEffect, useState } from 'react';
 import { stylesParams, classNames } from '../../../settings';
@@ -20,7 +19,6 @@ import { fetchMoreReceipes } from '../../utils/recipes';
 
 const SearchResults = () => {
 
-  const dispatch = useDispatch();
   const [changeIndicator, setChangeIndicator] = useState(false)
   const [loading, setLoading] = useState(false);
   const searchResult = useSelector(state => getSearchResult(state));

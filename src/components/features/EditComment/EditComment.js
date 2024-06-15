@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { getPosts, updatePosts } from '../../../redux/reducers/postsReducer';
 import { getUser } from '../../../redux/reducers/userReducer';
-import { messages } from '../../../settings';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createComment, updateComment } from '../../utils/comments';
+import { updateComment } from '../../utils/comments';
 import { fetchPosts } from '../../utils/posts';
 
 const EditComment = () => {

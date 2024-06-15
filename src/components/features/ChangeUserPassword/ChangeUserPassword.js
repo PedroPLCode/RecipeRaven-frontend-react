@@ -3,14 +3,12 @@ import { useState, useEffect } from 'react';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { getUser, updateUser } from '../../../redux/reducers/userReducer';
+import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
-
-import { getUserData, createUser, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../utils/users'
+import { getUserData, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../utils/users'
 
 const ChangeUserPassword = () => {
 
@@ -50,7 +48,7 @@ const ChangeUserPassword = () => {
   };
   
   const handleConfirm = async (event) => {
-    event.preventDefault(); // Zapobieganie domyślnej akcji formularza, jeśli używasz formularza
+    event.preventDefault();
     setShowModal(false);
     
     try {

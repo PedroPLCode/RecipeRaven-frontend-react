@@ -8,11 +8,8 @@ import { clsx } from "clsx";
 import { updateIngredients, getIngredients } from '../../../redux/reducers/ingredientsReducer';
 import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
-import { getSearchResult, updateSearchResult } from '../../../redux/reducers/searchResultReducer';
-import { updateLinkNextPage, getLinkNextPage } from '../../../redux/reducers/nextResultsPageReducer';
-import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
-import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
-import { classNames, elementsNames, parametersNames, messages } from '../../../settings';
+import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
+import { classNames, parametersNames, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { validateInputString } from '../../utils/recipes'

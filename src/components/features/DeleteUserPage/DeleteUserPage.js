@@ -8,10 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { getUser, updateUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import axios from "axios";
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
-
-import { getUserData, createUser, changeUserPassword, checkUserPassword} from '../../utils/users'
+import { getUserData, checkUserPassword} from '../../utils/users'
 
 const DeleteUserPage = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -40,7 +38,7 @@ const DeleteUserPage = (props) => {
   };
   
   const handleConfirm = async (event) => {
-    event.preventDefault(); // Zapobieganie domyślnej akcji formularza, jeśli używasz formularza
+    event.preventDefault();
     setShowModal(false);
     
     try {

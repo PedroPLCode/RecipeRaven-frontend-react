@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { getUser, updateUser } from '../../../redux/reducers/userReducer';
+import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { validateLogin, validatePasswordInput, passwordAndConfirmPasswordMatch, validateEmail } from '../../utils/users';
 import { getUserData, createUser } from '../../utils/users';
 
@@ -29,7 +28,7 @@ const CreateUserPage = () => {
     email: "",
     name: "",
     about: "",
-    picture: null, // Dodaj pole na zdjęcie
+    picture: null, 
   });
   
   const handleChange = (event) => {
@@ -75,19 +74,7 @@ const CreateUserPage = () => {
     //console.log(createUserValidators);
   
     if (createUserValidators.every(valid => valid)) {
-      const formData = new FormData();
-      formData.append('login', createUserForm.login);
-      formData.append('password', createUserForm.password);
-      formData.append('confirmPassword', createUserForm.confirmPassword);
-      formData.append('email', createUserForm.email);
-      formData.append('name', createUserForm.name);
-      formData.append('about', createUserForm.about);
-      if (createUserForm.picture) {
-        formData.append('picture', createUserForm.picture);
-      }
-  
       createUser(event, createUserForm, setCreateUserForm)
-      
     } else {
       // Handle errors
       console.log('Validation failed');

@@ -16,6 +16,12 @@ const SingleFavorite = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [showNote, setShowNote] = useState(false);
+
+  const toggleNote = () => {
+    setShowNote(!showNote);
+  };
+
   const [note, setNote] = useState(props.favorite['note'] ? props.favorite['note'].content : '');
 
   const handleUpdateNote = async (event) => {
@@ -71,7 +77,19 @@ const SingleFavorite = props => {
         </p>
           <a href={SingleFavoriteObject[parametersNames.url]} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
 
-          <input 
+
+          <button onClick={toggleNote}>
+      {showNote ? (
+        <span>Hide Note</span>
+      ) : (
+        <span>Show Note</span>
+      )
+      }
+      </button>
+
+      {showNote ? (
+      <div>
+        <input 
             id="note"
             type="text"
             name="note" 
@@ -81,6 +99,12 @@ const SingleFavorite = props => {
             onChange={event => setNote(event.target.value)} 
           />
       <button onClick={(event) => handleUpdateNote(event)}>Save Note</button>
+      </div>
+    ) : '' }
+
+          
+
+
 
       <div onClick={handleRemoveFavorites} className={styles.button_remove}><i>Remove from favorites <FontAwesomeIcon icon={faTrashCan} /></i></div>
       

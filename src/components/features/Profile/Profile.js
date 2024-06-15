@@ -1,9 +1,8 @@
 import styles from './Profile.module.scss';
-import { useState, useEffect } from 'react';
-import axios from "axios";
+import { useEffect } from 'react';
 import { getUserData } from '../../utils/users';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, getUser } from '../../../redux/reducers/userReducer';
+import { getUser } from '../../../redux/reducers/userReducer';
 
 const Profile = props => {
 
@@ -30,7 +29,7 @@ const Profile = props => {
           <p>About me: {userData.about}</p>
           <p>Creation Date: {userData.creation_date}</p>
           <p>Last Login: {userData.last_login}</p>
-          <p>Last API Activity: {userData.last_api_activity}</p>
+          <p>Last Activity: {userData.last_api_activity}</p>
           <a href="/favorites">Favorites: {userData.favorites_count}</a>
           <a href="/userposts">Posts: {userData.posts_count}</a>
           <a href="/usercomments">Comments: {userData.comments_count}</a>
