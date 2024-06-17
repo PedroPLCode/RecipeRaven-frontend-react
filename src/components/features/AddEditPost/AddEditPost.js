@@ -49,12 +49,15 @@ const AddEditPost = () => {
       guest_author: newPostAuthor,
     };
 
+
     if (postId) {
-      const updatedPosts = posts.map(post => 
-        post.id === parseInt(postId) ? { ...post, ...newPost } : post
-      );
-      dispatch(updatePosts(updatedPosts));
-      updatePost(postId, newPost);
+      if (window.confirm("Edit the item?")) {
+        const updatedPosts = posts.map(post => 
+          post.id === parseInt(postId) ? { ...post, ...newPost } : post
+        );
+        dispatch(updatePosts(updatedPosts));
+        updatePost(postId, newPost);
+      }
     } else {
       dispatch(updatePosts([...posts, newPost]));
       createPost(newPost);

@@ -25,7 +25,7 @@ const FavoritesPage = props => {
   const handleFilterFavorites = () => {
     return favorites.filter(favorite => {
       const labelMatch = favorite.data.label.toLowerCase().includes(filterFavoritesString.toLowerCase());
-      const commentMatch = favorite.note.content.toLowerCase().includes(filterFavoritesString.toLowerCase());
+      const commentMatch = favorite.note ? favorite.note.content.toLowerCase().includes(filterFavoritesString.toLowerCase()) : false;
   
       return labelMatch || commentMatch;
     });

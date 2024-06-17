@@ -8,6 +8,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { deletePost } from '../../utils/posts';
 import { Link } from 'react-router-dom';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
+import { settings } from '../../../settings.js'
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -41,10 +42,12 @@ const Post = (props) => {
   };
 
   const handleDeletePost = () => {
-    if (props.post.comments.length <= 1) {
-      deletePost(props.post.id);
-      const updatedPosts = props.posts.filter(post => post.id !== props.post.id);
-      dispatch(updatePosts(updatedPosts));
+    if (props.post.comments.length === 0) {
+      if (window.confirm("Delete the item?")) {
+        deletePost(props.post.id);
+        const updatedPosts = props.posts.filter(post => post.id !== props.post.id);
+        dispatch(updatePosts(updatedPosts));
+      }
     } else {
       alert(`Post have ${props.post.comments.length} comments already`)
     }
@@ -55,7 +58,7 @@ const Post = (props) => {
       <strong>{props.post.title}</strong>
 
       {props.userData ?  
-      (props.post.user_id === props.userData.id ? 
+      (props.post.user_id === props.userData.id || props.userData.id === settings.adminId ? 
       <div>
       <div onClick={handleDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
       <Link to={`/addeditpost/${props.post.id}`}>Edit post</Link>

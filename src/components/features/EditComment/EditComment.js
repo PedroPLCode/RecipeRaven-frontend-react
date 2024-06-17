@@ -43,30 +43,34 @@ const EditComment = () => {
   const handleEditComment = (event) => {
     event.preventDefault();
 
-    const newComment = {
-      content: newCommentContent,
+    if (window.confirm("Edit the item?")) {
+
+      const newComment = {
+        content: newCommentContent,
+      };
+
+      if (commentId) {
+        updateComment(commentId, newComment)
+          .then(() => {
+            const updatedPosts = posts.map(post => 
+              post.comments.some(comment => comment.id === parseInt(commentId)) 
+                ? { ...post, comments: post.comments.map(comment => comment.id === parseInt(commentId) ? newComment : comment) } 
+                : post
+            );
+            dispatch(updatePosts(updatedPosts));
+            navigate(-1);
+          })
+          .catch(error => console.error('Error updating comment:', error));
+        }
+
+      setNewCommentContent('');
+      setReloadTrigger(!reloadTrigger);
     };
-
-    if (commentId) {
-      updateComment(commentId, newComment)
-        .then(() => {
-          const updatedPosts = posts.map(post => 
-            post.comments.some(comment => comment.id === parseInt(commentId)) 
-              ? { ...post, comments: post.comments.map(comment => comment.id === parseInt(commentId) ? newComment : comment) } 
-              : post
-          );
-          dispatch(updatePosts(updatedPosts));
-          navigate(-1);
-        })
-        .catch(error => console.error('Error updating comment:', error));
-      }
-
-    setNewCommentContent('');
-    setReloadTrigger(!reloadTrigger);
-  };
+  }
 
   const handleBack = () => {
     navigate(-1);
+    
   }
 
   return (

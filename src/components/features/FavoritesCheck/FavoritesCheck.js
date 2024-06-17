@@ -6,8 +6,11 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { parametersNames, settings } from '../../../settings';
 import PropTypes from "prop-types";
 import { fetchFavorites } from '../../utils/favorites'
+import { useDispatch } from 'react-redux';
 
 const FavoritesCheck = props => {
+
+  const dispatch = useDispatch();
 
   const searchResult = useSelector(state => getSearchResult(state));
 
@@ -28,7 +31,7 @@ const FavoritesCheck = props => {
   }
 
   useEffect(() => {
-    fetchFavorites();
+    fetchFavorites(dispatch);
   }, []);
   const favorites = useSelector(state => getFavorites(state));
   const favoriteKeys = Object.keys(favorites);

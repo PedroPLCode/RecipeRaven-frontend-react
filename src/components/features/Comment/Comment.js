@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { deleteComment } from '../../utils/comments';
 import { Link } from 'react-router-dom';
+import { settings } from '../../../settings'
 
 const Comment = props => {
 
@@ -13,29 +14,35 @@ const Comment = props => {
   const dispatch = useDispatch();
 
   const handleDeleteComment = () => {
-    deleteComment(props.comment.id);
-    
-    const updatedPosts = props.posts.map(post => {
-      if (post.id === props.post.id) {
-        const updatedComments = post.comments.filter(comment => comment.id !== props.comment.id);
-        return { ...post, comments: updatedComments };
-      } else {
-        return post;
-      }
-    });
 
-    dispatch(updatePosts(updatedPosts));
+    if (window.confirm("Delete the item?")) {
+      deleteComment(props.comment.id);
+    
+      const updatedPosts = props.posts.map(post => {
+        if (post.id === props.post.id) {
+          const updatedComments = post.comments.filter(comment => comment.id !== props.comment.id);
+          return { ...post, comments: updatedComments };
+        } else {
+          return post;
+        }
+      });
+  
+      dispatch(updatePosts(updatedPosts));
+    }
   };
   
     return (
       <div className={styles.comment}>
 
-      {props.userData && props.comment.user_id === props.userData.id ? 
+      {props.userData ?  
+      (props.comment.user_id === props.userData.id || props.userData.id === settings.adminId ? 
       <div>
       <div onClick={handleDeleteComment} className={styles.button_remove}><i>Delete Comment <FontAwesomeIcon icon={faTrashCan} /></i></div>
       <Link to={`/editcomment/${props.comment.id}`}>Edit comment</Link>
       </div>
-       : ''}
+       : '')
+       : 
+       ''}
 
         { props.comment.creation_date ? <p>Created {props.comment.creation_date}</p> : '' }
         { props.comment.last_update ? <p>Modified {props.comment.last_update}</p> : '' }

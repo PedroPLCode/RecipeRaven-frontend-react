@@ -81,4 +81,5 @@ export const settings = {
   regexLoginString: /^[a-zA-Z0-9]{1,10}$/,
   regexPasswordString: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
   title: 'Receipes Search App',
+  adminId: 1,
 }
