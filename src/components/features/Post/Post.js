@@ -122,6 +122,18 @@ const Post = (props) => {
   <span>Add First Comment</span>
 )}
       </button>
+
+      <button onClick={toggleComments}>
+      {props.post.comments ? 
+      (showComments ? (
+        <span>Hide Comments</span>
+      ) : (
+        <span>{props.post.comments && props.post.comments.length > 0 ? `${props.post.comments.length} Comments - Show` : 'Add Comment'}</span>
+      ))
+      : ''}
+      
+      </button>
+      
     </div>
   </>
 )}
