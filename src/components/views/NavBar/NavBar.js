@@ -63,7 +63,7 @@ const NavBar = props => {
             Search
           </Nav.Link>
           <Nav.Link className={styles.link} as={NavLink} to="/favorites">
-            Favorites { props.token ? "(" + favoritesCount + ")" : null }
+            Favorites { props.token && userData ? "(" + favoritesCount + ")" : null }
           </Nav.Link>
           <Nav.Link className={styles.link} as={NavLink} to="/board">
             Board
@@ -73,10 +73,10 @@ const NavBar = props => {
           </Nav.Link>
           
           <Nav.Link className={styles.link} as={NavLink} to="/login">
-            { props.token ? "Your account (" + userName + ")" : "Login" }
+            { props.token && userData ? "Your account (" + userName + ")" : "Login" }
           </Nav.Link>
 
-          { !props.token ?
+          { !props.token && !userData ?
           <Nav.Link className={styles.link} as={NavLink} to="/createuser">Create account</Nav.Link> : <Logout token={removeToken}/>
           }
 

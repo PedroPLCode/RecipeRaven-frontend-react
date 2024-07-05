@@ -11,6 +11,8 @@ const LoginPage = () => {
 
   const { token, removeToken, setToken } = useToken();
 
+  console.log(localStorage.token)
+
   return (
     <div className={styles.account}>
       <h3>User Account Page</h3>
