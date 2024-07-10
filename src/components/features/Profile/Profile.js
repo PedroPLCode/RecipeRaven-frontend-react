@@ -13,16 +13,13 @@ const Profile = props => {
     getUserData(dispatch, props);
   }, [dispatch, props]);
 
-  //console.log(userData)
-  //console.log(localStorage.token)
-
   return (
     <div className={styles.profile}>
       <p>Your profile details: </p>
       {userData != null ? (
         <div>
           {userData.picture ? (
-            <img src={`http://localhost:5000/static/profile_pictures/${userData.picture}`} alt="profile" />
+            <img src={`http://localhost:5000/static/uploaded_photos/${userData.picture}`} alt={userData.picture} />
           ) : (
             <p>No profile picture available</p>
           )}

@@ -71,7 +71,7 @@ const Post = (props) => {
       { props.post.last_update ? <p>Modified {props.post.last_update}</p> : '' }
       <p>{props.post.content}</p>
       <p>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</p>
-      <img src={`http://localhost:5000/static/profile_pictures/${props.post.author ? props.post.author_picture : 'anonymous.jpg'}`} alt="profile" />
+      <img src={`http://localhost:5000/static/uploaded_photos/${props.post.author ? props.post.author_picture : 'anonymous.jpg'}`} alt="profile" />
 
       <button onClick={toggleComments}>
       {props.post.comments ? 

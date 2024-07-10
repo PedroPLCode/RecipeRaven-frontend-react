@@ -46,7 +46,7 @@ const SingleFavorite = props => {
   }
 
   const SingleFavoriteObject = props.favorite['data'];
-  const imagePath = props.favorite['image_name'];
+  const imageName = props.favorite['image_name'];
 
   console.log(props.favorite)
 
@@ -56,7 +56,7 @@ const SingleFavorite = props => {
       <div className={styles.image}>
         <a href={SingleFavoriteObject.url} target='_blank' rel="noreferrer">
           <i>Click for full receipe!</i>
-          <img src={`http://localhost:5000/static/profile_pictures/${imagePath}`} alt={imagePath} width='400' height='400' />
+          <img src={`http://localhost:5000/static/uploaded_photos/${imageName}`} alt={imageName} width='400' height='400' />
         </a>
       </div>  
 
@@ -90,7 +90,9 @@ const SingleFavorite = props => {
       {showNote ? (
         <span>Hide Note</span>
       ) : (
-        <span>Show Note</span>
+        <span>
+          {note ? 'Show Note' : 'Add note'}
+        </span>
       )
       }
       </button>
@@ -109,9 +111,6 @@ const SingleFavorite = props => {
       <button onClick={(event) => handleUpdateNote(event)}>Save Note</button>
       </div>
     ) : '' }
-
-          
-
 
 
       <div onClick={handleRemoveFavorites} className={styles.button_remove}><i>Remove from favorites <FontAwesomeIcon icon={faTrashCan} /></i></div>

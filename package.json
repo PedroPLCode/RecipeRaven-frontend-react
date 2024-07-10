@@ -33,7 +33,8 @@
     "redux": "^4.2.1",
     "sass": "^1.66.1",
     "shortid": "^2.2.16",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.22"
   },
   "scripts": {
     "start": "set HTTPS=true && react-scripts start",
