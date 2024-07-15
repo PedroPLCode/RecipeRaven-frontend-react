@@ -98,6 +98,7 @@ export const fetchCheckUserLogin = async loginToCheck => {
 };
 
 export const getUserData = async (dispatch, props = null) => {
+  console.log(localStorage.token)
   const url = `http://localhost:5000/api/users`;
   const options = {
     method: 'GET',

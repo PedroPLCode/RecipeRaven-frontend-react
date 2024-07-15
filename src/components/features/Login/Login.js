@@ -1,6 +1,8 @@
 import styles from './Login.module.scss'
 import { useState } from 'react';
 import axios from "axios";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import GoogleAuth from '../GoogleAuth/GoogleAuth';
 
 const Login = props => {
 
@@ -62,6 +64,11 @@ const Login = props => {
                value={loginForm.password} />
         <button onClick={logMeIn}>Login</button>
       </form>
+
+      <GoogleOAuthProvider clientId="868534734276-qbdh8jfvu93533vpnqljgevh1it0s2oj.apps.googleusercontent.com">
+        <GoogleAuth setToken={props.setToken}></GoogleAuth>
+      </GoogleOAuthProvider>
+
     </div>
   );
 }

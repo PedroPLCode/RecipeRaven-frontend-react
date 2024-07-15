@@ -10,8 +10,6 @@ import { fetchPosts } from '../../utils/posts';
 
 const UserComments = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => getPosts(state));
-  const userData = useSelector(state => getUser(state));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +27,9 @@ const UserComments = () => {
 
     fetchData();
   }, []);
+
+  const posts = useSelector(state => getPosts(state));
+  const userData = useSelector(state => getUser(state));
 
   console.log(userData)
 

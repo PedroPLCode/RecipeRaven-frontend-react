@@ -6,6 +6,7 @@ import store from './redux/store'
 import App from './App';
 import { elementsNames } from './settings';
 import './styles/styles.scss';
+import reportWebVitals from './components/utils/reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById(elementsNames.root));
 root.render(
@@ -17,3 +18,5 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>,
 );
+
+reportWebVitals();

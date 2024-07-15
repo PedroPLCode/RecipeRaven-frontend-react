@@ -58,10 +58,10 @@ const ChangeUserPicture = () => {
       <h3>User Account form</h3>
       <h5>Change User Details</h5>
       {userData && userData.picture ? (
-        <img src={`http://localhost:5000/static/profile_pictures/${userData.picture}`} alt="profile"/>
-      ) : (
-        <p>No profile picture available</p>
-      )}
+              <img src={`${userData.google_user && userData.original_google_picture ? '' : 'http://localhost:5000/static/uploaded_photos/'}${userData.picture}`} alt={userData.picture} />
+            ) : (
+              <p>No profile picture available</p>
+            )}
       <div>
         <form className="login">
           <input 
