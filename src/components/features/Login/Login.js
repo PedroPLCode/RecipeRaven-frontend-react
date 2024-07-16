@@ -65,6 +65,8 @@ const Login = props => {
         <button onClick={logMeIn}>Login</button>
       </form>
 
+      <a href="/forgottenpassword">Forgotten password</a>
+
       <GoogleOAuthProvider clientId="868534734276-qbdh8jfvu93533vpnqljgevh1it0s2oj.apps.googleusercontent.com">
         <GoogleAuth setToken={props.setToken}></GoogleAuth>
       </GoogleOAuthProvider>

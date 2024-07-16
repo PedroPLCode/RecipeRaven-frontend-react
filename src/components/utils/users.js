@@ -293,6 +293,38 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
 }
 
 
+export const resetPassword = async (event, email) => {
+  event.preventDefault();
+
+  //const formData = new FormData();
+  //formData.append('email', email);
+
+  const url = 'http://127.0.0.1:5000/api/resetpassword';
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  }
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result);
+
+    if (response.ok) {
+      // Handle successful response here
+    } else {
+      // Handle error response here
+      console.error(result);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 export const logOut = props => {
   axios({
     method: "POST",

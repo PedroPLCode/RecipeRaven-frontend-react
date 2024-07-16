@@ -27,6 +27,8 @@ import AddEditPost from './components/features/AddEditPost/AddEditPost.js';
 import EditComment from './components/features/EditComment/EditComment.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ForgottenPassword from './components/features/ForgottenPassword/ForgottenPassword.js';
+import ResetPassword from './components/features/ResetPassword/ResetPassword.js';
 
 const App = () => {
 
@@ -73,6 +75,10 @@ const App = () => {
             <Route path="/changeuserpicture" element={<ChangeUserPicture token={token} setToken={setToken} />} />
             <Route path="/changeuserpassword" element={<ChangeUserPassword token={token} setToken={setToken} />} />
             <Route path="/deleteuserpage" element={<DeleteUserPage token={token} setToken={setToken} />} />
+
+            <Route path="/forgottenpassword" element={<ForgottenPassword />} />
+            <Route path="/resetpassword/:token" element={<ResetPassword />} />
+
             <Route path="*/errorpage" element={<ErrorPage />} />
             <Route path="/loadingpage" element={<Loading />} />
             <Route path="/readypage" element={<ReadyToSearch />} />
