@@ -1,4 +1,5 @@
 import styles from './Comment.module.scss'
+import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
@@ -6,16 +7,20 @@ import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { deleteComment } from '../../utils/comments';
 import { Link } from 'react-router-dom';
 import { settings } from '../../../settings'
+import { ConfirmToast } from 'react-confirm-toast'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import { createNotification } from '../../utils/notifications';
 
 const Comment = props => {
 
-  console.log(props.comment)
+  const [show, setShow] = useState(false)
   
   const dispatch = useDispatch();
 
   const handleDeleteComment = () => {
 
-    if (window.confirm("Delete the item?")) {
       deleteComment(props.comment.id);
     
       const updatedPosts = props.posts.map(post => {
@@ -28,7 +33,7 @@ const Comment = props => {
       });
   
       dispatch(updatePosts(updatedPosts));
-    }
+      toast.success('Comment deleted');
   };
   
     return (
@@ -37,7 +42,15 @@ const Comment = props => {
       {props.userData ?  
       (props.comment.user_id === props.userData.id || props.userData.id === settings.adminId ? 
       <div>
-      <div onClick={handleDeleteComment} className={styles.button_remove}><i>Delete Comment <FontAwesomeIcon icon={faTrashCan} /></i></div>
+
+      <div onClick={() => setShow(true)} className={styles.button_remove}><i>Delete Comment <FontAwesomeIcon icon={faTrashCan} /></i></div>
+      <ConfirmToast
+      asModal={true}
+        customFunction={handleDeleteComment}
+        setShowConfirmToast={setShow}
+        showConfirmToast={show}
+      />
+
       <Link to={`/editcomment/${props.comment.id}`}>Edit comment</Link>
       </div>
        : '')

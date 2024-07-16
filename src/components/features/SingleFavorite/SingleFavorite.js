@@ -10,6 +10,10 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
 import { deleteFavorite } from '../../utils/favorites'
 import { updateNote } from '../../utils/notes'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import { createNotification } from '../../utils/notifications';
 
 const SingleFavorite = props => {
 
@@ -34,16 +38,33 @@ const SingleFavorite = props => {
       favorite.id === props.favorite.id ? { ...favorite, note: updatedNote } : favorite
     );
     dispatch(updateFavorites(updatedFavorites));
-    await updateNote(updatedNote);
+    await toast.promise(updateNote(updatedNote), {
+      pending: 'Updating note',
+      success: 'Note updated',
+      error: 'Error'
+    }, {toastId: 1});
     setNote(updatedNote.content);
   };
 
-  const handleRemoveFavorites = () => {
-    deleteFavorite(props.favorite.id);
-    dispatch(updateFavorites(props.favorites));
-    props.setReload(!props.reload);
-    navigate(elementsNames.favorites);
-  }
+  const handleRemoveFavorites = async () => {
+    try {
+      await toast.promise(
+        deleteFavorite(props.favorite.id),
+        {
+          pending: 'Removing favorite',
+          success: 'Favorite removed',
+          error: 'Error',
+        }, {toastId: 2}
+      );
+  
+      dispatch(updateFavorites(props.favorites));
+      props.setReload(!props.reload);
+      navigate(elementsNames.favorites);
+    } catch (error) {
+      console.error('Error during delete:', error);
+      toast.error('Error during delete');
+    }
+  };
 
   const SingleFavoriteObject = props.favorite['data'];
   const imageName = props.favorite['image_name'];

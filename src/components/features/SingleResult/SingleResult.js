@@ -5,17 +5,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
 import { createFavorite } from '../../utils/favorites';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import { createNotification } from '../../utils/notifications';
 
 const SingleResult = props => {
 
   const dispatch = useDispatch();
 
-  const handleAddToFavorites = () => {
+  const handleAddToFavorites = async () => {
     props.favorites[props.singleHit.label] = props.singleHit;
     dispatch(updateFavorites(props.favorites));
     props.changeButtonStyle(props.singleHit.calories);
     props.singleHit['user_id'] = localStorage.user_id
-    createFavorite(props.singleHit);
+    
+    try {
+      await toast.promise(
+        createFavorite(props.singleHit),
+        {
+          pending: 'Creating favorite',
+          success: 'Favorite created',
+          error: 'Error',
+        }, {toastId: 3}
+      );
+    } catch (error) {
+      console.error('Error during delete:', error);
+      toast.error('Error during delete');
+    }
   }
 
   return (

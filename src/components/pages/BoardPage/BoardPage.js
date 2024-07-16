@@ -7,6 +7,10 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Post from '../../features/Post/Post';
 import { fetchPosts, createPost } from '../../utils/posts';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import { createNotification } from '../../utils/notifications';
 
 const BoardPage = () => {
 
@@ -38,7 +42,7 @@ const BoardPage = () => {
   };
   
 
-  const handleSendNewPost = () => {
+  const handleSendNewPost = async () => {
     const newPost = {
       title: newPostTitle,
       content: newPostContent,
@@ -47,7 +51,21 @@ const BoardPage = () => {
     console.log(newPost)
     posts.push(newPost);
     dispatch(updatePosts(posts));
-    createPost(newPost);
+    
+    try {
+      await toast.promise(
+        createPost(newPost),
+        {
+          pending: 'Creating comment',
+          success: 'comment created',
+          error: 'Error',
+        }, {toastId: 4}
+      );
+    } catch (error) {
+      console.error('Error during delete:', error);
+      toast.error('Error during delete');
+    }
+
     setNewPostTitle('');
     setNewPostContent('');
     setNewPostAuthor('');

@@ -25,6 +25,8 @@ import UserPosts from './components/pages/UserPosts/UserPosts.js';
 import UserComments from './components/pages/UserComments/UserComments.js';
 import AddEditPost from './components/features/AddEditPost/AddEditPost.js';
 import EditComment from './components/features/EditComment/EditComment.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
@@ -81,6 +83,19 @@ const App = () => {
         </div>
       </Container>
       <Footer />
+      <ToastContainer
+        className="toast-container"
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+/>
     </main>
   );
 }

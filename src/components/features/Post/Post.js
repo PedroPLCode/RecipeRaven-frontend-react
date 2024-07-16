@@ -9,6 +9,10 @@ import { deletePost } from '../../utils/posts';
 import { Link } from 'react-router-dom';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { settings } from '../../../settings.js'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import { createNotification } from '../../utils/notifications';
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -21,7 +25,7 @@ const Post = (props) => {
     setShowComments(!showComments);
   };
 
-  const handleSendNewComment = (event) => {
+  const handleSendNewComment = async (event) => {
     event.preventDefault();
     const newComment = {
       content: newCommentContent,
@@ -35,7 +39,21 @@ const Post = (props) => {
       post.id === props.post.id ? { ...post, comments: [...post.comments, newComment] } : post
     );
     dispatch(updatePosts(updatedPosts));
-    createComment(newComment);
+
+    try {
+      await toast.promise(
+        createComment(newComment),
+        {
+          pending: 'Creating comment',
+          success: 'comment created',
+          error: 'Error',
+        }, {toastId: 4}
+      );
+    } catch (error) {
+      console.error('Error during delete:', error);
+      toast.error('Error during delete');
+    }
+
     setNewCommentContent('');
     setNewCommentAuthor('');
     setReloadTrigger(!reloadTrigger);
