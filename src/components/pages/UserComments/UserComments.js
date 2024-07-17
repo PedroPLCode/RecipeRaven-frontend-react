@@ -7,6 +7,7 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Post from '../../features/Post/Post';
 import { fetchPosts } from '../../utils/posts';
+import { getUserData } from '../../utils/users';
 
 const UserComments = () => {
   const dispatch = useDispatch();
@@ -15,11 +16,9 @@ const UserComments = () => {
     const fetchData = async () => {
       try {
         if (localStorage.token) {
-          console.log(userData)
+          getUserData(dispatch);
+          fetchPosts(dispatch);
         }
-        
-        fetchPosts(dispatch);
-
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -31,9 +30,7 @@ const UserComments = () => {
   const posts = useSelector(state => getPosts(state));
   const userData = useSelector(state => getUser(state));
 
-  console.log(userData)
-
-  if (posts) {    
+  if (posts && userData) {    
     return (
       <div className={styles.board}>
         <h3>Posts with {userData ? (userData.name ? userData.name : userData.login): 'Your'} comments</h3>

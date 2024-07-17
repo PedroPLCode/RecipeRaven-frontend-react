@@ -7,6 +7,7 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Post from '../../features/Post/Post';
 import { fetchPosts } from '../../utils/posts';
+import { getUserData } from '../../utils/users';
 
 const UserPosts = () => {
   const dispatch = useDispatch();
@@ -15,11 +16,10 @@ const UserPosts = () => {
     const fetchData = async () => {
       try {
         if (localStorage.token) {
-          console.log(userData)
+          getUserData(dispatch);
+          fetchPosts(dispatch);
         }
-        
         fetchPosts(dispatch);
-
       } catch (error) {
         console.error('Error fetching user data:', error);
       }

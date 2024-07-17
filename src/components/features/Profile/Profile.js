@@ -42,8 +42,8 @@ const Profile = props => {
             <a href="/usercomments">Comments: {userData.comments_count}</a>
             <a href="/changeuserdetails">Change user details</a>
             <a href="/changeuserpicture">Change user picture</a>
-            <a href="/changeuserpassword">Change user password</a>
-            <a href="/deleteuserpage">Delete This User</a>
+            {userData.google_user ? '' : <a href="/changeuserpassword">Change user password</a>}
+            <a href="/deleteuserpage">{userData.google_user ? 'Remove account' : 'Delete user'}</a>
           </div>
         ) : (
           <p>No profile data available</p>

@@ -19,11 +19,11 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className={clsx(styles.footer, show ? '' : styles.footer_hidden)}>
+    <footer className={clsx(styles.footer, show ? '' : styles.footer_hidden)}>
       <a className={styles.link} href="#top">
         <FontAwesomeIcon icon={faArrowUp} />
       </a>
-    </div>
+    </footer>
   )
 }
 
