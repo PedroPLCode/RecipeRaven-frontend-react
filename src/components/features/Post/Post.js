@@ -34,7 +34,7 @@ const Post = (props) => {
       author: localStorage.token ? (props.userData.name ? props.userData.name : props.userData.login) : null,
       user_id: localStorage.token ? props.userData.id : null,
     };
-    console.log(newComment);
+
     const updatedPosts = props.posts.map(post => 
       post.id === props.post.id ? { ...post, comments: [...post.comments, newComment] } : post
     );
@@ -71,11 +71,20 @@ const Post = (props) => {
     }
   };
 
-  console.log(props)
-
   return (
     <div className={styles.post}>
-      <strong>{props.post.title}</strong>
+
+      <div className={styles.post_header}>
+        <div>
+          <p>{props.post.title}</p>
+        </div>
+        <div>
+          {props.post.author_picture ? (
+                <img src={`${(props.post.author_google_user && props.post.author_original_google_picture) ? '' : 'http://localhost:5000/static/uploaded_photos/'}${props.post.author_picture}`} alt='no profile picture' />
+              ) : null }
+          <i>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</i>
+        </div>
+      </div>
 
       {props.userData ?  
       (props.post.user_id === props.userData.id || props.userData.id === settings.adminId ? 
@@ -83,18 +92,14 @@ const Post = (props) => {
       <div onClick={handleDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
       <Link to={`/addeditpost/${props.post.id}`}>Edit post</Link>
       </div>
-       : '')
+       : null)
        : 
-      ''}
+      null}
 
-      <p>Created {props.post.creation_date}</p>
-      { props.post.last_update ? <p>Modified {props.post.last_update}</p> : '' }
       <p>{props.post.content}</p>
-      <p>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</p>
-      
-      {props.post.author_picture ? (
-              <img src={`${(props.post.author_google_user && props.post.author_original_google_picture) ? '' : 'http://localhost:5000/static/uploaded_photos/'}${props.post.author_picture}`} alt='no profile picture' />
-            ) : '' }
+
+      <i>Created {props.post.creation_date}</i>
+      { props.post.last_update ? <i>Modified {props.post.last_update}</i> : '' }
 
       <button onClick={toggleComments}>
       {props.post.comments ? 
