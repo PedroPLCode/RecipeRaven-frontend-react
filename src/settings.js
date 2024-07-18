@@ -29,6 +29,7 @@ export const elementsNames = {
   root: 'root',
   input: 'input',
   favorites: '/favorites',
+  search: '/search',
 }
 
 export const messages = {
@@ -79,7 +80,8 @@ export const settings = {
   delay: 1000,
   regexIngredientsString: /^[A-Za-z\s]*$/,
   regexLoginString: /^[a-zA-Z0-9]{1,10}$/,
-  regexPasswordString: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+  //regexPasswordString: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+  regexPasswordString: /^[a-zA-Z0-9!@#$%^&*]{6,}$/,
   title: 'Receipes Search App',
   adminId: 1,
 }

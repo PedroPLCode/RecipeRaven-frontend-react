@@ -71,6 +71,8 @@ const Post = (props) => {
     }
   };
 
+  console.log(props)
+
   return (
     <div className={styles.post}>
       <strong>{props.post.title}</strong>
@@ -89,7 +91,10 @@ const Post = (props) => {
       { props.post.last_update ? <p>Modified {props.post.last_update}</p> : '' }
       <p>{props.post.content}</p>
       <p>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</p>
-      <img src={`http://localhost:5000/static/uploaded_photos/${props.post.author ? props.post.author_picture : 'anonymous.jpg'}`} alt="profile" />
+      
+      {props.post.author_picture ? (
+              <img src={`${(props.post.author_google_user && props.post.author_original_google_picture) ? '' : 'http://localhost:5000/static/uploaded_photos/'}${props.post.author_picture}`} alt='no profile picture' />
+            ) : '' }
 
       <button onClick={toggleComments}>
       {props.post.comments ? 

@@ -29,8 +29,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ForgottenPassword from './components/features/ForgottenPassword/ForgottenPassword.js';
 import ResetPassword from './components/features/ResetPassword/ResetPassword.js';
+import { getUserData } from './components/utils/users.js';
+import { useDispatch } from "react-redux";
 
 const App = () => {
+
+  const dispatch = useDispatch();
 
   const { token, removeToken, setToken } = useToken();
   const location = useLocation();
@@ -41,6 +45,10 @@ const App = () => {
     document.title = settings.title;
     //window.location.reload();
   }, []);
+
+  if (localStorage.token) {
+    getUserData(dispatch);
+  }
 
   useEffect(() => {
     if (location !== displayLocation) setTransistionStage("fadeOut");

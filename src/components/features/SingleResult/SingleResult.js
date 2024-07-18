@@ -9,10 +9,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { createNotification } from '../../utils/notifications';
+import { useNavigate } from 'react-router-dom';
+import { elementsNames, parametersNames } from '../../../settings';
 
 const SingleResult = props => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddToFavorites = async () => {
     props.favorites[props.singleHit.label] = props.singleHit;
@@ -29,6 +32,9 @@ const SingleResult = props => {
           error: 'Error',
         }, {toastId: 3}
       );
+
+      navigate(elementsNames.search);
+
     } catch (error) {
       console.error('Error during delete:', error);
       toast.error('Error during delete');

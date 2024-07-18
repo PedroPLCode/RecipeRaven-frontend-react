@@ -43,6 +43,9 @@ const DeleteUserPage = (props) => {
       const passwdCheck = await checkUserPassword(deleteUserForm);
       if (passwdCheck) {
         handleDeleteUser();
+        localStorage.token = null; // ??
+        navigate('/login');
+        createNotification('warning', 'User account deleted');
       } else {
         createNotification('error', 'Wrong password');
       }

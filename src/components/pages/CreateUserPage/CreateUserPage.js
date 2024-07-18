@@ -8,10 +8,12 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { validateLogin, validatePasswordInput, passwordAndConfirmPasswordMatch, validateEmail } from '../../utils/users';
 import { getUserData, createUser } from '../../utils/users';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUserPage = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.token) {
@@ -66,7 +68,7 @@ const CreateUserPage = () => {
     const createUserValidators = [
       await validateLogin(createUserForm.login),
       validatePasswordInput(createUserForm.password, 'password'),
-      //validatePasswordInput(createUserForm.confirmPassword, 'confirm_password'),
+      validatePasswordInput(createUserForm.confirmPassword, 'confirmPassword'),
       passwordAndConfirmPasswordMatch(createUserForm.password, createUserForm.confirmPassword),
       validateEmail(createUserForm.email),
     ];
@@ -75,6 +77,7 @@ const CreateUserPage = () => {
   
     if (createUserValidators.every(valid => valid)) {
       createUser(event, createUserForm, setCreateUserForm)
+      navigate('/login');
     } else {
       // Handle errors
       console.log('Validation failed');

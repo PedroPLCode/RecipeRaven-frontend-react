@@ -37,6 +37,7 @@ export const validatePasswordInput = (password, field_id) => {
     } else {
       passwordInputField.classList.add(stylesCreateUser.input_ok);
       passwordInputField.classList.add(stylesChangePassword.input_ok);
+      console.log('Validation passwd success');
       return true;
     }
   }
@@ -45,23 +46,23 @@ export const validatePasswordInput = (password, field_id) => {
 export const passwordAndConfirmPasswordMatch = (password, confirmPassword) => {
   const passwordInputField = document.getElementById('password');
   const confirmPasswordInputField = document.getElementById('confirmPassword');
-  if (password !== confirmPassword) {
-    if (passwordInputField && confirmPasswordInputField) {
+  if (passwordInputField && confirmPasswordInputField) {
+    if (password !== confirmPassword) {
       passwordInputField.classList.remove(stylesCreateUser.input_ok);
       confirmPasswordInputField.classList.remove(stylesCreateUser.input_ok);
       passwordInputField.classList.remove(stylesChangePassword.input_ok);
       confirmPasswordInputField.classList.remove(stylesChangePassword.input_ok);
+      console.log('Validation passwd match failed');
+      return false
+    } else {
+      passwordInputField.classList.add(stylesCreateUser.input_ok);
+      confirmPasswordInputField.classList.add(stylesCreateUser.input_ok);
+      passwordInputField.classList.add(stylesChangePassword.input_ok);
+      confirmPasswordInputField.classList.add(stylesChangePassword.input_ok);
+      console.log('Validation passwd match success');
+      return true
     }
-    console.log('Validation passwd match failed');
-    return false
   }
-  if (passwordInputField && confirmPasswordInputField) {
-    passwordInputField.classList.add(stylesCreateUser.input_ok);
-    confirmPasswordInputField.classList.add(stylesCreateUser.input_ok);
-    passwordInputField.classList.add(stylesChangePassword.input_ok);
-    confirmPasswordInputField.classList.add(stylesChangePassword.input_ok);
-  }
-  return true
 }
 
 export const validateEmail = email => {
@@ -130,7 +131,7 @@ export const getUserData = async (dispatch, props = null) => {
 
 export const checkUserPassword = async (form) => {
   const formData = new FormData();
-  formData.append('password', form.oldPassword);
+  formData.append('password', form.password);
 
   const url = 'http://127.0.0.1:5000/api/userpasswdcheck';
   const options = {

@@ -6,6 +6,12 @@ import UserAvatar from "../../utils/userAvatar.js";
 import { getUserData } from "../../utils/users.js";
 import { useDispatch } from "react-redux";
 
+const GoogleAuth = props => {
+
+const dispatch = useDispatch();
+const [loggedIn, setLoggedIn] = useState(false);
+const [user, setUser] = useState({});
+
 async function getUserInfo(codeResponse) {
   try {
     const response = await fetch("http://localhost:5000/google_token", {
@@ -28,11 +34,6 @@ async function getUserInfo(codeResponse) {
   }
 }
 
-export default function GoogleAuth(props) {
-  const dispatch = useDispatch();
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
-
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
@@ -45,6 +46,8 @@ export default function GoogleAuth(props) {
         const userData = await getUserData(dispatch);
         console.log(userData)
         setUser(userData);
+
+        window.location.reload();
         
       } catch (error) {
         console.error('Login failed:', error);
@@ -79,3 +82,5 @@ export default function GoogleAuth(props) {
     </>
   );
 }
+
+export default GoogleAuth;

@@ -39,9 +39,11 @@ const NavBar = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getUserData(dispatch); 
-      await sleep(settings.delay); 
-      console.log(userData);
+      if (localStorage.token) {
+        await getUserData(dispatch); 
+        await sleep(settings.delay); 
+        console.log(userData);
+      }
     };
 
     fetchData();
@@ -93,7 +95,7 @@ const NavBar = (props) => {
         </Nav.Link>
         { !props.token && !userData ?
           <Nav.Link className={styles.link} as={NavLink} to="/createuser" onClick={handleLinkClick}>Create account</Nav.Link> :
-          <button onClick={() => { handleLinkClick(); removeToken(); }}>Logout</button>
+          <Logout token={removeToken}/>
         }
       </div>
       <div className={clsx(styles.hamburger, { [styles.open]: isMenuOpen })} onClick={toggleMenu}>
