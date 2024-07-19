@@ -20,7 +20,6 @@ const FavoritesPage = props => {
     }
   }, [reload]);
   const favorites = useSelector(state => getFavorites(state));
-  console.log(favorites)
 
   const handleFilterFavorites = () => {
     return favorites.filter(favorite => {

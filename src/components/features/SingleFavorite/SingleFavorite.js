@@ -58,6 +58,7 @@ const SingleFavorite = props => {
       );
   
       dispatch(updateFavorites(props.favorites));
+
       props.setReload(!props.reload);
       navigate(elementsNames.favorites);
     } catch (error) {
@@ -68,8 +69,6 @@ const SingleFavorite = props => {
 
   const SingleFavoriteObject = props.favorite['data'];
   const imageName = props.favorite['image_name'];
-
-  console.log(props.favorite)
 
   return (
     <div className={clsx(styles.single_favorite, styles.hidden)}>

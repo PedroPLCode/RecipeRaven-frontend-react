@@ -14,8 +14,6 @@ const FavoritesCheck = props => {
 
   const searchResult = useSelector(state => getSearchResult(state));
 
-  console.log(searchResult)
-
   const sleep = ms => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -23,8 +21,11 @@ const FavoritesCheck = props => {
   const checkIfAlreadyInFavorites = favorites => {
     for (let singleHit of searchResult.hits) {
       for (let singleKey of favoriteKeys) {
-        if ((favorites[singleKey]['data']) && (singleHit.calories === favorites[singleKey]['data'][parametersNames.calories])) {
-          props.changeButtonStyle(singleHit.calories);
+        if ((favorites[singleKey]['data']) && (singleHit.calories === favorites[singleKey]['data'][parametersNames.calories]) && (singleHit.label === favorites[singleKey]['data'][parametersNames.label])) {
+          props.changeButtonStyle(`${singleHit.calories+singleHit.totalTime+singleHit.url}`);
+          singleHit['isFavorite'] = true;
+        } else {
+          singleHit['isFavorite'] = false;
         }
       }
     }
@@ -46,7 +47,11 @@ const FavoritesCheck = props => {
   return (
     <div>
       <h3 className={styles.favorites_top}>{bottomText}</h3>
-      {props.favoriteKeys.length !== 0 ? <h3 className={styles.favorites_bottom}>{props.favoriteKeys.length} recipes saved in favorites</h3> : <h3>And let's save something in favorites</h3>}
+      {localStorage.token ? 
+        (props.favoriteKeys.length !== 0 ? <h3 className={styles.favorites_bottom}>{props.favoriteKeys.length} recipes saved in favorites</h3> : <h3>And let's save something in favorites</h3>)
+        :
+        <a className={styles.favorites_login}href='/login'>Login to save in favorites</a>
+      }
     </div>
   )
 }

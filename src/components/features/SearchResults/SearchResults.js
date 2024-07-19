@@ -94,7 +94,7 @@ const SearchResults = () => {
         <h3>Found {searchResult.count} receipes..</h3>
         <h3>{messages.takeALook}</h3>
         {preppedHits.map(singleHit => (
-          <SingleResult key={singleHit.calories} singleHit={singleHit} favorites={favorites} changeButtonStyle={changeButtonStyle} createFavorite={createFavorite} />
+          <SingleResult key={singleHit.calories+singleHit.totalTime} singleHit={singleHit} favorites={favorites} changeButtonStyle={changeButtonStyle} createFavorite={createFavorite} />
         ))}
         {searchResult.count > searchResult.hits.length && (
           <h3 className={clsx(styles.button_nextpage, loading && styles.loading)} onClick={handleFetchMoreReceipes}>

@@ -42,7 +42,6 @@ const NavBar = (props) => {
       if (localStorage.token) {
         await getUserData(dispatch); 
         await sleep(settings.delay); 
-        console.log(userData);
       }
     };
 
@@ -52,7 +51,6 @@ const NavBar = (props) => {
   useEffect(() => {
     setFavoritesCount(userData ? userData.favorites_count : false);
     setUserName(userData ? userData.name : false);
-    console.log(userData);
   }, [userData]);
 
   useEffect(() => {
@@ -91,7 +89,7 @@ const NavBar = (props) => {
           About
         </Nav.Link>
         <Nav.Link className={styles.link} as={NavLink} to="/login" onClick={handleLinkClick}>
-          { props.token && userData ? `Your account (${userName})` : "Login" }
+          { props.token && userData ? `${userName} Account` : "Login" }
         </Nav.Link>
         { !props.token && !userData ?
           <Nav.Link className={styles.link} as={NavLink} to="/createuser" onClick={handleLinkClick}>Create account</Nav.Link> :

@@ -18,26 +18,32 @@ const SingleResult = props => {
   const navigate = useNavigate();
 
   const handleAddToFavorites = async () => {
-    props.favorites[props.singleHit.label] = props.singleHit;
-    dispatch(updateFavorites(props.favorites));
-    props.changeButtonStyle(props.singleHit.calories);
-    props.singleHit['user_id'] = localStorage.user_id
-    
-    try {
-      await toast.promise(
-        createFavorite(props.singleHit),
-        {
-          pending: 'Creating favorite',
-          success: 'Favorite created',
-          error: 'Error',
-        }, {toastId: 3}
-      );
 
-      navigate(elementsNames.search);
-
-    } catch (error) {
-      console.error('Error during delete:', error);
-      toast.error('Error during delete');
+    if (props.singleHit['isFavorite'] !== true) {
+      props.favorites[props.singleHit.label] = props.singleHit;
+      dispatch(updateFavorites(props.favorites));
+      props.changeButtonStyle(`${props.singleHit.calories+props.singleHit.totalTime+props.singleHit.url}`);
+      props.singleHit['user_id'] = localStorage.user_id
+      props.singleHit['isFavorite'] = true;
+      
+      try {
+        await toast.promise(
+          createFavorite(props.singleHit),
+          {
+            pending: 'Creating favorite',
+            success: 'Favorite created',
+            error: 'Error',
+          }, {toastId: 3}
+        );
+  
+        navigate(elementsNames.search);
+  
+      } catch (error) {
+        console.error('Error during delete:', error);
+        toast.error('Error during delete');
+      }
+    } else {
+      createNotification('success', 'Recipe already saved in favorites', 4);
     }
   }
 
@@ -73,7 +79,19 @@ const SingleResult = props => {
           <strong>{props.singleHit.calories}</strong>
         </p>
         <a href={props.singleHit.url} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
-        <div id={props.singleHit.calories} onClick={handleAddToFavorites} className={styles.button_favorites}><i>Save in favorites <FontAwesomeIcon icon={faStar} /></i></div>
+
+        {localStorage.token ? 
+          <div id={`${props.singleHit.calories+props.singleHit.totalTime+props.singleHit.url}`} 
+               onClick={handleAddToFavorites}
+               className={styles.button_favorites}>
+                <i>{props.singleHit['isFavorite'] ? 'Saved' : 'Save'} in favorites 
+                  <FontAwesomeIcon icon={faStar} />
+                </i>
+          </div> 
+          : 
+          <a href='/login'>Login to save in favorites</a>
+        }
+        
       </div>
     </div>
   )

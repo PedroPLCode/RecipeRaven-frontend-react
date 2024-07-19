@@ -31,8 +31,6 @@ const UserPosts = () => {
   const posts = useSelector(state => getPosts(state));
   const userData = useSelector(state => getUser(state));
 
-  console.log(userData)
-
   if (posts) {    
     return (
       <div className={styles.board}>
