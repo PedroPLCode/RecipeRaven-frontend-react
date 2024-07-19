@@ -4,57 +4,83 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
+import { createFavorite } from '../../utils/favorites';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import { createNotification } from '../../utils/notifications';
+import { useNavigate } from 'react-router-dom';
+import { elementsNames, parametersNames } from '../../../settings';
 
 const SingleResult = props => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleAddToFavorites = () => {
-    props.favorites[props.singleHit.recipe.label] = props.singleHit;
+  const handleAddToFavorites = async () => {
+    props.favorites[props.singleHit.label] = props.singleHit;
     dispatch(updateFavorites(props.favorites));
-    props.changeButtonStyle(props.singleHit.recipe.calories);
+    props.changeButtonStyle(props.singleHit.calories);
+    props.singleHit['user_id'] = localStorage.user_id
+    
+    try {
+      await toast.promise(
+        createFavorite(props.singleHit),
+        {
+          pending: 'Creating favorite',
+          success: 'Favorite created',
+          error: 'Error',
+        }, {toastId: 3}
+      );
+
+      navigate(elementsNames.search);
+
+    } catch (error) {
+      console.error('Error during delete:', error);
+      toast.error('Error during delete');
+    }
   }
 
   return (
     <div className={styles.single_result}>
       <div className={styles.image}>
-        <a href={props.singleHit.recipe.url} target='_blank' rel="noreferrer">
+        <a href={props.singleHit.url} target='_blank' rel="noreferrer">
           <i>Click for full receipe!</i>
-          <img src={props.singleHit.recipe.images.SMALL.url} alt={props.singleHit.recipe.images.REGULAR.url} width='400' height='400' />
+          <img src={props.singleHit.image_SMALL_url} alt={props.singleHit.image_REGULAR_url} width='400' height='400' />
         </a>
       </div>  
       <div className={styles.description}>
-        <p><strong className={styles.blue}>{props.singleHit.recipe.label}</strong></p>
+        <p><strong className={styles.blue}>{props.singleHit.label}</strong></p>
         <p><span className={styles.blue}>Dist Type: </span> 
-          <strong>{props.singleHit.recipe.dishType} / {props.singleHit.recipe.mealType}</strong>
+          <strong>{props.singleHit.dishType} / {props.singleHit.mealType}</strong>
         </p>
         <p><span className={styles.blue}>Cuisine Type: </span>  
-          <strong>{props.singleHit.recipe.cuisineType}</strong>
+          <strong>{props.singleHit.cuisineType}</strong>
         </p>
         <p><span className={styles.blue}>Cautions:</span>  
-          <strong>{props.singleHit.recipe.cautions.map(singleCaution => ` ${singleCaution},`)}</strong>
+          <strong>{props.singleHit.cautions.map(singleCaution => ` ${singleCaution},`)}</strong>
         </p>
         <p><span className={styles.blue}>Prep Time: </span>  
-          <strong>{props.singleHit.recipe.totalTime} min</strong>
+          <strong>{props.singleHit.totalTime} min</strong>
         </p>
         <p><span className={styles.blue}>Diet Info: </span>  
-          <strong>{props.singleHit.recipe.dietLabels}</strong>
+          <strong>{props.singleHit.dietLabels}</strong>
         </p>
         <p><span className={styles.blue}>Health Info:</span> 
-          <strong>{props.singleHit.recipe.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong>
+          <strong>{props.singleHit.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong>
         </p>
         <p><span className={styles.blue}>Calories per one portion: </span> 
-          <strong>{props.singleHit.recipe.calories}</strong>
+          <strong>{props.singleHit.calories}</strong>
         </p>
-        <a href={props.singleHit.recipe.url} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
-        <div id={props.singleHit.recipe.calories} onClick={handleAddToFavorites} className={styles.button_favorites}><i>Save in favorites <FontAwesomeIcon icon={faStar} /></i></div>
+        <a href={props.singleHit.url} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
+        <div id={props.singleHit.calories} onClick={handleAddToFavorites} className={styles.button_favorites}><i>Save in favorites <FontAwesomeIcon icon={faStar} /></i></div>
       </div>
     </div>
   )
 }
 
 SingleResult.propTypes = {
-  favorites: PropTypes.object.isRequired,
+  favorites: PropTypes.array.isRequired,
   singleHit: PropTypes.object.isRequired,
   changeButtonStyle: PropTypes.func.isRequired,
 };

@@ -43,7 +43,11 @@ const initialState = {
   searchResult: '',
   serverResponse: '',
   serverError: '',
-  favorites: {},
+  favorites: [],
+  linkNextPage: '',
+  posts: [],
+  comments: [],
+  user: null,
 };
     
 export default initialState;

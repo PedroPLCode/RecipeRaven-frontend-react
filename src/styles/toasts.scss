@@ -1,0 +1,9 @@
+@import './settings.scss';
+
+.toast-container {
+    pointer-events: none;
+  }
+  
+  .toast-container .Toastify__toast {
+    pointer-events: all;
+  }

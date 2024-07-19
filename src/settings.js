@@ -1,5 +1,3 @@
-import { PRIVATE_API_KEY } from "./API_PRIVATE_KEY.js";
-
 export const classNames = {
   offline: '.offline',
   selectedButtons: '.SearchPage_active__321Sw',
@@ -23,46 +21,28 @@ export const parametersNames = {
   healthLabels: 'healthLabels',
   calories: 'calories',
   images: 'images',
-  SMALL: 'SMALL',
-  REGULAR: 'REGULAR',
-  regexString: /^[A-Za-z\s]*$/,
+  image_SMALL: 'image_SMALL_url',
+  image_REGULAR: 'image_REGULAR_url',
 }
 
 export const elementsNames = {
   root: 'root',
   input: 'input',
   favorites: '/favorites',
-}
-
-export const ReceipesApiSettings = {
-  mainUrl: 'https://edamam-recipe-search.p.rapidapi.com/api/recipes/v2?type=public',
-  query: '&q=',
-  excluded: '&excluded%5B0%5D=',
-  and: '%20',
-  methodGET: 'GET',
-  headers: {
-    'Accept-Language': 'en',
-    'X-RapidAPI-Key': PRIVATE_API_KEY,
-    'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
-  }
-}
-
-export const QuotesApiSettings = {
-  defaultQuote: 'You are what you eat, so don’t be fast, cheap, easy, or fake.',
-  selectedTopics: ['fitness', 'food', 'health'],
-  mainUrl: 'https://famous-quotes4.p.rapidapi.com/random?',
-  category: 'category=',
-  count: '&count=1',
-  methodGET: 'GET',
-  headers: {
-    'X-RapidAPI-Key': PRIVATE_API_KEY,
-    'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com'
-  }
+  search: '/search',
 }
 
 export const messages = {
   putIngredients: 'Selected ingredients...',
   putExcluded: 'Excluded ingredients...',
+  newPost: {
+    title: 'New post title',
+    content: 'Write new post on out board',
+    author: 'Author field',
+  },
+  newComment: {
+    content: 'Write new comment to this post..',
+  },
   noInfoProvided: 'No information provided',
   showOnly20: 'But we wil show only 20',
   takeALook: 'Take a look...',
@@ -71,6 +51,9 @@ export const messages = {
   search: 'Search',
   foodSearchApp: 'Search for new recipes',
   inputWarning: 'Only letters and spaces',
+  defalutQuote: {
+    text: "You are what you eat, so don't be fast, cheap, easy, or fake."
+  }
 }
 
 export const infoData = {
@@ -95,5 +78,10 @@ export const stylesParams = {
 
 export const settings = {
   delay: 1000,
+  regexIngredientsString: /^[A-Za-z\s]*$/,
+  regexLoginString: /^[a-zA-Z0-9]{1,10}$/,
+  //regexPasswordString: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+  regexPasswordString: /^[a-zA-Z0-9!@#$%^&*]{6,}$/,
   title: 'Receipes Search App',
+  adminId: 1,
 }

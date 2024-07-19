@@ -8,6 +8,10 @@ import searchResultReducer from './reducers/searchResultReducer';
 import serverResponseReducer from './reducers/serverResponseReducer';
 import serverErrorReducer from './reducers/serverErrorReducer';
 import favoritesReducer from './reducers/favoritesReducer';
+import nextResultsPageReducer from './reducers/nextResultsPageReducer';
+import userReducer from './reducers/userReducer';
+import postsReducer from './reducers/postsReducer';
+import commentsReducer from './reducers/commentsReducer';
 
 const subreducers = {
   quote: quoteReducer,
@@ -18,6 +22,10 @@ const subreducers = {
   serverResponse: serverResponseReducer,
   serverError: serverErrorReducer,
   favorites: favoritesReducer,
+  linkNextPage: nextResultsPageReducer,
+  posts: postsReducer,
+  comments: commentsReducer,
+  user: userReducer,
 }
 
 const reducer = combineReducers(subreducers);

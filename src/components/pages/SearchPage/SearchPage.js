@@ -8,12 +8,12 @@ import { clsx } from "clsx";
 import { updateIngredients, getIngredients } from '../../../redux/reducers/ingredientsReducer';
 import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
-import { getSearchResult, updateSearchResult } from '../../../redux/reducers/searchResultReducer';
-import { updateServerResponse } from '../../../redux/reducers/serverResponseReducer';
-import { updateServerError } from '../../../redux/reducers/serverErrorReducer'
-import { classNames, elementsNames, parametersNames, ReceipesApiSettings, messages } from '../../../settings';
+import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
+import { classNames, parametersNames, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { validateInputString } from '../../utils/recipes'
+import { fetchReceipes } from '../../utils/recipes'
 
 const SearchPage = () => {
 
@@ -29,31 +29,13 @@ const SearchPage = () => {
   const [success, setSuccess] = useState(searchResult ? true : false);
 
   const handleIngredientsSet = value => {
-    validateInputString(value);
+    validateInputString(value, setInputOK);
     dispatch(updateIngredients(value));
   }
 
   const handleExcludedSet = value => {
-    validateInputString(value);
+    validateInputString(value, setInputOK);
     dispatch(updateExcluded(value));
-  }
-
-  const validateInputString = input => {
-    const inputFields = document.querySelectorAll(elementsNames.input);
-    let regex = parametersNames.regexString; 
-    if (!regex.test(input) || input.includes('  ')) {
-      setInputOK(false);
-      for (let singleInput of inputFields) {
-        singleInput.classList.add(styles.input_error);
-      }
-      return false;
-    } else {
-      for (let singleInput of inputFields) {
-        singleInput.classList.remove(styles.input_error);
-      }
-      setInputOK(true);
-      return true;
-    }
   }
 
   const handleDietClick = element => {
@@ -73,49 +55,9 @@ const SearchPage = () => {
     }
   }
 
-  const prepareSearchString = () => {
-    let searchString = ''; 
-    searchString += `${ReceipesApiSettings.query}${ingredients.replaceAll(' ', ReceipesApiSettings.and)}`;
-    for(let singleKey of dietKeys) {
-      diet[`${singleKey}`][parametersNames.value] ? searchString += `${ReceipesApiSettings.and}${diet[`${singleKey}`][parametersNames.string]}` : searchString += '';
-    }
-    return searchString;
-  }
-
-  const prepareExcludedString = () => {
-    if (excluded !== undefined) {
-      let excludedString = ''; 
-      excludedString += `${ReceipesApiSettings.excluded}${excluded.replaceAll(' ', ReceipesApiSettings.and)}`;
-      return excludedString;
-    }
-  }
-
-  const searchReceipes = async () => {
-    const searchString = prepareSearchString(ingredients);
-    const exccludedString = prepareExcludedString(excluded);
-    const url = `${ReceipesApiSettings.mainUrl}${searchString}${exccludedString}`;
-    const options = {
-	    method: ReceipesApiSettings.methodGET,
-	    headers: ReceipesApiSettings.headers,
-    }; 
-    if (validateInputString(ingredients) && validateInputString(excluded)) {
-      setLoading(true); 
-      try {
-        const response = await fetch(url, options);
-        dispatch(updateServerResponse(response));
-        const result = await response.text();
-        const searchResponse = JSON.parse(result)
-        dispatch(updateSearchResult(searchResponse));
-        setLoading(false); 
-        setSuccess(true); 
-        return result;
-      } catch (error) {
-        dispatch(updateServerError(error));
-        setLoading(false); 
-        setSuccess(true); 
-      }
-    }
-  }
+  const handleSearchReceipes = () => {
+    fetchReceipes(ingredients, excluded, diet, dietKeys, setLoading, setSuccess, dispatch, setInputOK);
+  };
 
   const headerString = inputOK ? messages.foodSearchApp : messages.inputWarning;
 
@@ -144,7 +86,7 @@ const SearchPage = () => {
               </div>
             </div> 
           </form>
-          <div onClick={searchReceipes} className={clsx(styles.search_button, online ? '' : styles.offline)} variant="primary">
+          <div onClick={handleSearchReceipes} className={clsx(styles.search_button, online ? '' : styles.offline)} variant="primary">
               <p>
                 <Online><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.search}</Online>
                 <Offline><FontAwesomeIcon icon={faMagnifyingGlass} /> {messages.offline}</Offline>
