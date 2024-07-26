@@ -56,7 +56,7 @@ const App = () => {
 
   return (
     <main>
-      <NavBar token={token} setToken={setToken} />
+      <NavBar token={token} setToken={setToken} removeToken={removeToken}/>
       <Container>
         <div
           className={transitionStage}

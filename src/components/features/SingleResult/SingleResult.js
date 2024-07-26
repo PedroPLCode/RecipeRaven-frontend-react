@@ -89,7 +89,7 @@ const SingleResult = props => {
                 </i>
           </div> 
           : 
-          <a href='/login'>Login to save in favorites</a>
+          <a href='/login' onClick={(e) => { e.preventDefault(); navigate('/login'); }}>Login to save in favorites</a>
         }
         
       </div>

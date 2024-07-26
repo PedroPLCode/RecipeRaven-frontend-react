@@ -11,10 +11,13 @@ export const fetchFavorites = async dispatch => {
   }; 
   try {
     const response = await fetch(url, options);
+    console.log(response)
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
-    dispatch(updateFavorites(finalResponse));
-    console.log(finalResponse)
+    if (response.ok) {
+      dispatch(updateFavorites(finalResponse));
+      console.log(finalResponse)
+    }
     return result;
   } catch (error) {
     console.log(error);

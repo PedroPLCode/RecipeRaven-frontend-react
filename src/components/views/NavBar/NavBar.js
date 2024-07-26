@@ -9,12 +9,12 @@ import { settings } from '../../../settings';
 import clsx from 'clsx';
 import styles from './NavBar.module.scss';
 import footerStyles from '../Footer/Footer.module.scss'
-import useToken from '../../features/useToken/useToken';
+//import useToken from '../../features/useToken/useToken';
 
 const NavBar = (props) => {
   const dispatch = useDispatch();
   const userData = useSelector(state => getUser(state));
-  const { token, removeToken, setToken } = useToken();
+  //const { token, removeToken, setToken } = useToken();
 
   const sleep = ms => {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -80,7 +80,7 @@ const NavBar = (props) => {
           Search
         </Nav.Link>
         <Nav.Link className={styles.link} as={NavLink} to="/favorites" onClick={handleLinkClick}>
-          Favorites { props.token && userData ? `(${favoritesCount})` : null }
+          Favorites { localStorage.token && userData ? `(${favoritesCount})` : null }
         </Nav.Link>
         <Nav.Link className={styles.link} as={NavLink} to="/board" onClick={handleLinkClick}>
           Board
@@ -89,11 +89,11 @@ const NavBar = (props) => {
           About
         </Nav.Link>
         <Nav.Link className={styles.link} as={NavLink} to="/login" onClick={handleLinkClick}>
-          { props.token && userData ? `${userName} Account` : "Login" }
+          { localStorage.token && userData ? `${userName} Account` : "Login" }
         </Nav.Link>
-        { !props.token && !userData ?
+        { !localStorage.token && !userData ?
           <Nav.Link className={styles.link} as={NavLink} to="/createuser" onClick={handleLinkClick}>Create account</Nav.Link> :
-          <Logout token={removeToken}/>
+          <Logout token={props.removeToken}/>
         }
       </div>
       <div className={clsx(styles.hamburger, { [styles.open]: isMenuOpen })} onClick={toggleMenu}>

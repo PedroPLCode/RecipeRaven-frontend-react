@@ -3,8 +3,16 @@ import { useState } from 'react';
 import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
+import { useNavigate } from 'react-router-dom';
+
+import { useDispatch } from "react-redux";
+import { fetchFavorites, deleteFavorite } from '../../utils/favorites';
+import { getUserData } from '../../utils/users';
 
 const Login = props => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [loginForm, setloginForm] = useState({
     login: "",
@@ -24,7 +32,10 @@ const Login = props => {
     .then((response) => {
       props.setToken(response.data.access_token);
       //dispatch(updateUser(response.data));
-      window.location.reload();
+      //window.location.reload();
+      getUserData(dispatch)
+      fetchFavorites(dispatch)
+      navigate('/login');
     })
     .catch((error) => {
       if (error.response) {

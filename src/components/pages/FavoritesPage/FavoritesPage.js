@@ -7,7 +7,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import SingleFavorite from '../../features/SingleFavorite/SingleFavorite';
 import { fetchFavorites, deleteFavorite } from '../../utils/favorites';
 
-const FavoritesPage = props => {
+const FavoritesPage = () => {
 
   const dispatch = useDispatch();
   const [reload, setReload] = useState(false);
@@ -15,22 +15,30 @@ const FavoritesPage = props => {
   const [filterFavoritesString, setFilterFavoritesString] = useState('');
 
   useEffect(() => {
-    if (props.token) {
-      fetchFavorites(dispatch);
-    }
-  }, [reload]);
+    const fetchData = async () => {
+      if (localStorage.token) {
+        await fetchFavorites(dispatch);
+      }
+    };
+    fetchData();
+  }, [reload, dispatch]);
   const favorites = useSelector(state => getFavorites(state));
 
   const handleFilterFavorites = () => {
-    return favorites.filter(favorite => {
-      const labelMatch = favorite.data.label.toLowerCase().includes(filterFavoritesString.toLowerCase());
-      const commentMatch = favorite.note ? favorite.note.content.toLowerCase().includes(filterFavoritesString.toLowerCase()) : false;
-  
-      return labelMatch || commentMatch;
-    });
+    if (localStorage.token && favorites) {
+      return favorites.filter(favorite => {
+        const labelMatch = favorite.data.label.toLowerCase().includes(filterFavoritesString.toLowerCase());
+        const commentMatch = favorite.note ? favorite.note.content.toLowerCase().includes(filterFavoritesString.toLowerCase()) : false;
+    
+        return labelMatch || commentMatch;
+      });
+    } else {
+      fetchFavorites(dispatch);
+      setReload(!reload)
+    }
   };
 
-  if (!props.token) {
+  if (!localStorage.token) {
     return (
       <div className={styles.favorite}>
         <h3>You must login to save favorite recipes</h3>
