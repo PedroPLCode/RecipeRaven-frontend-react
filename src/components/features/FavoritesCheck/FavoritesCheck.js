@@ -19,17 +19,26 @@ const FavoritesCheck = props => {
   }
 
   const checkIfAlreadyInFavorites = favorites => {
-    for (let singleHit of searchResult.hits) {
-      for (let singleKey of favoriteKeys) {
-        if ((favorites[singleKey]['data']) && (singleHit.calories === favorites[singleKey]['data'][parametersNames.calories]) && (singleHit.label === favorites[singleKey]['data'][parametersNames.label])) {
-          props.changeButtonStyle(`${singleHit.calories+singleHit.totalTime+singleHit.url}`);
-          singleHit['isFavorite'] = true;
-        } else {
-          singleHit['isFavorite'] = false;
-        }
+    const favoritesMap = new Map();
+  
+    for (const key of favoriteKeys) {
+      const favorite = favorites[key];
+      if (favorite && favorite.data) {
+        const keyStr = `${favorite.data[parametersNames.calories]}-${favorite.data[parametersNames.label]}`;
+        favoritesMap.set(keyStr, true);
       }
     }
-  }
+  
+    for (const singleHit of searchResult.hits) {
+      const hitKey = `${singleHit.calories}-${singleHit.label}`;
+      if (favoritesMap.has(hitKey)) {
+        props.changeButtonStyle(`${singleHit.calories + singleHit.totalTime + singleHit.url}`);
+        singleHit.isFavorite = true;
+      } else {
+        singleHit.isFavorite = false;
+      }
+    }
+  };
 
   useEffect(() => {
     fetchFavorites(dispatch);

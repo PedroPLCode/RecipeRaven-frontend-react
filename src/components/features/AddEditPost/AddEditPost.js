@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { createNotification } from '../../utils/notifications';
+import { ConfirmToast } from 'react-confirm-toast'
 
 const AddEditPost = () => {
   const { postId } = useParams();
@@ -24,6 +25,7 @@ const AddEditPost = () => {
   const [newPostContent, setNewPostContent] = useState('');
   const [newPostAuthor, setNewPostAuthor] = useState(userData ? (userData.name || userData.login) : '');
   const [reloadTrigger, setReloadTrigger] = useState(false);
+  const [showToast, setShowToast] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,13 +57,11 @@ const AddEditPost = () => {
 
 
     if (postId) {
-      if (window.confirm("Edit the item?")) {
-        const updatedPosts = posts.map(post => 
-          post.id === parseInt(postId) ? { ...post, ...newPost } : post
-        );
-        dispatch(updatePosts(updatedPosts));
-        updatePost(postId, newPost);
-      }
+      const updatedPosts = posts.map(post => 
+        post.id === parseInt(postId) ? { ...post, ...newPost } : post
+      );
+      dispatch(updatePosts(updatedPosts));
+      updatePost(postId, newPost);
     } else {
       dispatch(updatePosts([...posts, newPost]));
       try {
@@ -89,6 +89,10 @@ const AddEditPost = () => {
 
   const handleBack = () => {
     navigate(-1)
+  }
+
+  const handleClickAddEditPost = () => {
+    setShowToast(true)
   }
 
   return (
@@ -122,7 +126,14 @@ const AddEditPost = () => {
           onChange={event => setNewPostAuthor(event.target.value)}
         />
       )}
-      <button onClick={handleSendNewPost}>{postId ? 'Update post' : 'Add post'}</button>
+      <button onClick={handleClickAddEditPost}>{postId ? 'Update post' : 'Add post'}</button>
+      <ConfirmToast
+        asModal={true}
+        toastText='Are you sure?'
+        customFunction={handleSendNewPost}
+        setShowConfirmToast={setShowToast}
+        showConfirmToast={showToast}
+      />
       <button onClick={handleBack}>back</button>
       <RandomQuote />
     </div>

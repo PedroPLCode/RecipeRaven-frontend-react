@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { createNotification } from '../../utils/notifications';
+import { ConfirmToast } from 'react-confirm-toast'
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Post = (props) => {
   const [newCommentContent, setNewCommentContent] = useState('');
   const [newCommentAuthor, setNewCommentAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
+  const [showToast, setShowToast] = useState(false)
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -59,13 +61,15 @@ const Post = (props) => {
     setReloadTrigger(!reloadTrigger);
   };
 
+  const handleClickDeletePost = () => {
+    setShowToast(true)
+  }
+
   const handleDeletePost = () => {
     if (props.post.comments.length === 0) {
-      if (window.confirm("Delete the item?")) {
-        deletePost(props.post.id);
-        const updatedPosts = props.posts.filter(post => post.id !== props.post.id);
-        dispatch(updatePosts(updatedPosts));
-      }
+      deletePost(props.post.id);
+      const updatedPosts = props.posts.filter(post => post.id !== props.post.id);
+      dispatch(updatePosts(updatedPosts));
     } else {
       alert(`Post have ${props.post.comments.length} comments already`)
     }
@@ -89,7 +93,13 @@ const Post = (props) => {
       {props.userData ?  
       (props.post.user_id === props.userData.id || props.userData.id === settings.adminId ? 
       <div>
-      <div onClick={handleDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
+      <div onClick={handleClickDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
+      <ConfirmToast
+        asModal={true}
+        customFunction={handleDeletePost}
+        setShowConfirmToast={setShowToast}
+        showConfirmToast={showToast}
+      />
       <Link to={`/addeditpost/${props.post.id}`}>Edit post</Link>
       </div>
        : null)

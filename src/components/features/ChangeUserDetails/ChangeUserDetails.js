@@ -66,9 +66,6 @@ const ChangeUserDetails = () => {
 
   const handleChangeUserDetails = (event) => {
     changeUserDetails(event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch);
-
-    console.log(changeUserDetailsForm)
-
     navigate('/login')
   }
 

@@ -7,6 +7,7 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateComment } from '../../utils/comments';
 import { fetchPosts } from '../../utils/posts';
+import { ConfirmToast } from 'react-confirm-toast'
 
 const EditComment = () => {
   const { commentId } = useParams();
@@ -17,6 +18,7 @@ const EditComment = () => {
 
   const [newCommentContent, setNewCommentContent] = useState('');
   const [reloadTrigger, setReloadTrigger] = useState(false);
+  const [showToast, setShowToast] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,37 +42,36 @@ const EditComment = () => {
     }
   }, [commentId, posts]);
 
-  const handleEditComment = (event) => {
-    event.preventDefault();
+  const handleEditComment = () => {
 
-    if (window.confirm("Edit the item?")) {
-
-      const newComment = {
-        content: newCommentContent,
-      };
-
-      if (commentId) {
-        updateComment(commentId, newComment)
-          .then(() => {
-            const updatedPosts = posts.map(post => 
-              post.comments.some(comment => comment.id === parseInt(commentId)) 
-                ? { ...post, comments: post.comments.map(comment => comment.id === parseInt(commentId) ? newComment : comment) } 
-                : post
-            );
-            dispatch(updatePosts(updatedPosts));
-            navigate(-1);
-          })
-          .catch(error => console.error('Error updating comment:', error));
-        }
-
-      setNewCommentContent('');
-      setReloadTrigger(!reloadTrigger);
+    const newComment = {
+      content: newCommentContent,
     };
+    if (commentId) {
+      updateComment(commentId, newComment)
+        .then(() => {
+          const updatedPosts = posts.map(post => 
+            post.comments.some(comment => comment.id === parseInt(commentId)) 
+              ? { ...post, comments: post.comments.map(comment => comment.id === parseInt(commentId) ? newComment : comment) } 
+              : post
+          );
+          dispatch(updatePosts(updatedPosts));
+          navigate(-1);
+        })
+        .catch(error => console.error('Error updating comment:', error));
+      }
+
+    setNewCommentContent('');
+    setReloadTrigger(!reloadTrigger);
   }
 
   const handleBack = () => {
     navigate(-1);
     
+  }
+
+  const handleClickEditComment = () => {
+    setShowToast(true)
   }
 
   return (
@@ -84,9 +85,16 @@ const EditComment = () => {
         onChange={event => setNewCommentContent(event.target.value)} 
       />
 
-      <button onClick={handleEditComment}>
+      <button onClick={handleClickEditComment}>
         Edit Comment
       </button>
+      <ConfirmToast
+        asModal={true}
+        toastText='Are you sure?'
+        customFunction={handleEditComment}
+        setShowConfirmToast={setShowToast}
+        showConfirmToast={showToast}
+      />
       <button onClick={handleBack}>Back</button>
       <RandomQuote />
     </div>
