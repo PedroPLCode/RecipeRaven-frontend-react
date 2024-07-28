@@ -2,7 +2,6 @@
 
 .post {
   width: 100%;
-  margin: calc($base-size);
   background-color: $transparent-background;
   display: flex;
   flex-direction: column;
@@ -73,12 +72,17 @@
 
 }
 
-button {
+.buttons_for_users {
+  width: 100%;
+}
+
+.button_remove {
 
   width: calc($base-size * 10);
   height: calc($base-size * 3);
   border: none;
   color: $color-one;
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,6 +103,7 @@ button {
   @media (max-width: $media-border) {
     background-position: 0 100%;
     color: $transparent-background;
+    width: 100%;
   }
 }
 
@@ -182,6 +187,7 @@ button {
     @media (max-width: $media-border) {
       background-position: 0 100%;
       color: $transparent-background;
+      width: 100%;
     }
   }
 }

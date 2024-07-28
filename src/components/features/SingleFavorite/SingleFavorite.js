@@ -105,32 +105,34 @@ const SingleFavorite = props => {
         </p>
           <a href={SingleFavoriteObject[parametersNames.url]} target='_blank' rel="noreferrer"><i>Click for full receipe!</i></a>
 
+        <div>
+          <button className={clsx(showNote ? styles.show_note : '')} onClick={toggleNote}>
+            {showNote ? (
+              <span>Hide Note</span>
+            ) : (
+              <span>
+                {note ? 'Show Note' : 'Add note'}
+              </span>
+            )
+            }
+            </button>
 
-          <button onClick={toggleNote}>
-      {showNote ? (
-        <span>Hide Note</span>
-      ) : (
-        <span>
-          {note ? 'Show Note' : 'Add note'}
-        </span>
-      )
-      }
-      </button>
-
-      {showNote ? (
-      <div>
-        <input 
-            id="note"
-            type="text"
-            name="note" 
-            placeholder="your note.." 
-            title="Your Note"
-            value={note} 
-            onChange={event => setNote(event.target.value)} 
-          />
-      <button onClick={(event) => handleUpdateNote(event)}>Save Note</button>
+            {showNote ? (
+            <div>
+              <input 
+                  id="note"
+                  type="text"
+                  name="note" 
+                  placeholder="your note.." 
+                  title="Your Note"
+                  value={note} 
+                  onChange={event => setNote(event.target.value)} 
+                />
+          <button onClick={(event) => handleUpdateNote(event)}>Save Note</button>
+          
+        </div>
+        ) : '' }
       </div>
-    ) : '' }
 
 
       <div onClick={handleRemoveFavorites} className={styles.button_remove}><i>Remove from favorites <FontAwesomeIcon icon={faTrashCan} /></i></div>

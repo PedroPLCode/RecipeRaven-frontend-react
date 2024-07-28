@@ -7,6 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: $base-size;
 
   @media (max-width: $media-border) {
     padding-left: calc($base-size * 2);
@@ -54,6 +55,10 @@
 
     transition-property: border, color, background-color, box-shadow;
     transition-duration: $transition-duration;
+
+    @media (max-width: $media-border) {
+      width: 100%;
+    }
   }
 
   input:first-of-type {}
@@ -109,6 +114,7 @@
     @media (max-width: $media-border) {
       background-position: 0 100%;
       color: $transparent-background;
+      width: 100%;
     }
   }
 }

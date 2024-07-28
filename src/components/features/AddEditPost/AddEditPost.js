@@ -96,7 +96,7 @@ const AddEditPost = () => {
   }
 
   return (
-    <div className={styles.board}>
+    <div className={styles.addeditpost}>
       <h3>{postId ? `Edit Post ${postId} component` : 'Add Post component'}</h3>
       <input
         id="new-post-title"

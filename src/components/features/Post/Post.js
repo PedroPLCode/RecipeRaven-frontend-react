@@ -96,7 +96,7 @@ const Post = (props) => {
 
       {props.userData ?  
       (props.post.user_id === props.userData.id || props.userData.id === settings.adminId ? 
-      <div>
+      <div className={styles.buttons_for_users}>
       <div onClick={handleClickDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
       <ConfirmToast
         asModal={true}

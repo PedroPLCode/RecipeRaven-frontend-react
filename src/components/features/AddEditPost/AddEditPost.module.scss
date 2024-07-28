@@ -1,6 +1,6 @@
 @import '../../../styles/settings.scss';
 
-.board {
+.addeditpost {
     padding-top: calc($base-size * 6.5);
     display: flex;
     flex-direction: column;
@@ -28,6 +28,10 @@
 
         transition-property: border, color, background-color, box-shadow;
         transition-duration: $transition-duration;
+
+        @media (max-width: $media-border) {
+            width: 90%;
+        }
     }
 
     input:nth-of-type(2) {
@@ -45,13 +49,10 @@
 
     input:focus {
         outline: none;
-        background-color: $color-one;
-        color: $color-three;
     }
 
     input:not(:placeholder-shown) {
-        background-color: $color-one;
-        color: $color-three;
+
     }
 
     button {
@@ -81,6 +82,7 @@
         @media (max-width: $media-border) {
             background-position: 0 100%;
             color: $transparent-background;
+            width: 90%;
         }
     }
 }

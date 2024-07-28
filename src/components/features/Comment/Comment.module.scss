@@ -26,6 +26,10 @@
 
     transition-property: border, color, background-color, box-shadow;
     transition-duration: $transition-duration;
+
+    @media (max-width: $media-border) {
+      width: 100%;
+    }
   }
 
   input:nth-of-type(2) {
