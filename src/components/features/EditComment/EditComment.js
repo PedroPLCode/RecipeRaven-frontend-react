@@ -75,18 +75,18 @@ const EditComment = () => {
   }
 
   return (
-    <div className={styles.board}>
+    <div className={styles.editcomment}>
       <h3>{commentId ? 'Edit Comment' : 'Add Comment'}</h3>
       <input 
         id="new-comment-content" 
         type="text" 
-        placeholder="Enter your comment" 
+        placeholder="Your comment" 
         value={newCommentContent} 
         onChange={event => setNewCommentContent(event.target.value)} 
       />
 
       <button onClick={handleClickEditComment}>
-        Edit Comment
+        Save
       </button>
       <ConfirmToast
         asModal={true}

@@ -39,28 +39,28 @@ const Comment = props => {
     return (
       <div className={styles.comment}>
 
-      {props.userData ?  
-      (props.comment.user_id === props.userData.id || props.userData.id === settings.adminId ? 
-      <div>
+        {props.userData ?  
+        (props.comment.user_id === props.userData.id || props.userData.id === settings.adminId ? 
+        <div>
 
-      <div onClick={() => setShow(true)} className={styles.button_remove}><i>Delete Comment <FontAwesomeIcon icon={faTrashCan} /></i></div>
-      <ConfirmToast
-      asModal={true}
-        customFunction={handleDeleteComment}
-        setShowConfirmToast={setShow}
-        showConfirmToast={show}
-      />
+          <div onClick={() => setShow(true)} className={styles.button_remove}><i>Delete Comment <FontAwesomeIcon icon={faTrashCan} /></i></div>
+          <ConfirmToast
+          asModal={true}
+            customFunction={handleDeleteComment}
+            setShowConfirmToast={setShow}
+            showConfirmToast={show}
+          />
 
-      <Link to={`/editcomment/${props.comment.id}`}>Edit comment</Link>
-      </div>
-       : '')
-       : 
-       ''}
+          <Link to={`/editcomment/${props.comment.id}`}>Edit comment</Link>
+          </div>
+          : null)
+          : 
+          null}
 
-        { props.comment.creation_date ? <p>Created {props.comment.creation_date}</p> : '' }
-        { props.comment.last_update ? <p>Modified {props.comment.last_update}</p> : '' }
         <p>{props.comment.content}</p>
         <p>Author: {props.comment.author ? props.comment.author : props.comment.guest_author ? `${props.comment.guest_author} (Guest)` : 'Guest'}</p>
+        { props.comment.creation_date ? <i>Created {props.comment.creation_date}</i> : '' }
+        { props.comment.last_update ? <i>Modified {props.comment.last_update}</i> : '' }
       </div>
     );
   }

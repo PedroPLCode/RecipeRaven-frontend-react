@@ -78,11 +78,15 @@ const Post = (props) => {
   return (
     <div className={styles.post}>
 
-      <div className={styles.post_header}>
-        <div>
+      <div className={styles.post_content}>
+        <div className={styles.post_text}>
           <p>{props.post.title}</p>
+          <p>{props.post.content}</p>
+
+          <i>Created {props.post.creation_date}</i>
+          { props.post.last_update ? <i>Modified {props.post.last_update}</i> : '' }
         </div>
-        <div>
+        <div className={styles.post_author}>
           {props.post.author_picture ? (
                 <img src={`${(props.post.author_google_user && props.post.author_original_google_picture) ? '' : 'http://localhost:5000/static/uploaded_photos/'}${props.post.author_picture}`} alt='no profile picture' />
               ) : null }
@@ -106,17 +110,16 @@ const Post = (props) => {
        : 
       null}
 
-      <p>{props.post.content}</p>
-
-      <i>Created {props.post.creation_date}</i>
-      { props.post.last_update ? <i>Modified {props.post.last_update}</i> : '' }
-
       <button onClick={toggleComments}>
       {props.post.comments ? 
       (showComments ? (
         <span>Hide Comments</span>
       ) : (
-        <span>{props.post.comments && props.post.comments.length > 0 ? `${props.post.comments.length} Comments - Show` : 'Add Comment'}</span>
+        <span>
+          {props.post.comments && props.post.comments.length > 0 
+            ? `${props.post.comments.length} ${props.post.comments.length > 1 ? 'Comments' : 'Comment'} - Show`
+            : 'Add Comment'}
+        </span>
       ))
       : ''}
       
@@ -132,7 +135,7 @@ const Post = (props) => {
       <p>No comments to this post. Be the first!</p>
     )}
 
-    <div>
+    <div className={styles.addcomment}>
       <input 
         id="new-comment-content" 
         type="text" 

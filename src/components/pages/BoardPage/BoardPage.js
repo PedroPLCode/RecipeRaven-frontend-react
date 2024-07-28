@@ -29,18 +29,18 @@ const BoardPage = () => {
   const handleSortPosts = () => {
     setSortByNewest(!sortByNewest)
   }
-  
+
   const handleFilterPosts = () => {
     return posts.filter(post => {
       const titleMatch = post.title.toLowerCase().includes(filterPostsString.toLowerCase());
       const contentMatch = post.content.toLowerCase().includes(filterPostsString.toLowerCase());
       const authorMatch = (post.author && post.author.toLowerCase().includes(filterAuthorsString.toLowerCase())) ||
-                          (post.guest_author && post.guest_author.toLowerCase().includes(filterAuthorsString.toLowerCase()));
-  
+        (post.guest_author && post.guest_author.toLowerCase().includes(filterAuthorsString.toLowerCase()));
+
       return (titleMatch || contentMatch) && authorMatch;
     });
   };
-  
+
 
   const handleSendNewPost = async () => {
     const newPost = {
@@ -51,7 +51,7 @@ const BoardPage = () => {
     console.log(newPost)
     posts.push(newPost);
     dispatch(updatePosts(posts));
-    
+
     try {
       await toast.promise(
         createPost(newPost),
@@ -59,7 +59,7 @@ const BoardPage = () => {
           pending: 'Creating comment',
           success: 'comment created',
           error: 'Error',
-        }, {toastId: 4}
+        }, { toastId: 4 }
       );
     } catch (error) {
       console.error('Error during delete:', error);
@@ -78,7 +78,7 @@ const BoardPage = () => {
         if (localStorage.token) {
           console.log(userData)
         }
-        
+
         fetchPosts(dispatch);
 
       } catch (error) {
@@ -91,31 +91,31 @@ const BoardPage = () => {
 
   console.log(userData)
 
-  if (posts.length >= 1) {    
+  if (posts.length >= 1) {
     return (
       <div className={styles.board}>
         <h3>BoardPage component</h3>
 
-        <input id="filter" type="text" placeholder='filter posts' 
-                     title='filter posts' value={filterPostsString} 
-                     onChange={event => setFilterPostsString(event.target.value)} />
-        <input id="authors" type="text" placeholder='filter authors' 
-                     title='filter authors' value={filterAuthorsString} 
-                     onChange={event => setFilterAuthorsString(event.target.value)} />
+        <input id="filter" type="text" placeholder='filter posts'
+          title='filter posts' value={filterPostsString}
+          onChange={event => setFilterPostsString(event.target.value)} />
+        <input id="authors" type="text" placeholder='filter authors'
+          title='filter authors' value={filterAuthorsString}
+          onChange={event => setFilterAuthorsString(event.target.value)} />
         <button onClick={handleSortPosts}>
-        Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
+          Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
         </button>
 
-      <a href="/addeditpost">New Post</a>
+        <a href="/addeditpost">Add New Post</a>
 
-      {handleFilterPosts()
-      .slice()
-      .sort(sortByNewest ? (a, b) => new Date(b.creation_date) - new Date(a.creation_date) : (a, b) => new Date(a.creation_date) - new Date(b.creation_date))
-      .map(post => (
-        <Post key={post.id} post={post} posts={posts} userData={userData} />
-      ))}
+        {handleFilterPosts()
+          .slice()
+          .sort(sortByNewest ? (a, b) => new Date(b.creation_date) - new Date(a.creation_date) : (a, b) => new Date(a.creation_date) - new Date(b.creation_date))
+          .map(post => (
+            <Post key={post.id} post={post} posts={posts} userData={userData} />
+          ))}
 
-      <a href="/addeditpost">New Post</a>
+        <a href="/addeditpost">Add New Post</a>
 
         <RandomQuote />
       </div>
@@ -126,7 +126,7 @@ const BoardPage = () => {
         <h3>BoardPage component</h3>
         <h5>No posts found</h5>
 
-        
+
         <a href="/addeditpost">Add first Post</a>
 
 
@@ -134,6 +134,6 @@ const BoardPage = () => {
       </div>
     )
   }
-}    
+}
 
 export default BoardPage;

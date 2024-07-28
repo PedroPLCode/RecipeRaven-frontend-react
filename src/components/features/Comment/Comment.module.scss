@@ -1,3 +1,84 @@
+@import '../../../styles/settings.scss';
+
 .comment {
-    
+  padding-bottom: calc($base-size);
+  width: 75dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+
+  p, i {
+    font-size: calc($base-size * 1.4);
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  input {
+    width: 60%;
+    height: calc($base-size *3);
+    color: $color-one;
+    font-weight: bold;
+    border: none;
+    background-color: $transparent-background;
+
+    transition-property: border, color, background-color, box-shadow;
+    transition-duration: $transition-duration;
+  }
+
+  input:nth-of-type(2) {
+    height: 30dvh;
+  }
+
+  input::placeholder {
+    color: $error-background;
+    font-size: calc($base-size * 1.3);
+
+    @media (max-width: $media-border) {
+      font-size: calc($base-size * 1.5);
+    }
+  }
+
+  input:focus {
+    outline: none;
+    background-color: $color-one;
+    color: $color-three;
+  }
+
+  input:not(:placeholder-shown) {
+    background-color: $color-one;
+    color: $color-three;
+  }
+
+  button {
+
+    width: calc($base-size * 10);
+    height: calc($base-size * 3);
+    border: none;
+    color: $color-one;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(90deg, $color-one 50%, $transparent-background 50%);
+    background-position: 100% 0;
+    background-size: 300% 300%;
+
+    transition-duration: $transition-duration;
+    transition-property: color, background-color, background-position, box-shadow;
+
+
+    &:hover {
+      background-position: 0 100%;
+      color: $transparent-background;
+      cursor: pointer;
+    }
+
+    @media (max-width: $media-border) {
+      background-position: 0 100%;
+      color: $transparent-background;
+    }
+  }
 }
