@@ -18,6 +18,14 @@
         transition-duration: $transition-duration;
     }
 
+    .post_author_user {
+        background: $transparent-background;
+        color: $color-one;
+        margin: 0;
+        width: 90%;
+        text-align: center;
+    }
+
     input {
         width: 60%;
         height: calc($base-size *3);

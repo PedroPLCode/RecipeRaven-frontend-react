@@ -19,7 +19,7 @@
   }
 
   input {
-    width: 60%;
+    width: 90%;
     height: 30dvh;
     color: $color-one;
     font-weight: bold;
@@ -41,18 +41,14 @@
 
   input:focus {
     outline: none;
-
-    color: $color-three;
   }
 
   input:not(:placeholder-shown) {
-    background-color: $color-one;
-    color: $color-three;
   }
 
   button {
 
-    width: calc($base-size * 10);
+    width: 90%;
     height: calc($base-size * 3);
     border: none;
     color: $color-one;

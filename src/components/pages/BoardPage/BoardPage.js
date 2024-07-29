@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { createNotification } from '../../utils/notifications';
+import { parse, compareAsc, compareDesc } from 'date-fns';
 
 const BoardPage = () => {
 
@@ -48,7 +49,6 @@ const BoardPage = () => {
       content: newPostContent,
       guest_author: newPostAuthor,
     }
-    console.log(newPost)
     posts.push(newPost);
     dispatch(updatePosts(posts));
 
@@ -76,7 +76,6 @@ const BoardPage = () => {
     const fetchData = async () => {
       try {
         if (localStorage.token) {
-          console.log(userData)
         }
 
         fetchPosts(dispatch);
@@ -89,17 +88,28 @@ const BoardPage = () => {
     fetchData();
   }, [reloadTrigger]);
 
-  console.log(userData)
+  const parseDate = (dateString) => {
+    return parse(dateString.replace(' ', 'T').replace(' CET', 'Z'), 'yyyy-MM-dd\'T\'HH:mm:ssX', new Date());
+  };
+
+  const sortedPosts = handleFilterPosts()
+    .slice()
+    .sort((a, b) => {
+      const dateA = parseDate(a.creation_date);
+      const dateB = parseDate(b.creation_date);
+      console.log("Porównanie dat:", dateA, dateB);
+      return sortByNewest ? compareDesc(dateA, dateB) : compareAsc(dateA, dateB);
+    });
 
   if (posts.length >= 1) {
     return (
       <div className={styles.board}>
         <h3>BoardPage component</h3>
 
-        <input id="filter" type="text" placeholder='filter posts'
+        <input id="filter" type="text" placeholder='filter posts by title or content'
           title='filter posts' value={filterPostsString}
           onChange={event => setFilterPostsString(event.target.value)} />
-        <input id="authors" type="text" placeholder='filter authors'
+        <input id="authors" type="text" placeholder='filter posts by authors'
           title='filter authors' value={filterAuthorsString}
           onChange={event => setFilterAuthorsString(event.target.value)} />
         <button onClick={handleSortPosts}>
@@ -108,12 +118,9 @@ const BoardPage = () => {
 
         <a href="/addeditpost">Add New Post</a>
 
-        {handleFilterPosts()
-          .slice()
-          .sort(sortByNewest ? (a, b) => new Date(b.creation_date) - new Date(a.creation_date) : (a, b) => new Date(a.creation_date) - new Date(b.creation_date))
-          .map(post => (
-            <Post key={post.id} post={post} posts={posts} userData={userData} />
-          ))}
+        {sortedPosts.map(post => (
+          <Post key={post.id} post={post} posts={posts} userData={userData} />
+        ))}
 
         <a href="/addeditpost">Add New Post</a>
 

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPen, faStickyNote } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
 import { deleteFavorite } from '../../utils/favorites'
 import { updateNote } from '../../utils/notes'
@@ -111,7 +111,7 @@ const SingleFavorite = props => {
               <span>Hide Note</span>
             ) : (
               <span>
-                {note ? 'Show Note' : 'Add note'}
+                <i>{note ? 'Show Note ' : 'Add note '} <FontAwesomeIcon icon={faStickyNote} /></i>
               </span>
             )
             }
@@ -128,7 +128,7 @@ const SingleFavorite = props => {
                   value={note} 
                   onChange={event => setNote(event.target.value)} 
                 />
-          <button onClick={(event) => handleUpdateNote(event)}>Save Note</button>
+          <button onClick={(event) => handleUpdateNote(event)}><i>Save Note <FontAwesomeIcon icon={faPen} /></i></button>
           
         </div>
         ) : '' }

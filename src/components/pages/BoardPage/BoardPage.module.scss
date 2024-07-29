@@ -61,8 +61,6 @@
     }
   }
 
-  input:first-of-type {}
-
   input::placeholder {
     color: $error-background;
     font-size: calc($base-size * 1.3);
@@ -74,13 +72,9 @@
 
   input:focus {
     outline: none;
-    background-color: $color-one;
-    color: $color-three;
   }
 
   input:not(:placeholder-shown) {
-    background-color: $color-one;
-    color: $color-three;
   }
 
   a {

@@ -1,7 +1,7 @@
 import styles from './Comment.module.scss'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { deleteComment } from '../../utils/comments';
@@ -39,11 +39,20 @@ const Comment = props => {
     return (
       <div className={styles.comment}>
 
+        <div className={styles.content}>
+          <p>{props.comment.content}</p>
+
+            <p className={styles.comment_author}>Author: {props.comment.author ? props.comment.author : props.comment.guest_author ? `${props.comment.guest_author} (Guest)` : 'Guest'}</p>
+            
+          { props.comment.creation_date ? <i>Created {props.comment.creation_date}</i> : '' }
+          { props.comment.last_update ? <i>Modified {props.comment.last_update}</i> : '' }
+        </div>
+
         {props.userData ?  
         (props.comment.user_id === props.userData.id || props.userData.id === settings.adminId ? 
-        <div>
+        <div className={styles.buttons_for_users}>
 
-          <div onClick={() => setShow(true)} className={styles.button_remove}><i>Delete Comment <FontAwesomeIcon icon={faTrashCan} /></i></div>
+          <div onClick={() => setShow(true)} className={styles.button_remove}><i><FontAwesomeIcon icon={faTrashCan} /></i></div>
           <ConfirmToast
           asModal={true}
             customFunction={handleDeleteComment}
@@ -51,16 +60,12 @@ const Comment = props => {
             showConfirmToast={show}
           />
 
-          <Link to={`/editcomment/${props.comment.id}`}>Edit comment</Link>
+          <Link to={`/editcomment/${props.comment.id}`}><i><FontAwesomeIcon icon={faEdit} /></i></Link>
           </div>
           : null)
           : 
           null}
 
-        <p>{props.comment.content}</p>
-        <p>Author: {props.comment.author ? props.comment.author : props.comment.guest_author ? `${props.comment.guest_author} (Guest)` : 'Guest'}</p>
-        { props.comment.creation_date ? <i>Created {props.comment.creation_date}</i> : '' }
-        { props.comment.last_update ? <i>Modified {props.comment.last_update}</i> : '' }
       </div>
     );
   }

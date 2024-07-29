@@ -29,7 +29,6 @@ const NavBar = (props) => {
     setIsMenuOpen(!isMenuOpen);
 
     const footer = document.querySelector('footer');
-    console.log(footer)
     if (!isMenuOpen) {
       footer.classList.add(footerStyles.footer_hidden);
     } else {

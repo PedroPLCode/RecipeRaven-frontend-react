@@ -115,7 +115,7 @@ const AddEditPost = () => {
         onChange={event => setNewPostContent(event.target.value)}
       />
       {userData ? (
-        <p>Author: {userData.name || userData.login}</p>
+        <p className={styles.post_author_user}>Author: {userData.name || userData.login}</p>
       ) : (
         <input
           id="new-post-author"

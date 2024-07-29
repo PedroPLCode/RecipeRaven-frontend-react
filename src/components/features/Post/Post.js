@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { createComment } from '../../utils/comments';
 import Comment from '../Comment/Comment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { deletePost } from '../../utils/posts';
 import { Link } from 'react-router-dom';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
@@ -75,8 +75,34 @@ const Post = (props) => {
     }
   };
 
+  const displayAuthorName = props.post.author
+  ? props.post.author
+  : props.post.guest_author
+  ? (
+    <>
+      {props.post.guest_author}<br />(Guest)
+    </>
+    )
+  : 'Guest';
+
   return (
     <div className={styles.post}>
+
+      {props.userData ?  
+            (props.post.user_id === props.userData.id || props.userData.id === settings.adminId ? 
+            <div className={styles.buttons_for_users}>
+            <div onClick={handleClickDeletePost} className={styles.button_remove}><i>Delete <FontAwesomeIcon icon={faTrashCan} /></i></div>
+            <ConfirmToast
+              asModal={true}
+              customFunction={handleDeletePost}
+              setShowConfirmToast={setShowToast}
+              showConfirmToast={showToast}
+            />
+            <Link to={`/addeditpost/${props.post.id}`}><i>Edit <FontAwesomeIcon icon={faEdit} /></i></Link>
+            </div>
+            : null)
+            : 
+            null}
 
       <div className={styles.post_content}>
         <div className={styles.post_text}>
@@ -89,26 +115,10 @@ const Post = (props) => {
         <div className={styles.post_author}>
           {props.post.author_picture ? (
                 <img src={`${(props.post.author_google_user && props.post.author_original_google_picture) ? '' : 'http://localhost:5000/static/uploaded_photos/'}${props.post.author_picture}`} alt='no profile picture' />
-              ) : null }
-          <i>Author: {props.post.author ? props.post.author : props.post.guest_author ? `${props.post.guest_author} (Guest)` : 'Guest'}</i>
+              ) : <img src='http://localhost:5000/static/uploaded_photos/guest_author.jpeg' alt='no profile picture'/> }
+          <i className={styles.author_name}>Author:<br />{displayAuthorName}</i>
         </div>
       </div>
-
-      {props.userData ?  
-      (props.post.user_id === props.userData.id || props.userData.id === settings.adminId ? 
-      <div className={styles.buttons_for_users}>
-      <div onClick={handleClickDeletePost} className={styles.button_remove}><i>Delete Post <FontAwesomeIcon icon={faTrashCan} /></i></div>
-      <ConfirmToast
-        asModal={true}
-        customFunction={handleDeletePost}
-        setShowConfirmToast={setShowToast}
-        showConfirmToast={showToast}
-      />
-      <Link to={`/addeditpost/${props.post.id}`}>Edit post</Link>
-      </div>
-       : null)
-       : 
-      null}
 
       <button onClick={toggleComments}>
       {props.post.comments ? 
@@ -158,13 +168,15 @@ const Post = (props) => {
 
       <button onClick={handleSendNewComment}>
       {props.post.comments.length > 0 ? (
-  <span>Add Comment</span>
-) : (
-  <span>Add First Comment</span>
-)}
+        <span>Add Comment</span>
+      ) : (
+        <span>Add First Comment</span>
+      )}
       </button>
+      
+    </div>
 
-      <button onClick={toggleComments}>
+    <button onClick={toggleComments}>
       {props.post.comments ? 
       (showComments ? (
         <span>Hide Comments</span>
@@ -174,8 +186,6 @@ const Post = (props) => {
       : ''}
       
       </button>
-      
-    </div>
   </>
 )}
 
