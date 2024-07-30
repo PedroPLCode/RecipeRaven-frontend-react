@@ -1,12 +1,27 @@
 @import '../../../styles/settings.scss';
 
 .post {
-  width: 100%;
+  width: 90%;
   background-color: $transparent-background;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .no_posts { 
+    margin-top: calc($base-size * 1);
+    color: $color-one;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+
+    &.comments_show {
+      background-position: 0 100%;
+      color: $transparent-background;
+    }
+  }
 
   .post_content {
     width: 100%;
@@ -98,13 +113,16 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 0px;
   
   a {
+    width: calc($base-size * 10);
+
     i {
       font-size: calc($base-size * 1.4);
+      text-align: center;
   
       @media (max-width: $media-border) {
         width: 100%;
@@ -156,6 +174,7 @@
 }
 
 .addcomment {
+  width: 100%;
   margin-top: calc($base-size * 1);
   margin-bottom: calc($base-size * 1);
   display: flex;
@@ -168,11 +187,12 @@
     width: 90%;
     height: calc($base-size * 2);
     background-color: $transparent-background;
-    font-weight: bold;
+    font-weight: normal;
     color: $color-one;
     display: flex;
     align-items: center; 
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: calc($base-size);
     transition-property: color;
     transition-duration: $transition-duration;
   }
@@ -211,7 +231,7 @@
 
   button {
 
-    width: calc($base-size * 10);
+    width: 90%;
     height: calc($base-size * 3);
     border: none;
     color: $color-one;
@@ -237,5 +257,10 @@
       color: $transparent-background;
       width: 90%;
     }
+  }
+
+  .toggle_comments {
+    width: 100%;
+    color: rgb(43, 255, 0);
   }
 }

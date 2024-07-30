@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/reducers/userReducer';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 const Profile = props => {
 
@@ -33,13 +34,17 @@ const Profile = props => {
             ) : (
               <p>No profile picture available</p>
             )}
-            <p>Login: {userData.login}</p>
-            <p>Name: {userData.name}</p>
-            <p>Email: {userData.email}</p>
-            <p>About me: {userData.about}</p>
-            <p>Creation Date: {userData.creation_date}</p>
-            <p>Last Login: {userData.last_login}</p>
-            <p>Last Activity: {userData.last_api_activity}</p>
+
+            <div>
+              <p>Login: {userData.login}</p>
+              <p>Name: {userData.name}</p>
+              <p>Email: {userData.email}</p>
+              <p>Detalis: {userData.about}</p>
+              <p>Created: {userData.creation_date}</p>
+              <p>Last Login: {userData.last_login}</p>
+              <p>Last Activity: {userData.last_api_activity}</p>
+            </div>
+
             <a href="/favorites" onClick={(e) => { e.preventDefault(); navigate('/favorites'); }}>Favorites: {userData.favorites_count}</a>
             <a href="/userposts" onClick={(e) => { e.preventDefault(); navigate('/userposts'); }}>Posts: {userData.posts_count}</a>
             <a href="/usercomments" onClick={(e) => { e.preventDefault(); navigate('/usercomments'); }}>Comments: {userData.comments_count}</a>

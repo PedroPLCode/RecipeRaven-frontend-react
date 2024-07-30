@@ -36,7 +36,7 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  const { token, removeToken, setToken } = useToken();
+  const { token, removeToken, setToken } = useToken(null);
   const location = useLocation();
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionStage, setTransistionStage] = useState("fadeIn");

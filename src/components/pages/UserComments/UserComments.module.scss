@@ -7,13 +7,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: $base-size;
 
   @media (max-width: $media-border) {
     padding-left: calc($base-size * 2);
     padding-right: calc($base-size * 2);
   }
 
-  h3, h5 {
+  h3,
+  h5 {
     font-weight: bold;
     color: $color-two;
     text-align: center;
@@ -24,21 +26,57 @@
     color: $color-three;
   }
 
-  h5 { 
+  h5 {
     margin-bottom: calc($base-size * 3);
   }
 
   .bottom {
     margin-top: calc($base-size * 2);
     color: $color-one;
-      @media (max-width: $media-border) {
-        margin-top: $base-size;
-      }
+
+    @media (max-width: $media-border) {
+      margin-top: $base-size;
+    }
   }
 
   @media (max-width: $media-border) {
     h5:last-of-type {
       margin-bottom: calc($base-size * 3);
     }
+  }
+
+  button,
+  a {
+    height: calc($base-size * 3);
+    font-size: calc($base-size * 1.4);
+    border: none;
+    color: $color-one;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(90deg, $color-one 50%, $transparent-background 50%);
+    background-position: 100% 0;
+    background-size: 300% 300%;
+
+    transition-duration: $transition-duration;
+    transition-property: color, background-color, background-position, box-shadow;
+
+    &:hover {
+      background-position: 0 100%;
+      color: $transparent-background;
+      cursor: pointer;
+    }
+
+    @media (max-width: $media-border) {
+      background-position: 0 100%;
+      color: $transparent-background;
+      width: 100%;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    width: calc($base-size * 10);
   }
 }

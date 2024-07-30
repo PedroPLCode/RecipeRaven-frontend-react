@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { createNotification } from '../../utils/notifications';
 import { ConfirmToast } from 'react-confirm-toast'
+import clsx from 'clsx';
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -29,36 +30,41 @@ const Post = (props) => {
 
   const handleSendNewComment = async (event) => {
     event.preventDefault();
-    const newComment = {
-      content: newCommentContent,
-      post_id: props.post.id,
-      guest_author: localStorage.token ? null : newCommentAuthor,
-      author: localStorage.token ? (props.userData.name ? props.userData.name : props.userData.login) : null,
-      user_id: localStorage.token ? props.userData.id : null,
-    };
 
-    const updatedPosts = props.posts.map(post => 
-      post.id === props.post.id ? { ...post, comments: [...post.comments, newComment] } : post
-    );
-    dispatch(updatePosts(updatedPosts));
-
-    try {
-      await toast.promise(
-        createComment(newComment),
-        {
-          pending: 'Creating comment',
-          success: 'comment created',
-          error: 'Error',
-        }, {toastId: 4}
+    if (!newCommentContent) {
+      toast.error('Error. No comment content.')
+    } else {
+      const newComment = {
+        content: newCommentContent,
+        post_id: props.post.id,
+        guest_author: localStorage.token ? null : newCommentAuthor,
+        author: localStorage.token ? (props.userData.name ? props.userData.name : props.userData.login) : null,
+        user_id: localStorage.token ? props.userData.id : null,
+      };
+  
+      const updatedPosts = props.posts.map(post => 
+        post.id === props.post.id ? { ...post, comments: [...post.comments, newComment] } : post
       );
-    } catch (error) {
-      console.error('Error during delete:', error);
-      toast.error('Error during delete');
+      dispatch(updatePosts(updatedPosts));
+  
+      try {
+        await toast.promise(
+          createComment(newComment),
+          {
+            pending: 'Creating comment',
+            success: 'comment created',
+            error: 'Error',
+          }, {toastId: 4}
+        );
+      } catch (error) {
+        console.error('Error during delete:', error);
+        toast.error('Error during delete');
+      }
+  
+      setNewCommentContent('');
+      setNewCommentAuthor('');
+      setReloadTrigger(!reloadTrigger);
     }
-
-    setNewCommentContent('');
-    setNewCommentAuthor('');
-    setReloadTrigger(!reloadTrigger);
   };
 
   const handleClickDeletePost = () => {
@@ -120,7 +126,7 @@ const Post = (props) => {
         </div>
       </div>
 
-      <button onClick={toggleComments}>
+      <button onClick={toggleComments} className={clsx(showComments ? styles.comments_show : '')}>
       {props.post.comments ? 
       (showComments ? (
         <span>Hide Comments</span>
@@ -142,7 +148,7 @@ const Post = (props) => {
         <Comment key={index} comment={comment} post={props.post} posts={props.posts} userData={props.userData} />
       ))
     ) : (
-      <p>No comments to this post. Be the first!</p>
+      <p className={styles.no_posts}>No comments to this post. Be the first!</p>
     )}
 
     <div className={styles.addcomment}>
@@ -166,7 +172,7 @@ const Post = (props) => {
         />
       )}
 
-      <button onClick={handleSendNewComment}>
+      <button className={styles.add_comment} onClick={handleSendNewComment}>
       {props.post.comments.length > 0 ? (
         <span>Add Comment</span>
       ) : (
@@ -176,7 +182,7 @@ const Post = (props) => {
       
     </div>
 
-    <button onClick={toggleComments}>
+    <button onClick={toggleComments} className={clsx(styles.toggle_comments, showComments ? styles.comments_show : '')}>
       {props.post.comments ? 
       (showComments ? (
         <span>Hide Comments</span>

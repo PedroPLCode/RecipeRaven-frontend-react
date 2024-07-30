@@ -4,7 +4,6 @@ import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import { useNavigate } from 'react-router-dom';
-
 import { useDispatch } from "react-redux";
 import { fetchFavorites, deleteFavorite } from '../../utils/favorites';
 import { getUserData } from '../../utils/users';
@@ -31,6 +30,7 @@ const Login = props => {
     })
     .then((response) => {
       props.setToken(response.data.access_token);
+      localStorage.setItem('token', response.data.access_token);
       //dispatch(updateUser(response.data));
       //window.location.reload();
       getUserData(dispatch)

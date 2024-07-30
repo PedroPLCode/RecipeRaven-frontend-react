@@ -115,7 +115,7 @@ const SingleFavorite = props => {
               </span>
             )
             }
-            </button>
+          </button>
 
             {showNote ? (
             <div>
@@ -130,9 +130,9 @@ const SingleFavorite = props => {
                 />
           <button onClick={(event) => handleUpdateNote(event)}><i>Save Note <FontAwesomeIcon icon={faPen} /></i></button>
           
+          </div>
+          ) : '' }
         </div>
-        ) : '' }
-      </div>
 
 
       <div onClick={handleRemoveFavorites} className={styles.button_remove}><i>Remove from favorites <FontAwesomeIcon icon={faTrashCan} /></i></div>

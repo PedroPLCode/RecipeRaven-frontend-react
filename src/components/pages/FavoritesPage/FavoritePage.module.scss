@@ -42,13 +42,9 @@
 
   input:focus {
     outline: none;
-    background-color: $color-one;
-    color: $color-three;
   }
 
   input:not(:placeholder-shown) {
-    background-color: $color-one;
-    color: $color-three;
   }
 
   h3, h5 {

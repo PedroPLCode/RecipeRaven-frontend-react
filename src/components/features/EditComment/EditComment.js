@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { updateComment } from '../../utils/comments';
 import { fetchPosts } from '../../utils/posts';
 import { ConfirmToast } from 'react-confirm-toast'
+import { ToastContainer, toast } from 'react-toastify';
 
 const EditComment = () => {
   const { commentId } = useParams();
@@ -71,7 +72,11 @@ const EditComment = () => {
   }
 
   const handleClickEditComment = () => {
-    setShowToast(true)
+    if (!newCommentContent) {
+      toast.error('Error. No comment content.')
+    } else {
+      setShowToast(true)
+    }
   }
 
   return (

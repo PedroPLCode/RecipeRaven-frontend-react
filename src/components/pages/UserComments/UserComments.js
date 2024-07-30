@@ -8,9 +8,16 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import Post from '../../features/Post/Post';
 import { fetchPosts } from '../../utils/posts';
 import { getUserData } from '../../utils/users';
+import { useState } from 'react';
+import { parse, compareAsc, compareDesc } from 'date-fns';
 
 const UserComments = () => {
   const dispatch = useDispatch();
+  const [sortByNewest, setSortByNewest] = useState(true);
+
+  const handleSortPosts = () => {
+    setSortByNewest(!sortByNewest)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,18 +37,34 @@ const UserComments = () => {
   const posts = useSelector(state => getPosts(state));
   const userData = useSelector(state => getUser(state));
 
+  const parseDate = (dateString) => {
+    return parse(dateString.replace(' ', 'T').replace(' CET', 'Z'), 'yyyy-MM-dd\'T\'HH:mm:ssX', new Date());
+  };
+  
+  const sortedPosts = posts
+  .slice()
+  .sort((a, b) => {
+    const dateA = parseDate(a.creation_date);
+    const dateB = parseDate(b.creation_date);
+    console.log("Porównanie dat:", dateA, dateB);
+    return sortByNewest ? compareDesc(dateA, dateB) : compareAsc(dateA, dateB);
+  });
+
   if (posts && userData) {    
     return (
       <div className={styles.board}>
         <h3>Posts with {userData ? (userData.name ? userData.name : userData.login): 'Your'} comments</h3>
 
-        {posts
+        <button onClick={handleSortPosts}>
+          Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
+        </button>
+
+        {sortedPosts
         .filter(post => post.comments.some(comment => comment.user_id === userData.id))
         .map(post => (
           <Post key={post.id} post={post} posts={posts} userData={userData} />
         ))}
-
-
+        
         <RandomQuote />
       </div>
     );

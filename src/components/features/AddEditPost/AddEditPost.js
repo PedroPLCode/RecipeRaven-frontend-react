@@ -55,7 +55,6 @@ const AddEditPost = () => {
       guest_author: newPostAuthor,
     };
 
-
     if (postId) {
       const updatedPosts = posts.map(post => 
         post.id === parseInt(postId) ? { ...post, ...newPost } : post
@@ -74,8 +73,8 @@ const AddEditPost = () => {
           }, {toastId: 4}
         );
       } catch (error) {
-        console.error('Error during delete:', error);
-        toast.error('Error during delete');
+        console.error('Error during creation:', error);
+        toast.error('Error during creation');
       }
     }
 
@@ -92,7 +91,13 @@ const AddEditPost = () => {
   }
 
   const handleClickAddEditPost = () => {
-    setShowToast(true)
+    if (!newPostTitle) {
+      toast.error('Error. No title.')
+    } else if (!newPostContent) {
+      toast.error('Error. No post content.')
+    } else {
+      setShowToast(true)
+    }
   }
 
   return (
