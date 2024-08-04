@@ -112,6 +112,11 @@ export const getUserData = async (dispatch, props = null) => {
 
   try {
     const response = await fetch(url, options);
+    
+    if (!response.ok) {
+      localStorage.removeItem('token');
+    }
+
     const finalResponse = await response.json();
     const userData = finalResponse.user_data;
 
@@ -184,12 +189,9 @@ export const createUser = async (event, createUserForm, setCreateUserForm) => {
     body: formData,
   };
 
-  console.log(options)
-
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
     setCreateUserForm({
       login: "",
       password: "",
@@ -335,6 +337,7 @@ export const logOut = props => {
   .then((response) => {
      props.token()
      window.location.reload();
+     localStorage.removeItem('token');
   }).catch((error) => {
     if (error.response) {
       console.log(error.response)
@@ -355,6 +358,7 @@ export const deleteUser = props => {
   .then((response) => {
     props.token()
     window.location.reload();
+    localStorage.removeItem('token');
   }).catch((error) => {
     if (error.response) {
       console.log(error.response)
