@@ -21,7 +21,6 @@ const SingleFavorite = React.memo(props => {
   const navigate = useNavigate();
   const favoriteRef = useRef(null);
 
-  const [showNote, setShowNote] = useState(false);
   const [note, setNote] = useState(props.favorite['note'] ? props.favorite['note'].content : '');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -105,14 +104,11 @@ const SingleFavorite = React.memo(props => {
         <a href={SingleFavoriteObject[parametersNames.url]} target='_blank' rel='noreferrer'><i>Click for full recipe!</i></a>
 
         <div>
-          <button className={clsx(showNote ? styles.show_note : '')} onClick={toggleNote}>
-            {showNote ? (
-              <span>Hide Note</span>
-            ) : (
-              <span>
-                <i>{note ? 'Show Note ' : 'Add note '} <FontAwesomeIcon icon={faStickyNote} /></i>
-              </span>
-            )}
+          <button className={clsx(styles.button_note, isModalOpen ? styles.show_note : '')} onClick={toggleNote}>
+            <span>
+              <i>{note ? 'Show Note ' : 'Add note '} <FontAwesomeIcon icon={faStickyNote} /></i>
+            </span>
+            
           </button>
           
           <Modal
@@ -133,7 +129,7 @@ const SingleFavorite = React.memo(props => {
               onChange={event => setNote(event.target.value)}
             />
             <button onClick={handleUpdateNote}>
-              <i>Save Note <FontAwesomeIcon icon={faPen} /></i>
+              <i>{note ? 'Update Note ' : 'Save note '} <FontAwesomeIcon icon={faPen} /></i>
             </button>
             <button onClick={toggleNote}>Close</button>
           </Modal>

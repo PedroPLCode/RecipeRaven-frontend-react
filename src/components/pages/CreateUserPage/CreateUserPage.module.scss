@@ -8,6 +8,10 @@
   justify-content: center;
   align-items: center;
 
+  @media (max-width: $media-border) {
+    width: 80&;
+  }
+
   h3, h5 {
     font-weight: bold;
     color: $color-two;
@@ -98,7 +102,6 @@
       @media (max-width: $media-border) {
         color: $color-one;
         background-position: 100% 0;
-        
       }
     }
   }

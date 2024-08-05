@@ -43,7 +43,10 @@ const UserPosts = () => {
     return parse(dateString.replace(' ', 'T').replace(' CET', 'Z'), 'yyyy-MM-dd\'T\'HH:mm:ssX', new Date());
   };
   
-  const sortedPosts = posts
+  const userPosts = posts
+  .filter(post => post.user_id === userData.id);
+
+  const sortedPosts = userPosts
   .slice()
   .sort((a, b) => {
     const dateA = parseDate(a.creation_date);
@@ -52,17 +55,19 @@ const UserPosts = () => {
     return sortByNewest ? compareDesc(dateA, dateB) : compareAsc(dateA, dateB);
   });
 
-  if (posts) {    
+  if (userPosts && userData) {    
     return (
       <div className={styles.board}>
         <h3>{userData ? (userData.name ? userData.name : userData.login): 'Your'} posts</h3>
 
-        <button onClick={handleSortPosts}>
-          Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
-        </button>
+        {userPosts.length > 1 ?
+          <button onClick={handleSortPosts}>
+            Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
+          </button>
+          : null
+        }
 
         {sortedPosts
-          .filter(post => post.user_id === userData.id)
           .map(post => (
             <Post key={post.id} post={post} posts={posts} userData={userData} />
           ))
@@ -75,8 +80,7 @@ const UserPosts = () => {
     return (
       <div className={styles.board}>
         <h3>BoardPage component</h3>
-        <h5>No posts found</h5>
-
+        <h5>No {userData ? (userData.name ? userData.name : userData.login): 'Yours'} posts found</h5>
         <RandomQuote />
       </div>
     )

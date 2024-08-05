@@ -22,6 +22,10 @@
     align-items: center;
     gap: $base-size;
 
+    @media (max-width: $media-border) {
+      width: 100%;
+    }
+
     div {
       width: 100%;
       padding: calc($base-size);

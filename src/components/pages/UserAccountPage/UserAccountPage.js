@@ -24,7 +24,6 @@ const LoginPage = () => {
         :(
         <div>
           <Profile token={token} setToken={setToken}/>
-          <Logout token={removeToken}/>
         </div>
         )}
       </div>

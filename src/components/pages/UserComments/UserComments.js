@@ -40,27 +40,31 @@ const UserComments = () => {
   const parseDate = (dateString) => {
     return parse(dateString.replace(' ', 'T').replace(' CET', 'Z'), 'yyyy-MM-dd\'T\'HH:mm:ssX', new Date());
   };
-  
-  const sortedPosts = posts
+
+  const postsWithUserComments = posts
+  .filter(post => post.comments.some(comment => comment.user_id === userData.id))
+
+  const sortedPosts = postsWithUserComments
   .slice()
   .sort((a, b) => {
     const dateA = parseDate(a.creation_date);
     const dateB = parseDate(b.creation_date);
-    console.log("Porównanie dat:", dateA, dateB);
     return sortByNewest ? compareDesc(dateA, dateB) : compareAsc(dateA, dateB);
   });
 
-  if (posts && userData) {    
+  if (postsWithUserComments.length >= 1 && userData) {    
     return (
       <div className={styles.board}>
         <h3>Posts with {userData ? (userData.name ? userData.name : userData.login): 'Your'} comments</h3>
 
-        <button onClick={handleSortPosts}>
-          Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
-        </button>
+        {postsWithUserComments.length > 1 ?
+                <button onClick={handleSortPosts}>
+                Sorted by - {sortByNewest ? 'newest' : 'oldest'} - click to change
+              </button>
+              : null
+        }
 
         {sortedPosts
-        .filter(post => post.comments.some(comment => comment.user_id === userData.id))
         .map(post => (
           <Post key={post.id} post={post} posts={posts} userData={userData} />
         ))}
@@ -72,8 +76,7 @@ const UserComments = () => {
     return (
       <div className={styles.board}>
         <h3>BoardPage component</h3>
-        <h5>No posts found</h5>
-
+        <h5>No {userData ? (userData.name ? userData.name : userData.login): 'Yours'} comments found</h5>
         <RandomQuote />
       </div>
     )

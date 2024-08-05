@@ -4,6 +4,7 @@ import { updateLinkNextPage } from '../../redux/reducers/nextResultsPageReducer'
 import { updateServerResponse } from '../../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../../redux/reducers/serverErrorReducer'
 import { elementsNames, settings } from '../../settings';
+import { ToastContainer, toast } from 'react-toastify';
 
 const prepareArrayFromStringInput = string => {
   if (typeof string !== 'string') {
@@ -38,6 +39,7 @@ export const validateInputString = (input, setInputOK) => {
     for (let singleInput of inputFields) {
       singleInput.classList.add(styles.input_error);
     }
+    toast.warning('Input error - only letters and single space', {toastId: 6});
     return false;
   } else {
     for (let singleInput of inputFields) {

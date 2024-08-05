@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { validateInputString } from '../../utils/recipes'
 import { fetchReceipes } from '../../utils/recipes'
+import { ToastContainer, toast } from 'react-toastify';
 
 const SearchPage = () => {
 
@@ -46,7 +47,9 @@ const SearchPage = () => {
         if (selectedButtons.length <= 2) {
           element.classList.add(styles.active);
           diet[clickedId][parametersNames.value] = true;
-        } 
+        } else {
+          toast.warning('Select max 3', {toastId: 4});
+        }
       } else {
         element.classList.remove(styles.active);
         diet[clickedId][parametersNames.value] = false;
@@ -55,8 +58,15 @@ const SearchPage = () => {
     }
   }
 
-  const handleSearchReceipes = () => {
-    fetchReceipes(ingredients, excluded, diet, dietKeys, setLoading, setSuccess, dispatch, setInputOK);
+  const handleSearchReceipes = async () => {
+    await toast.promise(
+      fetchReceipes(ingredients, excluded, diet, dietKeys, setLoading, setSuccess, dispatch, setInputOK),
+      {
+        pending: 'Searching',
+        success: 'Search completed',
+        error: 'Search error',
+      }, {toastId: 5}
+    );
   };
 
   const headerString = inputOK ? messages.foodSearchApp : messages.inputWarning;
