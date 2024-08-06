@@ -43,7 +43,7 @@ const News = (props) => {
       };
   
       const updatedNews = props.news.map(n => 
-        n.id === props.n.id ? { ...n, comments: [...n.reactions, newReaction] } : n
+        n.id === props.n.id ? { ...n, reactions: [...n.reactions, newReaction] } : n
       );
       dispatch(updateNews(updatedNews));
   

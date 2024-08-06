@@ -21,7 +21,7 @@ const Reaction = props => {
 
   const handleDeleteReaction = () => {
 
-    deleteReaction(props.comment.id);
+    deleteReaction(props.r.id);
 
     const updatedNews = props.news.map(n => {
       if (n.id === props.n.id) {
@@ -42,7 +42,7 @@ const Reaction = props => {
       <div className={styles.content}>
         <p>{props.r.content}</p>
 
-        <p className={styles.reaction_author}>Author: {props.r.author ? props.r.author : props.r.guest_author ? `${props.comment.guest_author} (Guest)` : 'Guest'}</p>
+        <p className={styles.reaction_author}>Author: {props.r.author ? props.r.author : props.r.guest_author ? `${props.r.guest_author} (Guest)` : 'Guest'}</p>
 
         {props.r.creation_date ? <i>Created {props.r.creation_date}</i> : ''}
         {props.r.last_update ? <i>Modified {props.r.last_update}</i> : ''}
