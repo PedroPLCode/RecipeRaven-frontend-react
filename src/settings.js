@@ -43,6 +43,13 @@ export const messages = {
   newComment: {
     content: 'Write new comment to this post..',
   },
+  newNews: {
+    title: 'New news title',
+    content: 'Write new news to the blog',
+  },
+  newReaction: {
+    content: 'Write new reaction to this news..',
+  },
   noInfoProvided: 'No information provided',
   showOnly20: 'But we wil show only 20',
   takeALook: 'Take a look...',
@@ -83,5 +90,5 @@ export const settings = {
   //regexPasswordString: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
   regexPasswordString: /^[a-zA-Z0-9!@#$%^&*]{6,}$/,
   title: 'Receipes Search App',
-  adminId: 1,
+  adminId: 18,
 }

@@ -25,12 +25,15 @@ import UserPosts from './components/pages/UserPosts/UserPosts.js';
 import UserComments from './components/pages/UserComments/UserComments.js';
 import AddEditPost from './components/features/AddEditPost/AddEditPost.js';
 import EditComment from './components/features/EditComment/EditComment.js';
+import AddEditNews from './components/features/AddEditNews/AddEditNews.js';
+import EditReaction from './components/features/EditReaction/EditReaction.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ForgottenPassword from './components/features/ForgottenPassword/ForgottenPassword.js';
 import ResetPassword from './components/features/ResetPassword/ResetPassword.js';
 import { getUserData } from './components/utils/users.js';
 import { useDispatch } from "react-redux";
+import MainPage from './components/pages/MainPage/MainPage.js'
 
 const App = () => {
 
@@ -77,6 +80,11 @@ const App = () => {
             <Route path="/addeditpost" element={<AddEditPost token={token} setToken={setToken} />} />
             <Route path="/addeditpost/:postId" element={<AddEditPost token={token} setToken={setToken} />} />
             <Route path="/editcomment/:commentId" element={<EditComment token={token} setToken={setToken} />} />
+
+            <Route path="/addeditnews" element={<AddEditNews token={token} setToken={setToken} />} />
+            <Route path="/addeditnews/:newsId" element={<AddEditNews token={token} setToken={setToken} />} />
+            <Route path="/editreaction/:reactionId" element={<EditReaction token={token} setToken={setToken} />} />
+
             <Route path="/usercomments" element={<UserComments token={token} setToken={setToken} />} />
             <Route path="/createuser" element={<CreateUserPage token={token} setToken={setToken} />} />
             <Route path="/changeuserdetails" element={<ChangeUserDetails token={token} setToken={setToken} />} />
@@ -92,7 +100,8 @@ const App = () => {
             <Route path="/readypage" element={<ReadyToSearch />} />
             <Route path="/noresultspage" element={<NoResultsPage />} />
             <Route path="/resultspage" element={<SearchResults />} />
-            <Route path="*" element={<SearchPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="*" element={<MainPage />} />
           </Routes>
         </div>
       </Container>

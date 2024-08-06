@@ -12,6 +12,8 @@ import nextResultsPageReducer from './reducers/nextResultsPageReducer';
 import userReducer from './reducers/userReducer';
 import postsReducer from './reducers/postsReducer';
 import commentsReducer from './reducers/commentsReducer';
+import newsReducer from './reducers/newsReducer';
+import reactionsReducer from './reducers/reactionsReducer';
 
 const subreducers = {
   quote: quoteReducer,
@@ -26,6 +28,8 @@ const subreducers = {
   posts: postsReducer,
   comments: commentsReducer,
   user: userReducer,
+  news: newsReducer,
+  reactions: reactionsReducer,
 }
 
 const reducer = combineReducers(subreducers);

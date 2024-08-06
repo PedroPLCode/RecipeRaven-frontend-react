@@ -76,6 +76,9 @@ const NavBar = (props) => {
     <div className={clsx(styles.navbar, isMenuOpen ? styles.menu_open : styles.menu_closed, show ? '' : styles.navbar_hidden)}>
       <div className={clsx(styles.wrapper, isMenuOpen ? styles.menu_open : styles.menu_closed)}>
         <Nav.Link className={styles.link} as={NavLink} to="/" onClick={handleLinkClick}>
+          Main
+        </Nav.Link>
+        <Nav.Link className={styles.link} as={NavLink} to="/search" onClick={handleLinkClick}>
           Search
         </Nav.Link>
         <Nav.Link className={styles.link} as={NavLink} to="/favorites" onClick={handleLinkClick}>

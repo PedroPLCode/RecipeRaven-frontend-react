@@ -47,6 +47,8 @@ const initialState = {
   linkNextPage: '',
   posts: [],
   comments: [],
+  news: [],
+  reactions: [],
   user: null,
 };
     
