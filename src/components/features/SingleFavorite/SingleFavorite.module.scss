@@ -256,12 +256,15 @@
 
     div {
       width: 100%;
-
-      button {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      
+      .button_note {
         background-image: linear-gradient(90deg, $color-one 50% , $transparent-background 50%);
         color: $color-three;
         border: none;
-        width: 100%;
       }
     }
 
