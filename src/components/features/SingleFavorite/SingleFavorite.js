@@ -6,9 +6,10 @@ import { elementsNames, parametersNames } from '../../../settings';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPen, faStickyNote } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPen, faStickyNote, faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
-import { deleteFavorite } from '../../utils/favorites';
+import { deleteFavorite, changeFavoriteStarred, fetchFavorites } from '../../utils/favorites';
 import { updateNote } from '../../utils/notes';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -47,6 +48,15 @@ const SingleFavorite = React.memo(props => {
     setIsModalOpen(false); // Zamknij modal po zapisaniu notatki
   }, [dispatch, note, props.favorite.id, props.favorites]);
 
+  const handleStarredFavorite = () => {
+    changeFavoriteStarred(props.favorite.id, favoriteStarred);
+    //const updatedFavorites = props.favorites.map(favorite => 
+    //  favorite.id === props.favorite.id ? { ...favorite, starred: favoriteStarred } : favorite
+    //);
+    //dispatch(updateFavorites(updatedFavorites));
+    fetchFavorites(dispatch);
+  }
+
   const handleRemoveFavorites = useCallback(async () => {
     try {
       await toast.promise(
@@ -69,6 +79,7 @@ const SingleFavorite = React.memo(props => {
 
   const SingleFavoriteObject = props.favorite['data'];
   const imageName = props.favorite['image_name'];
+  const favoriteStarred = props.favorite['starred'];
 
   return (
     <div ref={favoriteRef} id={SingleFavoriteObject[parametersNames.calories]} className={clsx(styles.single_favorite)}>
@@ -78,9 +89,9 @@ const SingleFavorite = React.memo(props => {
           <img src={`http://localhost:5000/static/uploaded_photos/${imageName}`} alt={imageName} width='400' height='400' />
         </a>
       </div>
-
+      
       <div className={styles.description}>
-        <p><strong className={styles.blue}>{SingleFavoriteObject[parametersNames.label]}</strong></p>
+        <p><FontAwesomeIcon className={styles.favoriteStar} onClick={handleStarredFavorite} icon={favoriteStarred ? faStarSolid : faStarRegular} />  <strong className={styles.blue}>{SingleFavoriteObject[parametersNames.label]}</strong></p>
         <p><span className={styles.blue}>Dish Type: </span> 
           <strong>{SingleFavoriteObject[parametersNames.dishType]} / {SingleFavoriteObject[parametersNames.mealType]}</strong>
         </p>

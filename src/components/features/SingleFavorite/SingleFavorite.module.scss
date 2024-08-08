@@ -264,6 +264,17 @@
         width: 100%;
       }
     }
+
+    .favoriteStar {
+      @media (hover: hover) {
+        transition-duration: $transition-duration;
+        transition-property: transform;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.4);
+        }
+      }
+    }
   }
 }
 

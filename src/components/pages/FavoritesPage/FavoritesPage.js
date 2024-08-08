@@ -31,7 +31,8 @@ const FavoritesPage = () => {
         const commentMatch = favorite.note ? favorite.note.content.toLowerCase().includes(filterFavoritesString.toLowerCase()) : false;
     
         return labelMatch || commentMatch;
-      });
+      })
+      .sort((a, b) => b.starred - a.starred);
     } else {
       fetchFavorites(dispatch);
       setReload(!reload)
