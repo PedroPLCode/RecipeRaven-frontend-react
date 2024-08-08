@@ -22,6 +22,9 @@ const SingleFavorite = React.memo(props => {
   const navigate = useNavigate();
   const favoriteRef = useRef(null);
 
+  const [animate, setAnimate] = useState(false);
+  const [animateDirectionUp, setAnimateDirectionUp] = useState(true);
+
   const [note, setNote] = useState(props.favorite['note'] ? props.favorite['note'].content : '');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -45,17 +48,26 @@ const SingleFavorite = React.memo(props => {
       error: 'Error',
     }, { toastId: 1 });
     setNote(updatedNote.content);
-    setIsModalOpen(false); // Zamknij modal po zapisaniu notatki
+    setIsModalOpen(false);
   }, [dispatch, note, props.favorite.id, props.favorites]);
 
-  const handleStarredFavorite = () => {
-    changeFavoriteStarred(props.favorite.id, favoriteStarred);
-    //const updatedFavorites = props.favorites.map(favorite => 
-    //  favorite.id === props.favorite.id ? { ...favorite, starred: favoriteStarred } : favorite
-    //);
-    //dispatch(updateFavorites(updatedFavorites));
-    fetchFavorites(dispatch);
-  }
+const handleStarredFavorite = async () => {
+  setAnimate(true);
+  setAnimateDirectionUp(!favoriteStarred);
+
+  setTimeout(async () => {
+    await changeFavoriteStarred(props.favorite.id, favoriteStarred);
+
+    const updatedFavorites = props.favorites.map(favorite => 
+      favorite.id === props.favorite.id ? { ...favorite, starred: favoriteStarred } : favorite
+    );
+    
+    await dispatch(updateFavorites(updatedFavorites));
+    await fetchFavorites(dispatch);
+
+    setAnimate(false);
+  }, 100);
+};
 
   const handleRemoveFavorites = useCallback(async () => {
     try {
@@ -82,7 +94,7 @@ const SingleFavorite = React.memo(props => {
   const favoriteStarred = props.favorite['starred'];
 
   return (
-    <div ref={favoriteRef} id={SingleFavoriteObject[parametersNames.calories]} className={clsx(styles.single_favorite)}>
+    <div ref={favoriteRef} id={SingleFavoriteObject[parametersNames.calories]} className={clsx(styles.single_favorite, animate ? (animateDirectionUp ? styles.single_favorite__animatemoveup : styles.single_favorite__animatemovedown) : '')}>
       <div className={styles.image}>
         <a href={SingleFavoriteObject.url} target='_blank' rel='noreferrer'>
           <i>Click for full recipe!</i>

@@ -8,6 +8,17 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  transition-duration: $transition-duration;
+  transition-property: transform;
+
+  &__animatemoveup {
+    transform: translateY(-1000px);
+  }
+
+  &__animatemovedown {
+    transform: translateY(1000px);
+  }
+  
   
   @media (max-width: $media-border) {
     padding: 0;
