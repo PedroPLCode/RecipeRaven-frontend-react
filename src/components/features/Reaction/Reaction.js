@@ -1,7 +1,9 @@
 import styles from './Reaction.module.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
+import { deletePost, handleUserReaction } from '../../utils/posts';
 import { useDispatch } from "react-redux";
 import { updateNews } from '../../../redux/reducers/newsReducer';
 import { deleteReaction } from '../../utils/reactions';
@@ -16,6 +18,19 @@ import { createNotification } from '../../utils/notifications';
 const Reaction = props => {
 
   const [show, setShow] = useState(false)
+
+  const [userLikedReaction, setUserLikedReaction] = useState(false);
+  const [likesCounter, setLikesCounter] = useState(props.reaction.likes.length);
+  const [userHatedReaction, setUserHatedReaction] = useState(false);
+  const [hatesCounter, setHatesCounter] = useState(props.reaction.hates.length);
+
+  const isReactionLiked = props.reaction.likes.some(likeUserId => likeUserId === props.userData.id);
+  const isReactionHated = props.reaction.hates.some(hateUserId => hateUserId === props.userData.id);
+
+  useEffect(() => {
+    setUserLikedReaction(isReactionLiked);
+    setUserHatedReaction(isReactionHated);
+  }, [isReactionLiked, isReactionHated]);
 
   const dispatch = useDispatch();
 
@@ -36,6 +51,21 @@ const Reaction = props => {
     toast.success('Reaction deleted');
   };
 
+  const handleLikes = () => {
+    if (userHatedReaction) {
+      handleUserReaction('reactions', 'hate', props.reaction.id, userHatedReaction, setUserHatedReaction, setHatesCounter);
+    }
+    handleUserReaction('reactions', 'like', props.reaction.id, userLikedReaction, setUserLikedReaction, setLikesCounter);
+  };
+
+  const handleHates = () => {
+    if (userLikedReaction) {
+      handleUserReaction('reactions', 'like', props.reaction.id, userLikedReaction, setUserLikedReaction, setLikesCounter);
+    }
+    handleUserReaction('reactions', 'hate', props.reaction.id, userHatedReaction, setUserHatedReaction, setHatesCounter);
+  };
+  
+
   return (
     <div className={styles.reaction}>
 
@@ -46,6 +76,10 @@ const Reaction = props => {
 
         {props.r.creation_date ? <i>Created {props.r.creation_date}</i> : ''}
         {props.r.last_update ? <i>Modified {props.r.last_update}</i> : ''}
+
+        <i onClick={props.userData ? handleLikes : null}><FontAwesomeIcon icon={userLikedReaction ? solidFaThumbsUp : regularFaThumbsUp} />{likesCounter > 0 ? likesCounter : null}</i>
+        <i onClick={props.userData ? handleHates : null}><FontAwesomeIcon icon={userHatedReaction ? solidFaThumbsDown : regularFaThumbsDown} />{hatesCounter > 0 ? hatesCounter : null}</i>
+
       </div>
 
       {props.userData ?

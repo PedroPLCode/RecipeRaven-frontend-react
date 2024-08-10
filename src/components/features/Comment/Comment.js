@@ -1,7 +1,9 @@
 import styles from './Comment.module.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
+import { deletePost, handleUserReaction } from '../../utils/posts';
 import { useDispatch } from "react-redux";
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { deleteComment } from '../../utils/comments';
@@ -16,6 +18,19 @@ import { createNotification } from '../../utils/notifications';
 const Comment = props => {
 
   const [show, setShow] = useState(false)
+
+  const [userLikedComment, setUserLikedComment] = useState(false);
+  const [likesCounter, setLikesCounter] = useState(props.comment.likes.length);
+  const [userHatedComment, setUserHatedComment] = useState(false);
+  const [hatesCounter, setHatesCounter] = useState(props.comment.hates.length);
+
+  const isCommentLiked = props.comment.likes.some(likeUserId => likeUserId === props.userData.id);
+  const isCommentHated = props.comment.hates.some(hateUserId => hateUserId === props.userData.id);
+
+  useEffect(() => {
+    setUserLikedComment(isCommentLiked);
+    setUserHatedComment(isCommentHated);
+  }, [isCommentLiked, isCommentHated]);
 
   const dispatch = useDispatch();
 
@@ -36,6 +51,21 @@ const Comment = props => {
     toast.success('Comment deleted');
   };
 
+  const handleLikes = () => {
+    if (userHatedComment) {
+      handleUserReaction('comments', 'hate', props.comment.id, userHatedComment, setUserHatedComment, setHatesCounter);
+    }
+    handleUserReaction('comments', 'like', props.comment.id, userLikedComment, setUserLikedComment, setLikesCounter);
+  };
+
+  const handleHates = () => {
+    if (userLikedComment) {
+      handleUserReaction('comments', 'like', props.comment.id, userLikedComment, setUserLikedComment, setLikesCounter);
+    }
+    handleUserReaction('comments', 'hate', props.comment.id, userHatedComment, setUserHatedComment, setHatesCounter);
+  };
+  
+
   return (
     <div className={styles.comment}>
 
@@ -46,6 +76,10 @@ const Comment = props => {
 
         {props.comment.creation_date ? <i>Created {props.comment.creation_date}</i> : ''}
         {props.comment.last_update ? <i>Modified {props.comment.last_update}</i> : ''}
+
+        <i onClick={props.userData ? handleLikes : null}><FontAwesomeIcon icon={userLikedComment ? solidFaThumbsUp : regularFaThumbsUp} />{likesCounter > 0 ? likesCounter : null}</i>
+        <i onClick={props.userData ? handleHates : null}><FontAwesomeIcon icon={userHatedComment ? solidFaThumbsDown : regularFaThumbsDown} />{hatesCounter > 0 ? hatesCounter : null}</i>
+
       </div>
 
       {props.userData ?

@@ -98,3 +98,31 @@ export const deletePost = async postId => {
     return error;
   }
 }
+
+export const handleUserReaction = async (target, reactionType, postId, reactionExists, setUserReacted, setCounter) => {
+  const url = `http://localhost:5000/api/${target}/${reactionType}/${postId}`;
+  const options = {
+    method: reactionExists ? 'DELETE' : 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.token,
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.text();
+    const finalResult = JSON.parse(result);
+    
+    if (finalResult.message.includes('successfully')) {
+      setUserReacted(prevReacted => !prevReacted);
+      setCounter(prevCounter => prevCounter + (reactionExists ? -1 : 1));
+    }
+    
+    return finalResult;
+  } catch (error) {
+    console.error(`Error handling ${reactionType}:`, error);
+    return error;
+  }
+};

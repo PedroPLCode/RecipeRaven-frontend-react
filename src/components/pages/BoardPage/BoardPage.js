@@ -97,7 +97,6 @@ const BoardPage = () => {
     .sort((a, b) => {
       const dateA = parseDate(a.creation_date);
       const dateB = parseDate(b.creation_date);
-      console.log("Porównanie dat:", dateA, dateB);
       return sortByNewest ? compareDesc(dateA, dateB) : compareAsc(dateA, dateB);
     });
 

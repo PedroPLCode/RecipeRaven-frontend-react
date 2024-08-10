@@ -1,10 +1,12 @@
 import styles from './News.module.scss';
 import { useDispatch } from "react-redux";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createReaction } from '../../utils/reactions.js';
 import Reaction from '../Reaction/Reaction.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
+import { deletePost, handleUserReaction } from '../../utils/posts';
 import { deleteNews } from '../../utils/news.js';
 import { Link } from 'react-router-dom';
 import { updateNews } from '../../../redux/reducers/newsReducer.js';
@@ -23,6 +25,19 @@ const News = (props) => {
   const [newReactionAuthor, setNewReactionAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [showToast, setShowToast] = useState(false)
+
+  const [userLikedNews, setUserLikedNews] = useState(false);
+  const [likesCounter, setLikesCounter] = useState(props.news.likes.length);
+  const [userHatedNews, setUserHatedNews] = useState(false);
+  const [hatesCounter, setHatesCounter] = useState(props.news.hates.length);
+
+  const isNewsLiked = props.news.likes.some(likeUserId => likeUserId === props.userData.id);
+  const isNewsHated = props.news.hates.some(hateUserId => hateUserId === props.userData.id);
+
+  useEffect(() => {
+    setUserLikedNews(isNewsLiked);
+    setUserHatedNews(isNewsHated);
+  }, [isNewsLiked, isNewsHated]); // Dodaj dependencies dla useEffect, aby reagować na zmiany
 
   const toggleReactions = () => {
     setShowReactions(!showReactions);
@@ -81,6 +96,20 @@ const News = (props) => {
     }
   };
 
+  const handleLikes = () => {
+    if (userHatedNews) {
+      handleUserReaction('news', 'hate', props.news.id, userHatedNews, setUserHatedNews, setHatesCounter);
+    }
+    handleUserReaction('news', 'like', props.news.id, userLikedNews, setUserLikedNews, setLikesCounter);
+  };
+
+  const handleHates = () => {
+    if (userLikedNews) {
+      handleUserReaction('news', 'like', props.news.id, userLikedNews, setUserLikedNews, setLikesCounter);
+    }
+    handleUserReaction('news', 'hate', props.news.id, userHatedNews, setUserHatedNews, setHatesCounter);
+  };
+  
 
   return (
     <div className={styles.news}>
@@ -108,6 +137,10 @@ const News = (props) => {
 
           <i>Created {props.n.creation_date}</i>
           { props.n.last_update ? <i>Modified {props.n.last_update}</i> : '' }
+
+          <i onClick={props.userData ? handleLikes : null}><FontAwesomeIcon icon={userLikedNews ? solidFaThumbsUp : regularFaThumbsUp} />{likesCounter > 0 ? likesCounter : null}</i>
+          <i onClick={props.userData ? handleHates : null}><FontAwesomeIcon icon={userHatedNews ? solidFaThumbsDown : regularFaThumbsDown} />{hatesCounter > 0 ? hatesCounter : null}</i>
+
         </div>
       </div>
 

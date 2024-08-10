@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { createComment } from '../../utils/comments';
 import Comment from '../Comment/Comment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { deletePost } from '../../utils/posts';
+import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
+import { deletePost, handleUserReaction } from '../../utils/posts';
 import { Link } from 'react-router-dom';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { settings } from '../../../settings.js'
@@ -15,6 +16,7 @@ import React from 'react';
 import { createNotification } from '../../utils/notifications';
 import { ConfirmToast } from 'react-confirm-toast'
 import clsx from 'clsx';
+import { useEffect } from 'react';
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -23,6 +25,18 @@ const Post = (props) => {
   const [newCommentAuthor, setNewCommentAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [showToast, setShowToast] = useState(false)
+
+  const [userLikedPost, setUserLikedPost] = useState(false)
+  const [likesCounter, setLikesCounter] = useState(props.post.likes.length)
+  const [userHatedPost, setUserHatedPost] = useState(false)
+  const [hatesCounter, setHatesCounter] = useState(props.post.hates.length)
+
+  const isPostLiked = props.post.likes.some(likeUserId => likeUserId === props.userData.id);
+  const isPostHated = props.post.hates.some(hateUserId => hateUserId === props.userData.id);
+  useEffect(() => {
+    setUserLikedPost(isPostLiked)
+    setUserHatedPost(isPostHated)
+  }, [isPostLiked, isPostHated]);
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -81,6 +95,20 @@ const Post = (props) => {
     }
   };
 
+  const handleLikes = () => {
+    if (userHatedPost) {
+      handleUserReaction('posts', 'hate', props.post.id, userHatedPost, setUserHatedPost, setHatesCounter);
+    }
+    handleUserReaction('posts', 'like', props.post.id, userLikedPost, setUserLikedPost, setLikesCounter);
+  };
+  
+  const handleHates = () => {
+    if (userLikedPost) {
+      handleUserReaction('posts', 'like', props.post.id, userLikedPost, setUserLikedPost, setLikesCounter);
+    }
+    handleUserReaction('posts', 'hate', props.post.id, userHatedPost, setUserHatedPost, setHatesCounter);
+  };
+  
   const displayAuthorName = props.post.author
   ? props.post.author
   : props.post.guest_author
@@ -117,6 +145,10 @@ const Post = (props) => {
 
           <i>Created {props.post.creation_date}</i>
           { props.post.last_update ? <i>Modified {props.post.last_update}</i> : '' }
+
+          <i onClick={props.userData ? handleLikes : null}><FontAwesomeIcon icon={userLikedPost ? solidFaThumbsUp : regularFaThumbsUp} />{likesCounter > 0 ? likesCounter : null}</i>
+          <i onClick={props.userData ? handleHates : null}><FontAwesomeIcon icon={userHatedPost ? solidFaThumbsDown : regularFaThumbsDown} />{hatesCounter > 0 ? hatesCounter : null}</i>
+
         </div>
         <div className={styles.post_author}>
           {props.post.author_picture ? (
