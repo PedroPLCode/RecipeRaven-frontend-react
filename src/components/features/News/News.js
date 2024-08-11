@@ -18,7 +18,7 @@ import { createNotification } from '../../utils/notifications.js';
 import { ConfirmToast } from 'react-confirm-toast'
 import clsx from 'clsx';
 
-const News = (props) => {
+const News = props => {
   const dispatch = useDispatch();
   const [showReactions, setShowReactions] = useState(false);
   const [newReactionContent, setNewReactionContent] = useState('');
@@ -27,17 +27,18 @@ const News = (props) => {
   const [showToast, setShowToast] = useState(false)
 
   const [userLikedNews, setUserLikedNews] = useState(false);
-  const [likesCounter, setLikesCounter] = useState(props.news.likes.length);
+  const [likesCounter, setLikesCounter] = useState(props.n.likes.length);
   const [userHatedNews, setUserHatedNews] = useState(false);
-  const [hatesCounter, setHatesCounter] = useState(props.news.hates.length);
-
-  const isNewsLiked = props.news.likes.some(likeUserId => likeUserId === props.userData.id);
-  const isNewsHated = props.news.hates.some(hateUserId => hateUserId === props.userData.id);
+  const [hatesCounter, setHatesCounter] = useState(props.n.hates.length);
 
   useEffect(() => {
-    setUserLikedNews(isNewsLiked);
-    setUserHatedNews(isNewsHated);
-  }, [isNewsLiked, isNewsHated]); // Dodaj dependencies dla useEffect, aby reagować na zmiany
+    if (props.userData) {
+      const isNewsLiked = props.n.likes.some(likeUserId => likeUserId === props.userData.id);
+      const isNewsHated = props.n.hates.some(hateUserId => hateUserId === props.userData.id);
+      setUserLikedNews(isNewsLiked);
+      setUserHatedNews(isNewsHated);
+    }
+  }, [props.n.likes, props.n.hates]);
 
   const toggleReactions = () => {
     setShowReactions(!showReactions);
@@ -98,16 +99,16 @@ const News = (props) => {
 
   const handleLikes = () => {
     if (userHatedNews) {
-      handleUserReaction('news', 'hate', props.news.id, userHatedNews, setUserHatedNews, setHatesCounter);
+      handleUserReaction('news', 'hate', props.n.id, userHatedNews, setUserHatedNews, setHatesCounter);
     }
-    handleUserReaction('news', 'like', props.news.id, userLikedNews, setUserLikedNews, setLikesCounter);
+    handleUserReaction('news', 'like', props.n.id, userLikedNews, setUserLikedNews, setLikesCounter);
   };
 
   const handleHates = () => {
     if (userLikedNews) {
-      handleUserReaction('news', 'like', props.news.id, userLikedNews, setUserLikedNews, setLikesCounter);
+      handleUserReaction('news', 'like', props.n.id, userLikedNews, setUserLikedNews, setLikesCounter);
     }
-    handleUserReaction('news', 'hate', props.news.id, userHatedNews, setUserHatedNews, setHatesCounter);
+    handleUserReaction('news', 'hate', props.n.id, userHatedNews, setUserHatedNews, setHatesCounter);
   };
   
 

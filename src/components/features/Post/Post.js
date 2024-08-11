@@ -31,12 +31,14 @@ const Post = (props) => {
   const [userHatedPost, setUserHatedPost] = useState(false)
   const [hatesCounter, setHatesCounter] = useState(props.post.hates.length)
 
-  const isPostLiked = props.post.likes.some(likeUserId => likeUserId === props.userData.id);
-  const isPostHated = props.post.hates.some(hateUserId => hateUserId === props.userData.id);
   useEffect(() => {
-    setUserLikedPost(isPostLiked)
-    setUserHatedPost(isPostHated)
-  }, [isPostLiked, isPostHated]);
+    if (props.userData) {
+      const isPostLiked = props.post.likes.some(likeUserId => likeUserId === props.userData.id);
+      const isPostHated = props.post.hates.some(hateUserId => hateUserId === props.userData.id);
+      setUserLikedPost(isPostLiked)
+      setUserHatedPost(isPostHated)
+    }
+  }, [props.post.likes, props.post.hates]);
 
   const toggleComments = () => {
     setShowComments(!showComments);

@@ -20,17 +20,18 @@ const Reaction = props => {
   const [show, setShow] = useState(false)
 
   const [userLikedReaction, setUserLikedReaction] = useState(false);
-  const [likesCounter, setLikesCounter] = useState(props.reaction.likes.length);
+  const [likesCounter, setLikesCounter] = useState(props.r.likes.length);
   const [userHatedReaction, setUserHatedReaction] = useState(false);
-  const [hatesCounter, setHatesCounter] = useState(props.reaction.hates.length);
-
-  const isReactionLiked = props.reaction.likes.some(likeUserId => likeUserId === props.userData.id);
-  const isReactionHated = props.reaction.hates.some(hateUserId => hateUserId === props.userData.id);
+  const [hatesCounter, setHatesCounter] = useState(props.r.hates.length);
 
   useEffect(() => {
-    setUserLikedReaction(isReactionLiked);
-    setUserHatedReaction(isReactionHated);
-  }, [isReactionLiked, isReactionHated]);
+    if (props.userData) {
+      const isReactionLiked = props.r.likes.some(likeUserId => likeUserId === props.userData.id);
+      const isReactionHated = props.r.hates.some(hateUserId => hateUserId === props.userData.id);
+      setUserLikedReaction(isReactionLiked);
+      setUserHatedReaction(isReactionHated);
+    }
+  }, [props.r.likes, props.r.hates]);
 
   const dispatch = useDispatch();
 
@@ -53,16 +54,16 @@ const Reaction = props => {
 
   const handleLikes = () => {
     if (userHatedReaction) {
-      handleUserReaction('reactions', 'hate', props.reaction.id, userHatedReaction, setUserHatedReaction, setHatesCounter);
+      handleUserReaction('reactions', 'hate', props.r.id, userHatedReaction, setUserHatedReaction, setHatesCounter);
     }
-    handleUserReaction('reactions', 'like', props.reaction.id, userLikedReaction, setUserLikedReaction, setLikesCounter);
+    handleUserReaction('reactions', 'like', props.r.id, userLikedReaction, setUserLikedReaction, setLikesCounter);
   };
 
   const handleHates = () => {
     if (userLikedReaction) {
-      handleUserReaction('reactions', 'like', props.reaction.id, userLikedReaction, setUserLikedReaction, setLikesCounter);
+      handleUserReaction('reactions', 'like', props.r.id, userLikedReaction, setUserLikedReaction, setLikesCounter);
     }
-    handleUserReaction('reactions', 'hate', props.reaction.id, userHatedReaction, setUserHatedReaction, setHatesCounter);
+    handleUserReaction('reactions', 'hate', props.r.id, userHatedReaction, setUserHatedReaction, setHatesCounter);
   };
   
 

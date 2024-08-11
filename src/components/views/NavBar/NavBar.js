@@ -93,7 +93,7 @@ const NavBar = (props) => {
         <Nav.Link className={styles.link} as={NavLink} to="/login" onClick={handleLinkClick}>
           { localStorage.token && userData ? `${userName} Account` : "Login" }
         </Nav.Link>
-        { !localStorage.token && !userData ?
+        { !localStorage.token || !userData ?
           <Nav.Link className={styles.link} as={NavLink} to="/createuser" onClick={handleLinkClick}>Create account</Nav.Link> :
           <Logout token={props.removeToken}/>
         }
