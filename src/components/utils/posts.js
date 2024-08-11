@@ -102,7 +102,7 @@ export const deletePost = async postId => {
 export const handleUserReaction = async (target, reactionType, Id, reactionExists, setUserReacted, setCounter) => {
   const url = `http://localhost:5000/api/${target}/${reactionType}/${Id}`;
   const options = {
-    method: reactionExists ? 'DELETE' : 'POST',
+    method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
@@ -115,10 +115,10 @@ export const handleUserReaction = async (target, reactionType, Id, reactionExist
     const result = await response.text();
     const finalResult = JSON.parse(result);
 
-    //if (finalResult.message.includes('successfully')) {
+    if (finalResult.message.includes('successfully')) {
       setUserReacted(prevReacted => !prevReacted);
       setCounter(prevCounter => prevCounter + (reactionExists ? -1 : 1));
-    //}
+    }
     
     return finalResult;
   } catch (error) {
