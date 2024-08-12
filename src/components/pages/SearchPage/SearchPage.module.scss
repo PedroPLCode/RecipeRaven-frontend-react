@@ -157,7 +157,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, calc($base-size * 10));
-  grid-template-rows: repeat(2, calc($base-size * 3));
+  grid-template-rows: repeat(3, calc($base-size * 3));
   gap: calc($base-size * 2);
 
   @media (max-width: $media-border) {
@@ -175,6 +175,10 @@
     align-items: center;
     transition-duration: $transition-duration;
     transition-property: color, background-color, box-shadow;
+
+    &:last-of-type {
+      grid-column: 1 / -1;
+    }
         
     p {
       margin: auto;

@@ -50,6 +50,7 @@ const initialState = {
   news: [],
   reactions: [],
   user: null,
+  random: {value: false},
 };
     
 export default initialState;

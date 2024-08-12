@@ -14,12 +14,14 @@ import postsReducer from './reducers/postsReducer';
 import commentsReducer from './reducers/commentsReducer';
 import newsReducer from './reducers/newsReducer';
 import reactionsReducer from './reducers/reactionsReducer';
+import randomReducer from './reducers/randomReducer';
 
 const subreducers = {
   quote: quoteReducer,
   ingredients: ingredientsReducer,
   excluded: excludedReducer,
   diet: dietReducer,
+  random: randomReducer,
   searchResult: searchResultReducer,
   serverResponse: serverResponseReducer,
   serverError: serverErrorReducer,

@@ -8,6 +8,7 @@ import { clsx } from "clsx";
 import { updateIngredients, getIngredients } from '../../../redux/reducers/ingredientsReducer';
 import { updateExcluded, getExcluded } from '../../../redux/reducers/excludedReducer';
 import { updateDiet, getDiet } from "../../../redux/reducers/dietReducer";
+import { updateRandom, getRandom } from "../../../redux/reducers/randomReducer";
 import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { classNames, parametersNames, messages } from '../../../settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +24,7 @@ const SearchPage = () => {
   const ingredients = useSelector(state => getIngredients(state));
   const excluded = useSelector(state => getExcluded(state));
   const diet = useSelector(state => getDiet(state));
+  const random = useSelector(state => getRandom(state));
   const dietKeys = Object.keys(diet)
 
   const [inputOK, setInputOK] = useState(true);
@@ -39,12 +41,26 @@ const SearchPage = () => {
     dispatch(updateExcluded(value));
   }
 
+  const handleRandomClick = element => {
+    if (element.classList.contains(styles.button)) {
+      if (element.classList.contains(styles.active)) {
+        element.classList.remove(styles.active);
+        random['value'] = false;
+      } else {
+        element.classList.add(styles.active);
+        random['value'] = true;
+      }
+      dispatch(updateRandom(random['value']));
+    }
+  }
+
   const handleDietClick = element => {
     if (element.classList.contains(styles.button)) {
       const clickedId = element.getAttribute(parametersNames.id);
       if (!element.classList.contains(styles.active)) {
         const selectedButtons = document.querySelectorAll(classNames.selectedButtons);
-        if (selectedButtons.length <= 2) {
+        const maxButtonsClicked = Object.values(selectedButtons).some(button => button.id === 'random') ? 3 : 2;
+        if (selectedButtons.length <= maxButtonsClicked) {
           element.classList.add(styles.active);
           diet[clickedId][parametersNames.value] = true;
         } else {
@@ -60,7 +76,7 @@ const SearchPage = () => {
 
   const handleSearchReceipes = async () => {
     await toast.promise(
-      fetchReceipes(ingredients, excluded, diet, dietKeys, setLoading, setSuccess, dispatch, setInputOK),
+      fetchReceipes(ingredients, excluded, diet, dietKeys, random['value'], setLoading, setSuccess, dispatch, setInputOK),
       {
         pending: 'Searching',
         success: 'Search completed',
@@ -93,6 +109,12 @@ const SearchPage = () => {
                       {diet[`${singleKey}`][parametersNames.description]}
                     </p>
                   </div>))}
+                  <div className={clsx(styles.button, random ? styles.active : '')} 
+                    id='random' onClick={event => handleRandomClick(event.target)} >
+                    <p onClick={event => handleRandomClick(event.target.parentElement)}>
+                      Random Search { random['value'] ? 'Active' : 'Inactive' }
+                    </p>
+                  </div>
               </div>
             </div> 
           </form>

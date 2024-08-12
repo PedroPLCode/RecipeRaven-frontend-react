@@ -67,10 +67,10 @@ export const deleteFavorite = async favoriteId => {
   }
 }
 
-export const changeFavoriteStarred = async (favoriteId, favoriteStarred)=> {
+export const changeFavoriteStarred = async (favoriteId)=> {
   const url = `http://localhost:5000/api/favorites/starred/${favoriteId}`;
   const options = {
-    method: favoriteStarred ? 'DELETE' : 'POST',
+    method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',

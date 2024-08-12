@@ -56,7 +56,7 @@ const handleStarredFavorite = async () => {
   setAnimateDirectionUp(!favoriteStarred);
 
   setTimeout(async () => {
-    await changeFavoriteStarred(props.favorite.id, favoriteStarred);
+    await changeFavoriteStarred(props.favorite.id);
 
     const updatedFavorites = props.favorites.map(favorite => 
       favorite.id === props.favorite.id ? { ...favorite, starred: favoriteStarred } : favorite

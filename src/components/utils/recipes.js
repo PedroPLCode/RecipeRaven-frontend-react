@@ -50,11 +50,12 @@ export const validateInputString = (input, setInputOK) => {
   }
 }
 
-export const fetchReceipes = async (ingredients, excluded, diet, dietKeys, setLoading, setSuccess, dispatch, setInputOK) => {
+export const fetchReceipes = async (ingredients, excluded, diet, dietKeys, random, setLoading, setSuccess, dispatch, setInputOK) => {
   const preparedRequestBody = {
     ingredients: prepareArrayFromStringInput(ingredients),
     excluded: prepareArrayFromStringInput(excluded),
     params: prepareDietArray(),
+    random: random,
   }
   const url = 'http://localhost:5000/api/search'
   const options = {
