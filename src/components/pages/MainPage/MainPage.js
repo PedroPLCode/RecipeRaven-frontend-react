@@ -102,7 +102,7 @@ const MainPage = () => {
     );
   } else {
     return (
-      <div className={styles.board}>
+      <div className={styles.news}>
         <h3>MainPage component</h3>
         <h5>No news found</h5>
 

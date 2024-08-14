@@ -1,4 +1,5 @@
 import { updatePosts } from '../../redux/reducers/postsReducer';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const fetchPosts = async dispatch => {
   const url = `http://localhost:5000/api/posts`;
@@ -126,3 +127,7 @@ export const handleUserReaction = async (target, reactionType, Id, reactionExist
     return error;
   }
 };
+
+export const handleLikeHateOwn = () => {
+  toast.warning("You can't add reaction to your own enrty", {toastId: 8});
+}

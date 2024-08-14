@@ -51,7 +51,7 @@ const FavoritesCheck = props => {
     checkIfAlreadyInFavorites(favorites);
   })()
 
-  const bottomText = searchResult.count <= searchResult.hits.length ? "That's it.. Lets search again!" : "Click button to load more!";
+  const bottomText = ((searchResult.count <= searchResult.hits.length) || (props.random['value'])) ? "That's it.. Lets search again!" : "Click button to load more!";
 
   return (
     <div>

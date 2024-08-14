@@ -109,10 +109,10 @@ const SearchPage = () => {
                       {diet[`${singleKey}`][parametersNames.description]}
                     </p>
                   </div>))}
-                  <div className={clsx(styles.button, random ? styles.active : '')} 
+                  <div className={clsx(styles.button, random['value'] ? styles.active : '')} 
                     id='random' onClick={event => handleRandomClick(event.target)} >
                     <p onClick={event => handleRandomClick(event.target.parentElement)}>
-                      Random Search { random['value'] ? 'Active' : 'Inactive' }
+                      20 Random Results Search { random['value'] ? 'Active' : 'Inactive' }
                     </p>
                   </div>
               </div>

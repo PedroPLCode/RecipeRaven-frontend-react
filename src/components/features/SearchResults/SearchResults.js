@@ -5,6 +5,7 @@ import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { getServerResponse } from '../../../redux/reducers/serverResponseReducer';
 import { getServerError } from '../../../redux/reducers/serverErrorReducer';
 import { getFavorites } from '../../../redux/reducers/favoritesReducer';
+import { getRandom } from '../../../redux/reducers/randomReducer';
 import { getLinkNextPage } from '../../../redux/reducers/nextResultsPageReducer';
 import { messages, stylesParams, classNames } from '../../../settings';
 import styles from './SeachResults.module.scss';
@@ -26,6 +27,7 @@ const SearchResults = () => {
   const favorites = useSelector(state => getFavorites(state));
   const favoriteKeys = Object.keys(favorites);
   const link_next_page = useSelector(state => getLinkNextPage(state));
+  const random = useSelector(state => getRandom(state));
 
   useEffect(() => {
     const resultBoxes = document.querySelectorAll(classNames.resultBoxes);
@@ -91,17 +93,17 @@ const SearchResults = () => {
     const preppedHits = prepDishesInfo(searchResult.hits);
     return (
       <div className={styles.results_wrapper}>
-        <h3>Found {searchResult.count} receipes..</h3>
+        <h3>{random['value'] ? '20 Random Search Results..' : `Found ${searchResult.count} receipes..`}</h3>
         <h3>{messages.takeALook}</h3>
         {preppedHits.map(singleHit => (
           <SingleResult key={singleHit.calories+singleHit.totalTime} singleHit={singleHit} favorites={favorites} changeButtonStyle={changeButtonStyle} createFavorite={createFavorite} />
         ))}
-        {searchResult.count > searchResult.hits.length && (
+        {searchResult.count > searchResult.hits.length && !random['value'] ? (
           <h3 className={clsx(styles.button_nextpage, loading && styles.loading)} onClick={handleFetchMoreReceipes}>
             {bottomButtonText}
           </h3>
-        )}
-        <FavoritesCheck changeButtonStyle={changeButtonStyle} favorites={favorites} favoriteKeys={favoriteKeys} />
+        ) : null }
+        <FavoritesCheck changeButtonStyle={changeButtonStyle} random={random} favorites={favorites} favoriteKeys={favoriteKeys} />
         <RandomQuote />
       </div>
     );

@@ -6,7 +6,7 @@ import Reaction from '../Reaction/Reaction.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { deletePost, handleUserReaction } from '../../utils/posts';
+import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../utils/posts';
 import { deleteNews } from '../../utils/news.js';
 import { Link } from 'react-router-dom';
 import { updateNews } from '../../../redux/reducers/newsReducer.js';
@@ -139,8 +139,8 @@ const News = props => {
           <i>Created {props.n.creation_date}</i>
           { props.n.last_update ? <i>Modified {props.n.last_update}</i> : '' }
 
-          <i onClick={props.userData ? handleLikes : null}><FontAwesomeIcon icon={userLikedNews ? solidFaThumbsUp : regularFaThumbsUp} />{likesCounter > 0 ? likesCounter : null}</i>
-          <i onClick={props.userData ? handleHates : null}><FontAwesomeIcon icon={userHatedNews ? solidFaThumbsDown : regularFaThumbsDown} />{hatesCounter > 0 ? hatesCounter : null}</i>
+          <i onClick={props.userData && (props.userData.id !== props.n.user_id) ? handleLikes : handleLikeHateOwn}><FontAwesomeIcon icon={userLikedNews ? solidFaThumbsUp : regularFaThumbsUp} />{likesCounter > 0 ? likesCounter : null}</i>
+          <i onClick={props.userData && (props.userData.id !== props.n.user_id) ? handleHates : handleLikeHateOwn}><FontAwesomeIcon icon={userHatedNews ? solidFaThumbsDown : regularFaThumbsDown} />{hatesCounter > 0 ? hatesCounter : null}</i>
 
         </div>
       </div>
