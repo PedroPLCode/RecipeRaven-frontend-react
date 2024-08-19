@@ -145,7 +145,7 @@ const News = props => {
         </div>
       </div>
 
-      <button onClick={toggleReactions} className={clsx(showReactions ? styles.reactrions_show : '')}>
+      <button onClick={toggleReactions} className={clsx(showReactions ? styles.reactions_show : '')}>
       {props.n.reactions ? 
       (showReactions ? (
         <span>Hide Reactions</span>
@@ -201,7 +201,7 @@ const News = props => {
       
     </div>
 
-    <button onClick={toggleReactions} className={clsx(styles.toggle_reactions, showReactions ? styles.reactions_show : '')}>
+    <button onClick={toggleReactions} className={clsx(showReactions ? styles.reactions_show : '')}>
       {props.n.reactions ? 
       (showReactions ? (
         <span>Hide Reactions</span>

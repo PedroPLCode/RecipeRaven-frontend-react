@@ -147,6 +147,24 @@
     p {
       margin: 0;
       text-align: right;
+
+      &:first-of-type {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: calc($base-size);
+
+        @media (min-width: $media-border) {
+
+          i {
+          }
+
+          span {
+          }
+        }
+      }
     
       .blue {
         color: $color-one;

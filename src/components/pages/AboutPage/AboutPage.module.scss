@@ -49,7 +49,6 @@
     &:hover {
       background-position: 0 100%;
       color: $transparent-background;
-      box-shadow: 0 0 5px 5px $color-one;
       cursor: pointer;
 
       @media (max-width: $media-border) {

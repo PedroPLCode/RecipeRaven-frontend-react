@@ -127,15 +127,15 @@ const Post = (props) => {
       {props.userData ?  
             (props.post.user_id === props.userData.id || props.userData.id === settings.adminId ? 
             <div className={styles.buttons_for_users}>
-            <div onClick={handleClickDeletePost} className={styles.button_remove}><i>Delete <FontAwesomeIcon icon={faTrashCan} /></i></div>
-            <ConfirmToast
-              asModal={true}
-              customFunction={handleDeletePost}
-              setShowConfirmToast={setShowToast}
-              showConfirmToast={showToast}
-            />
-            <Link to={`/addeditpost/${props.post.id}`}><i>Edit <FontAwesomeIcon icon={faEdit} /></i></Link>
-            </div>
+              <div onClick={handleClickDeletePost} className={styles.button_remove}><i>Delete <FontAwesomeIcon icon={faTrashCan} /></i></div>
+              <ConfirmToast
+                asModal={true}
+                customFunction={handleDeletePost}
+                setShowConfirmToast={setShowToast}
+                showConfirmToast={showToast}
+              />
+              <Link to={`/addeditpost/${props.post.id}`}><i>Edit <FontAwesomeIcon icon={faEdit} /></i></Link>
+              </div>
             : null)
             : 
             null}

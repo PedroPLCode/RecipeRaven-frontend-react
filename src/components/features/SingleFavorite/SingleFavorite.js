@@ -103,7 +103,10 @@ const handleStarredFavorite = async () => {
       </div>
       
       <div className={styles.description}>
-        <p><FontAwesomeIcon className={styles.favoriteStar} onClick={handleStarredFavorite} icon={favoriteStarred ? faStarSolid : faStarRegular} />  <strong className={styles.blue}>{SingleFavoriteObject[parametersNames.label]}</strong></p>
+        <p>
+          <strong className={styles.blue}>{SingleFavoriteObject[parametersNames.label]}</strong>
+          <FontAwesomeIcon className={styles.favoriteStar} onClick={handleStarredFavorite} icon={favoriteStarred ? faStarSolid : faStarRegular} />
+        </p>
         <p><span className={styles.blue}>Dish Type: </span> 
           <strong>{SingleFavoriteObject[parametersNames.dishType]} / {SingleFavoriteObject[parametersNames.mealType]}</strong>
         </p>

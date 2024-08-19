@@ -20,14 +20,14 @@ const Reaction = props => {
   const [show, setShow] = useState(false)
 
   const [userLikedReaction, setUserLikedReaction] = useState(false);
-  const [likesCounter, setLikesCounter] = useState(props.r.likes.length);
+  const [likesCounter, setLikesCounter] = useState(props.r.likes ? props.r.likes.length : null);
   const [userHatedReaction, setUserHatedReaction] = useState(false);
-  const [hatesCounter, setHatesCounter] = useState(props.r.hates.length);
+  const [hatesCounter, setHatesCounter] = useState(props.r.hates ? props.r.hates.length : null);
 
   useEffect(() => {
     if (props.userData) {
-      const isReactionLiked = props.r.likes.some(likeUserId => likeUserId === props.userData.id);
-      const isReactionHated = props.r.hates.some(hateUserId => hateUserId === props.userData.id);
+      const isReactionLiked = props.r.likes ? props.r.likes.some(likeUserId => likeUserId === props.userData.id) : false;
+      const isReactionHated = props.r.hates ? props.r.hates.some(hateUserId => hateUserId === props.userData.id) : false;
       setUserLikedReaction(isReactionLiked);
       setUserHatedReaction(isReactionHated);
     }

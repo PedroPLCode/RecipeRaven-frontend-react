@@ -81,7 +81,7 @@ const MainPage = () => {
   if (news.length >= 1) {
     return (
       <div className={styles.news}>
-        <h3>MainPage component</h3>
+        <h3>Home Page</h3>
 
         <input id="filter" type="text" placeholder='filter news by title or content'
           title='filter news' value={filterNewsString}
@@ -103,7 +103,7 @@ const MainPage = () => {
   } else {
     return (
       <div className={styles.news}>
-        <h3>MainPage component</h3>
+        <h3>Home Page</h3>
         <h5>No news found</h5>
 
         { userData ? (userData.id === settings.adminId ? 

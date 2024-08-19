@@ -129,5 +129,6 @@ export const handleUserReaction = async (target, reactionType, Id, reactionExist
 };
 
 export const handleLikeHateOwn = () => {
-  toast.warning("You can't add reaction to your own enrty", {toastId: 8});
+  const msg = localStorage.token ? "You can't add reaction to your own enrty" : "Only logged in users can add reactions.";
+  toast.warning(msg, {toastId: 8});
 }
