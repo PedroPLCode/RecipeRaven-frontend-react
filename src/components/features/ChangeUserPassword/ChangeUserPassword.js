@@ -9,6 +9,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { getUserData, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../utils/users'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 
 const ChangeUserPassword = () => {
 
@@ -33,15 +36,15 @@ const ChangeUserPassword = () => {
 
   const handleClickChangePassword = () => {
     if (!changeUserPasswordForm.oldPassword) {
-      alert('enter current password to confirm')
+      toast.warning('Error. enter current password to confirm', { toastId: 10 });
     } else if (!changeUserPasswordForm.password) {
-      alert('enter new password')
+      toast.warning('Error. enter new password', { toastId: 10 });
     } else if (!changeUserPasswordForm.confirmPassword) {
-      alert('confirm new password')
+      toast.warning('Error. confirm new password', { toastId: 10 });
     } else if (!validatePasswordInput(changeUserPasswordForm.password, 'password')) {
-      alert('passwords too short')
+      toast.warning('Error. passwords too short', { toastId: 10 });
     } else if (!passwordAndConfirmPasswordMatch(changeUserPasswordForm.password, changeUserPasswordForm.confirmPassword)) {
-      alert('passwords not match')
+      toast.warning('Error. passwords not match', { toastId: 10 });
     } else {
       setShowModal(true);
     }
@@ -56,11 +59,11 @@ const ChangeUserPassword = () => {
       if (passwdCheck) {
         handleChangeUserPassword(event);
       } else {
-        alert('Error: wrong password');
+        toast.error('Error. wrong passwords', { toastId: 10 });
       }
     } catch (error) {
       console.error('Error during password check:', error);
-      alert('Error: something went wrong');
+      toast.error('Error. something went wrong', { toastId: 10 });
     }
   };
   

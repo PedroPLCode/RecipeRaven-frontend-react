@@ -27,6 +27,7 @@ import AddEditPost from './components/features/AddEditPost/AddEditPost.js';
 import EditComment from './components/features/EditComment/EditComment.js';
 import AddEditNews from './components/features/AddEditNews/AddEditNews.js';
 import EditReaction from './components/features/EditReaction/EditReaction.js';
+import CameraCapture from './components/features/CameraCapture/CameraCapture.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ForgottenPassword from './components/features/ForgottenPassword/ForgottenPassword.js';
@@ -89,6 +90,8 @@ const App = () => {
             <Route path="/createuser" element={<CreateUserPage token={token} setToken={setToken} />} />
             <Route path="/changeuserdetails" element={<ChangeUserDetails token={token} setToken={setToken} />} />
             <Route path="/changeuserpicture" element={<ChangeUserPicture token={token} setToken={setToken} />} />
+            <Route path="/cameracapture" element={<CameraCapture token={token} setToken={setToken} />} />
+
             <Route path="/changeuserpassword" element={<ChangeUserPassword token={token} setToken={setToken} />} />
             <Route path="/deleteuserpage" element={<DeleteUserPage token={token} setToken={setToken} />} />
 

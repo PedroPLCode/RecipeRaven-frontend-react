@@ -3,6 +3,7 @@ import stylesCreateUser from '../../components/pages/CreateUserPage/CreateUserPa
 import stylesChangePassword from '../../components/features/ChangeUserPassword/ChangeUserPassword.module.scss'
 import { settings } from '../../settings';
 import { updateUser } from '../../redux/reducers/userReducer';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const validateLogin = async (login) => {
   const inputField = document.getElementById('login');
@@ -25,21 +26,23 @@ export const validateLogin = async (login) => {
 }
 
 
-export const validatePasswordInput = (password, field_id) => {
+export const validatePasswordInput = (password, field_id=false) => {
   const regex = settings.regexPasswordString;
-  const passwordInputField = document.getElementById(field_id);
-  if (passwordInputField) {
-    if (!regex.test(password)) {
+  const passwordInputField = field_id ? document.getElementById(field_id) : false;
+  if (!regex.test(password)) {
+    if (passwordInputField) {
       passwordInputField.classList.remove(stylesCreateUser.input_ok);
       passwordInputField.classList.remove(stylesChangePassword.input_ok);
-      console.log('Validation passwd failed');
-      return false
-    } else {
+    }
+    console.log('Validation passwd failed');
+    return false
+  } else {
+    if (passwordInputField) {
       passwordInputField.classList.add(stylesCreateUser.input_ok);
       passwordInputField.classList.add(stylesChangePassword.input_ok);
-      console.log('Validation passwd success');
-      return true;
     }
+    console.log('Validation passwd success');
+    return true;
   }
 }
 
@@ -136,7 +139,7 @@ export const getUserData = async (dispatch, props = null) => {
 
 export const checkUserPassword = async (form) => {
   const formData = new FormData();
-  formData.append('password', form.password);
+  formData.append('password', form.oldPassword || form.password);
 
   const url = 'http://127.0.0.1:5000/api/userpasswdcheck';
   const options = {
@@ -210,7 +213,7 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
   event.preventDefault();
   
   const formData = new FormData();
-  if (changeUserDetailsForm.email !== undefined) {
+  if (changeUserDetailsForm.email !== undefined && validateEmail(changeUserDetailsForm.email)) {
     formData.append('email', changeUserDetailsForm.email);
   }
   if (changeUserDetailsForm.name !== undefined) {
@@ -276,9 +279,9 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
       console.log(result);
 
       if (response.ok) {
-        // Handle successful response here
+        toast.success('Succesfully change password', { toastId: 10 });
       } else {
-        // Handle error response here
+        toast.success('Error. password not changed', { toastId: 10 });
         console.error(result);
       }
 

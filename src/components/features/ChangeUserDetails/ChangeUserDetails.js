@@ -5,8 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { getUserData, changeUserDetails } from '../../utils/users'
+import { getUserData, changeUserDetails, validateEmail } from '../../utils/users'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 
 const ChangeUserDetails = () => {
 
@@ -65,8 +68,13 @@ const ChangeUserDetails = () => {
     )}
 
   const handleChangeUserDetails = (event) => {
-    changeUserDetails(event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch);
-    navigate('/login')
+    if (!validateEmail(changeUserDetailsForm.email)) {
+      toast('Error. Wrong email address', { toastId: 10 });
+    } else {
+      changeUserDetails(event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch);
+      toast('Success. Details changed', { toastId: 10 });
+      navigate('/login')
+    }
   }
 
   return (
@@ -77,18 +85,21 @@ const ChangeUserDetails = () => {
         <form className="login">
           <input onChange={handleChange} 
                 type="email"
+                id="email"
                 text={changeUserDetailsForm.email} 
                 name="email" 
                 placeholder="Email" 
                 value={changeUserDetailsForm.email} />
           <input onChange={handleChange} 
                 type="text"
+                id="name"
                 text={changeUserDetailsForm.name} 
                 name="name" 
                 placeholder="Name" 
                 value={changeUserDetailsForm.name} />
           <input onChange={handleChange} 
                 type="text"
+                id="about"
                 text={changeUserDetailsForm.about} 
                 name="about" 
                 placeholder="About" 
