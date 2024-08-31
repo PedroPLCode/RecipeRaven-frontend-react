@@ -1,5 +1,6 @@
 import axios from "axios";
 import stylesCreateUser from '../../components/pages/CreateUserPage/CreateUserPage.module.scss'
+import stylesChangeUserDetails from '../../components/features/ChangeUserDetails/ChangeUserDetails.module.scss'
 import stylesChangePassword from '../../components/features/ChangeUserPassword/ChangeUserPassword.module.scss'
 import { settings } from '../../settings';
 import { updateUser } from '../../redux/reducers/userReducer';
@@ -68,21 +69,36 @@ export const passwordAndConfirmPasswordMatch = (password, confirmPassword) => {
   }
 }
 
-export const validateEmail = email => {
+export const validateEmail = async (email, currentEmail=false) => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailExists = await fetchCheckUserEmail(email);
   const inputField = document.getElementById('email');
+
+  console.log(inputField)
+  
   if (regex.test(email)) {
-    inputField.classList.add(stylesCreateUser.input_ok);
-    return true;
+    inputField.classList.remove(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
+    inputField.classList.add(!currentEmail ? stylesCreateUser.input_ok : stylesChangeUserDetails.input_ok);
   } else {
-    inputField.classList.remove(stylesCreateUser.input_ok);
-    console.log('Validation email failed');
+    inputField.classList.remove(!currentEmail ? stylesCreateUser.input_ok : stylesChangeUserDetails.input_ok);
+    inputField.classList.remove(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
     return false;
   }
+  
+  if (!emailExists || email === currentEmail) {
+    inputField.classList.remove(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
+  } else {
+    inputField.classList.add(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
+    inputField.classList.remove(!currentEmail ? stylesCreateUser.input_ok : stylesChangeUserDetails.input_ok);
+    return false;
+  }
+
+  return true;
+  
 };
 
 export const fetchCheckUserLogin = async loginToCheck => {
-  const url = `http://localhost:5000/api/logins?login=${loginToCheck}`;
+  const url = `http://localhost:5000/api/check_user?login=${loginToCheck}`;
   const options = {
     method: 'GET',
   }; 
@@ -98,6 +114,26 @@ export const fetchCheckUserLogin = async loginToCheck => {
     
   } catch (error) {
     console.error("Error fetching logins:", error);
+  }
+};
+
+export const fetchCheckUserEmail = async emailToCheck => {
+  const url = `http://localhost:5000/api/check_user?email=${emailToCheck}`;
+  const options = {
+    method: 'GET',
+  }; 
+  try {
+    const response = await fetch(url, options);
+    
+    if (response.ok) {
+      const emailStatus = await response.json();
+      return emailStatus['email_status']
+    } else {
+      console.error("Error fetching emails:", response.statusText);
+    }
+    
+  } catch (error) {
+    console.error("Error fetching emails:", error);
   }
 };
 

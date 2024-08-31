@@ -20,6 +20,18 @@
     transition-duration: $transition-duration;
   }
 
+  .input_error {
+    &:focus {
+      background-color: $error-background;
+    }
+  }
+
+  .input_ok {
+    &:focus {
+      background-color: green;
+    }
+  }
+
   input::placeholder {
     color: $error-background;
     font-size: calc($base-size * 1.3);

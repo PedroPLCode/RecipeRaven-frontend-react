@@ -20,13 +20,13 @@ const ResetPassword = () => {
 
   return (
     <div>
-      <h2>Zresetuj hasło</h2>
+      <h2>Reset Password</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Nowe hasło:
+          New Password:
           <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
         </label>
-        <button type="submit">Zmień hasło</button>
+        <button type="submit">Set New Password</button>
       </form>
       {message && <p>{message}</p>}
     </div>

@@ -14,6 +14,7 @@ import Modal from 'react-modal';
 const ChangeUserDetails = () => {
 
   const [showModal, setShowModal] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -47,6 +48,7 @@ const ChangeUserDetails = () => {
             name: userData.name,
             about: userData.about,
           });
+          setCurrentEmail(userData.email)
           console.log(userData);
         }
       } catch (error) {
@@ -63,6 +65,11 @@ const ChangeUserDetails = () => {
 
   const handleChange = event => {
     const {value, name} = event.target
+
+    if (name === 'email') {
+      validateEmail(value, currentEmail);
+    } 
+
     setChangeUserDetailsForm(prevNote => ({
         ...prevNote, [name]: value})
     )}
