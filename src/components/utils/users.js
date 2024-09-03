@@ -69,12 +69,12 @@ export const passwordAndConfirmPasswordMatch = (password, confirmPassword) => {
   }
 }
 
-export const validateEmail = async (email, currentEmail=false) => {
+export const validateEmail = async (email, currentEmail=false, checkIfExists=true) => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const emailExists = await fetchCheckUserEmail(email);
   const inputField = document.getElementById('email');
 
-  console.log(inputField)
+  console.log(email)
   
   if (regex.test(email)) {
     inputField.classList.remove(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
@@ -85,12 +85,14 @@ export const validateEmail = async (email, currentEmail=false) => {
     return false;
   }
   
-  if (!emailExists || email === currentEmail) {
-    inputField.classList.remove(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
-  } else {
-    inputField.classList.add(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
-    inputField.classList.remove(!currentEmail ? stylesCreateUser.input_ok : stylesChangeUserDetails.input_ok);
-    return false;
+  if (checkIfExists) {
+    if (!emailExists || email === currentEmail) {
+      inputField.classList.remove(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
+    } else {
+      inputField.classList.add(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
+      inputField.classList.remove(!currentEmail ? stylesCreateUser.input_ok : stylesChangeUserDetails.input_ok);
+      return false;
+    }
   }
 
   return true;
@@ -241,6 +243,40 @@ export const createUser = async (event, createUserForm, setCreateUserForm) => {
     });
   } catch (error) {
     console.error(error);
+  }
+}
+
+
+export const resendConfirmationEmail = async (event, form, setForm) => {
+  event.preventDefault();
+
+  const formData = new FormData();
+  if (form.email) {
+    formData.append('email', form.email);
+  }
+
+  const url = 'http://localhost:5000/api/resend/';
+  const options = {
+    method: 'POST',
+    body: formData,
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+
+    if (response.ok) {
+      alert('Confirmation email sent successfully. Please check your inbox.');
+    } else {
+      alert(`Failed to send confirmation email: ${result.msg}`);
+    }
+
+    // Clear the form after submission
+    setForm({ email: "" });
+
+  } catch (error) {
+    console.error("Error sending confirmation email:", error);
+    alert("An error occurred. Please try again later.");
   }
 }
 

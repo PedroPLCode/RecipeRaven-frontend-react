@@ -35,6 +35,8 @@ import ResetPassword from './components/features/ResetPassword/ResetPassword.js'
 import { getUserData } from './components/utils/users.js';
 import { useDispatch } from "react-redux";
 import MainPage from './components/pages/MainPage/MainPage.js'
+import ConfirmUser from './components/features/ConfirmUser/ConfirmUser.js'
+import UserConfirmed from './components/features/UserConfirmed/UserConfirmed.js'
 
 const App = () => {
 
@@ -91,6 +93,8 @@ const App = () => {
             <Route path="/changeuserdetails" element={<ChangeUserDetails token={token} setToken={setToken} />} />
             <Route path="/changeuserpicture" element={<ChangeUserPicture token={token} setToken={setToken} />} />
             <Route path="/cameracapture" element={<CameraCapture token={token} setToken={setToken} />} />
+            <Route path="/confirmuser" element={<ConfirmUser token={token} setToken={setToken} />} />
+            <Route path="/user/confirm/:token" element={<UserConfirmed token={token} setToken={setToken} />} />
 
             <Route path="/changeuserpassword" element={<ChangeUserPassword token={token} setToken={setToken} />} />
             <Route path="/deleteuserpage" element={<DeleteUserPage token={token} setToken={setToken} />} />

@@ -102,7 +102,7 @@ const CreateUserPage = () => {
 
     if (createUserValidators.every(valid => valid)) {
       await createUser(event, createUserForm, setCreateUserForm);
-      navigate('/login');
+      navigate('/confirmuser');
     } else {
       // Obsługa błędów walidacji
       console.log('Validation failed');

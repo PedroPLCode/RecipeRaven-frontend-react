@@ -29,13 +29,21 @@ const Login = props => {
        }
     })
     .then((response) => {
-      props.setToken(response.data.access_token);
-      localStorage.setItem('token', response.data.access_token);
-      //dispatch(updateUser(response.data));
-      //window.location.reload();
-      getUserData(dispatch)
-      fetchFavorites(dispatch)
-      navigate('/login');
+      console.log(response)
+      if (response.data.email_confirmed && response.data.access_token) {
+        props.setToken(response.data.access_token);
+        localStorage.setItem('token', response.data.access_token);
+        //dispatch(updateUser(response.data));
+        //window.location.reload();
+        getUserData(dispatch)
+        fetchFavorites(dispatch)
+        localStorage.setItem('email_confirmed', response.data.email_confirmed);
+        navigate('/login');
+      } else {
+        localStorage.setItem('email_confirmed', response.data.email_confirmed);
+        navigate('/confirmuser')
+      }
+      console.log(localStorage)
     })
     .catch((error) => {
       if (error.response) {

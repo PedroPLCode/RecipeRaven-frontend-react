@@ -49,7 +49,7 @@ const NavBar = (props) => {
 
   useEffect(() => {
     setFavoritesCount(userData ? userData.favorites_count : false);
-    setUserName(userData ? userData.name : false);
+    setUserName(userData ? (userData.name ? userData.name : userData.login): 'Your');
   }, [userData]);
 
   useEffect(() => {
