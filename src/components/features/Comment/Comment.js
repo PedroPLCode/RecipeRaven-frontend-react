@@ -20,14 +20,14 @@ const Comment = props => {
   const [show, setShow] = useState(false)
 
   const [userLikedComment, setUserLikedComment] = useState(false);
-  const [likesCounter, setLikesCounter] = useState(props.comment.likes.length);
+  const [likesCounter, setLikesCounter] = useState(props.comment.likes ? props.comment.likes.length : 0);
   const [userHatedComment, setUserHatedComment] = useState(false);
-  const [hatesCounter, setHatesCounter] = useState(props.comment.hates.length);
+  const [hatesCounter, setHatesCounter] = useState(props.comment.hates ? props.comment.hates.length : 0);
 
   useEffect(() => {
     if (props.userData) {
-      const isCommentLiked = props.comment.likes.some(likeUserId => likeUserId === props.userData.id);
-      const isCommentHated = props.comment.hates.some(hateUserId => hateUserId === props.userData.id);
+      const isCommentLiked = props.comment.likes ? props.comment.likes.some(likeUserId => likeUserId === props.userData.id) : false;
+      const isCommentHated = props.comment.hates ? props.comment.hates.some(hateUserId => hateUserId === props.userData.id) : false;
       setUserLikedComment(isCommentLiked);
       setUserHatedComment(isCommentHated);
     }
