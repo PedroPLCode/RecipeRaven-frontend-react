@@ -1,20 +1,20 @@
 import styles from './News.module.scss';
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
-import { createReaction } from '../../utils/reactions.js';
+import { createReaction } from '../../../utils/reactions.js';
 import Reaction from '../Reaction/Reaction.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../utils/posts';
-import { deleteNews } from '../../utils/news.js';
+import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
+import { deleteNews } from '../../../utils/news.js';
 import { Link } from 'react-router-dom';
 import { updateNews } from '../../../redux/reducers/newsReducer.js';
 import { settings } from '../../../settings.js'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications.js';
+import { createNotification } from '../../../utils/notifications.js';
 import { ConfirmToast } from 'react-confirm-toast'
 import clsx from 'clsx';
 

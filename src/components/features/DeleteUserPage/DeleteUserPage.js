@@ -6,12 +6,12 @@ import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { getUser, updateUser } from '../../../redux/reducers/userReducer';
-import { deleteUser, getUserData, checkUserPassword } from '../../utils/users';
+import { deleteUser, getUserData, checkUserPassword } from '../../../utils/users';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 
 const DeleteUserPage = (props) => {
   const [showModal, setShowModal] = useState(false);

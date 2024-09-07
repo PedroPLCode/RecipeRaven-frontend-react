@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
 import IconButton from "@mui/material/IconButton";
 import { useGoogleLogin } from "@react-oauth/google";
-import UserAvatar from "../../utils/userAvatar.js";
-import { getUserData } from "../../utils/users.js";
+import UserAvatar from "../../../utils/userAvatar.js";
+import { getUserData } from "../../../utils/users.js";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { fetchFavorites, deleteFavorite } from '../../utils/favorites';
+import { fetchFavorites, deleteFavorite } from '../../../utils/favorites';
 
 const GoogleAuth = props => {
 

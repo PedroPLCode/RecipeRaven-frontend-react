@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
-import { validateLogin, validatePasswordInput, passwordAndConfirmPasswordMatch, validateEmail, createUser, getUserData } from '../../utils/users';
+import { validateLogin, validatePasswordInput, passwordAndConfirmPasswordMatch, validateEmail, createUser, getUserData } from '../../../utils/users';
 import { useNavigate } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import Modal from 'react-modal';

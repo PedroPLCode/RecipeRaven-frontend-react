@@ -6,11 +6,11 @@ import { getNews, updateNews } from '../../../redux/reducers/newsReducer';
 import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import News from '../../features/News/News';
-import { fetchNews, createNews } from '../../utils/news';
+import { fetchNews, createNews } from '../../../utils/news';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 import { parse, compareAsc, compareDesc } from 'date-fns';
 import { settings } from '../../../settings';
 

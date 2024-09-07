@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { getFavorites } from '../../../redux/reducers/favoritesReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import SingleFavorite from '../../features/SingleFavorite/SingleFavorite';
-import { fetchFavorites, deleteFavorite } from '../../utils/favorites';
+import { fetchFavorites, deleteFavorite } from '../../../utils/favorites';
 
 const FavoritesPage = () => {
 

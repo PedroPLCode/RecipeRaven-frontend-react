@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getQuote } from '../../../redux/reducers/quoteReducer';
-import { fetchQuote} from '../../utils/quote'
+import { fetchQuote} from '../../../utils/quote'
 
 const RandomQuote = () => {
   const dispatch = useDispatch();

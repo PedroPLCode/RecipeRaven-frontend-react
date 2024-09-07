@@ -4,30 +4,26 @@ import { Nav } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import Logout from '../../features/Logout/Logout';
 import { getUser } from '../../../redux/reducers/userReducer';
-import { getUserData } from '../../utils/users';
+import { getUserData } from '../../../utils/users';
 import { settings } from '../../../settings';
 import clsx from 'clsx';
 import styles from './NavBar.module.scss';
 import footerStyles from '../Footer/Footer.module.scss'
-//import useToken from '../../features/useToken/useToken';
 
 const NavBar = (props) => {
   const dispatch = useDispatch();
   const userData = useSelector(state => getUser(state));
-  //const { token, removeToken, setToken } = useToken();
-
-  const sleep = ms => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [show, setShow] = useState(true);
   const [favoritesCount, setFavoritesCount] = useState(false);
   const [userName, setUserName] = useState(false);
 
+  const sleep = ms => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-
     const footer = document.querySelector('footer');
     if (!isMenuOpen) {
       footer.classList.add(footerStyles.footer_hidden);
@@ -43,7 +39,6 @@ const NavBar = (props) => {
         await sleep(settings.delay); 
       }
     };
-
     fetchData();
   }, [dispatch]);
 

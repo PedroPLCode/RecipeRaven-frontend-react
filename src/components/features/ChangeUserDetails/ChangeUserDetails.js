@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { getUserData, changeUserDetails, validateEmail } from '../../utils/users'
+import { getUserData, changeUserDetails, validateEmail } from '../../../utils/users'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

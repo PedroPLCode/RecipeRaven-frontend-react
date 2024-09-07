@@ -32,7 +32,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ForgottenPassword from './components/features/ForgottenPassword/ForgottenPassword.js';
 import ResetPassword from './components/features/ResetPassword/ResetPassword.js';
-import { getUserData } from './components/utils/users.js';
+import { getUserData } from './utils/users.js';
 import { useDispatch } from "react-redux";
 import MainPage from './components/pages/MainPage/MainPage.js'
 import ConfirmUser from './components/features/ConfirmUser/ConfirmUser.js'

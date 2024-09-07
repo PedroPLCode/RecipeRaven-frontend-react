@@ -3,17 +3,17 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../utils/posts';
+import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
 import { useDispatch } from "react-redux";
 import { updatePosts } from '../../../redux/reducers/postsReducer';
-import { deleteComment } from '../../utils/comments';
+import { deleteComment } from '../../../utils/comments';
 import { Link } from 'react-router-dom';
 import { settings } from '../../../settings'
 import { ConfirmToast } from 'react-confirm-toast'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 
 const Comment = props => {
 

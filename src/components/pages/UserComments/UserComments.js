@@ -6,8 +6,8 @@ import { getPosts } from '../../../redux/reducers/postsReducer';
 import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Post from '../../features/Post/Post';
-import { fetchPosts } from '../../utils/posts';
-import { getUserData } from '../../utils/users';
+import { fetchPosts } from '../../../utils/posts';
+import { getUserData } from '../../../utils/users';
 import { useState } from 'react';
 import { parse, compareAsc, compareDesc } from 'date-fns';
 

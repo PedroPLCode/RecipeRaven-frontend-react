@@ -7,11 +7,11 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { messages } from '../../../settings';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { fetchNews, createNews, updateSingleNews } from '../../utils/news';
+import { fetchNews, createNews, updateSingleNews } from '../../../utils/news';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 import { ConfirmToast } from 'react-confirm-toast'
 
 const AddEditNews = () => {

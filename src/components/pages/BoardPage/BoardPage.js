@@ -6,11 +6,11 @@ import { getPosts, updatePosts } from '../../../redux/reducers/postsReducer';
 import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Post from '../../features/Post/Post';
-import { fetchPosts, createPost } from '../../utils/posts';
+import { fetchPosts, createPost } from '../../../utils/posts';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 import { parse, compareAsc, compareDesc } from 'date-fns';
 
 const BoardPage = () => {

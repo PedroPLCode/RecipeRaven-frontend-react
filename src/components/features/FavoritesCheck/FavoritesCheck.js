@@ -5,7 +5,7 @@ import { getSearchResult } from '../../../redux/reducers/searchResultReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { parametersNames, settings } from '../../../settings';
 import PropTypes from "prop-types";
-import { fetchFavorites } from '../../utils/favorites'
+import { fetchFavorites } from '../../../utils/favorites'
 import { useDispatch } from 'react-redux';
 
 const FavoritesCheck = props => {

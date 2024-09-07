@@ -1,5 +1,4 @@
-import { updateFavorites } from '../../redux/reducers/favoritesReducer';
-
+import { updateFavorites } from '../redux/reducers/favoritesReducer';
 
 export const fetchFavorites = async dispatch => {
   const url = `http://localhost:5000/api/favorites`;

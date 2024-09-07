@@ -3,7 +3,7 @@ export const createComment = async (payload) => {
     const headers = {
       'Content-Type': 'application/json',
     };
-  
+    
     if (localStorage.token) {
       headers['Authorization'] = 'Bearer ' + localStorage.token;
     }

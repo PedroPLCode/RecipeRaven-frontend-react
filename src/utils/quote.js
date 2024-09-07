@@ -1,5 +1,5 @@
-import { updateQuote } from '../../redux/reducers/quoteReducer';
-import { messages } from '../../settings';
+import { updateQuote } from '../redux/reducers/quoteReducer';
+import { messages } from '../settings';
 
 export const fetchQuote = async dispatch => {
   try {

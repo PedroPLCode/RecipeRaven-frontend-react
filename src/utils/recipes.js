@@ -1,33 +1,40 @@
-import styles from '../../components/pages/SearchPage/SearchPage.module.scss'
-import { updateSearchResult } from '../../redux/reducers/searchResultReducer';
-import { updateLinkNextPage } from '../../redux/reducers/nextResultsPageReducer';
-import { updateServerResponse } from '../../redux/reducers/serverResponseReducer';
-import { updateServerError } from '../../redux/reducers/serverErrorReducer'
-import { elementsNames, settings } from '../../settings';
+import styles from '../components/pages/SearchPage/SearchPage.module.scss'
+import { updateSearchResult } from '../redux/reducers/searchResultReducer';
+import { updateLinkNextPage } from '../redux/reducers/nextResultsPageReducer';
+import { updateServerResponse } from '../redux/reducers/serverResponseReducer';
+import { updateServerError } from '../redux/reducers/serverErrorReducer'
+import { elementsNames, settings } from '../settings';
 import { ToastContainer, toast } from 'react-toastify';
 
 const prepareArrayFromStringInput = string => {
   if (typeof string !== 'string') {
     return [];
   }
+
   const resultArray = []
   for(let element of string.split(" ")) {
     resultArray.push(element);
   }
+
   return resultArray
 }
 
-const prepareDietArray = (diet, dietKeys, parametersNames) => {
-  if (!diet || !dietKeys || !parametersNames) {
-    return [];
+const prepareDietArray = (diet, dietKeys) => {
+  if (!diet || !dietKeys) {
+    return false;
   }
 
   const dietArray = []
   for(let singleKey of dietKeys) {
     if (diet[singleKey]['value']) {
-      dietArray.push(diet[`${singleKey}`][parametersNames.string]);
+      dietArray.push(diet[`${singleKey}`]['string']);
     }
   }
+
+  if (dietArray.length === 0) {
+    return false
+  }
+
   return dietArray
 }
 
@@ -52,10 +59,10 @@ export const validateInputString = (input, setInputOK) => {
 
 export const fetchReceipes = async (ingredients, excluded, diet, dietKeys, random, setLoading, setSuccess, dispatch, setInputOK) => {
   const preparedRequestBody = {
-    ingredients: prepareArrayFromStringInput(ingredients),
-    excluded: prepareArrayFromStringInput(excluded),
-    params: prepareDietArray(),
-    random: random,
+    ingredients: ingredients ? ingredients : false,
+    excluded: excluded ? prepareArrayFromStringInput(excluded) : false,
+    params: diet && dietKeys ? prepareDietArray(diet, dietKeys) : false,
+    random: random ? random : false,
   }
   const url = 'http://localhost:5000/api/search'
   const options = {
@@ -70,13 +77,11 @@ export const fetchReceipes = async (ingredients, excluded, diet, dietKeys, rando
     try {
       const response = await fetch(url, options);
       dispatch(updateServerResponse(response));
-      console.log(response)
       const result = await response.text();
-      console.log(result)
       const searchResponse = JSON.parse(result)
-      console.log(searchResponse)
       dispatch(updateSearchResult(searchResponse));
       dispatch(updateLinkNextPage(searchResponse._links.next ? searchResponse._links.next : null));
+      dispatch(updateServerError(false));
       setLoading(false); 
       setSuccess(true); 
       return result;

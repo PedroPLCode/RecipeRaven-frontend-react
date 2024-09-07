@@ -6,8 +6,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { fetchFavorites, deleteFavorite } from '../../utils/favorites';
-import { getUserData } from '../../utils/users';
+import { fetchFavorites, deleteFavorite } from '../../../utils/favorites';
+import { getUserData } from '../../../utils/users';
 import useToken from '../../features/useToken/useToken.js'
 
 const UserConfirmed = props => {

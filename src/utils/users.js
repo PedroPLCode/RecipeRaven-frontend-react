@@ -1,9 +1,9 @@
 import axios from "axios";
-import stylesCreateUser from '../../components/pages/CreateUserPage/CreateUserPage.module.scss'
-import stylesChangeUserDetails from '../../components/features/ChangeUserDetails/ChangeUserDetails.module.scss'
-import stylesChangePassword from '../../components/features/ChangeUserPassword/ChangeUserPassword.module.scss'
-import { settings } from '../../settings';
-import { updateUser } from '../../redux/reducers/userReducer';
+import stylesCreateUser from '../components/pages/CreateUserPage/CreateUserPage.module.scss'
+import stylesChangeUserDetails from '../components/features/ChangeUserDetails/ChangeUserDetails.module.scss'
+import stylesChangePassword from '../components/features/ChangeUserPassword/ChangeUserPassword.module.scss'
+import { settings } from '../settings';
+import { updateUser } from '../redux/reducers/userReducer';
 import { ToastContainer, toast } from 'react-toastify';
 
 export const validateLogin = async (login) => {
@@ -11,14 +11,12 @@ export const validateLogin = async (login) => {
   const regex = settings.regexLoginString;
   if (!regex.test(login)) {
     inputField.classList.add(stylesCreateUser.input_error);
-    console.log('Validation login failed: does not match regex');
     return false;
   }
 
   const loginExists = await fetchCheckUserLogin(login);
   if (loginExists) {
     inputField.classList.add(stylesCreateUser.input_error);
-    console.log('Validation login failed: login already exists');
     return false;
   }
 
@@ -35,14 +33,12 @@ export const validatePasswordInput = (password, field_id=false) => {
       passwordInputField.classList.remove(stylesCreateUser.input_ok);
       passwordInputField.classList.remove(stylesChangePassword.input_ok);
     }
-    console.log('Validation passwd failed');
     return false
   } else {
     if (passwordInputField) {
       passwordInputField.classList.add(stylesCreateUser.input_ok);
       passwordInputField.classList.add(stylesChangePassword.input_ok);
     }
-    console.log('Validation passwd success');
     return true;
   }
 }
@@ -56,14 +52,12 @@ export const passwordAndConfirmPasswordMatch = (password, confirmPassword) => {
       confirmPasswordInputField.classList.remove(stylesCreateUser.input_ok);
       passwordInputField.classList.remove(stylesChangePassword.input_ok);
       confirmPasswordInputField.classList.remove(stylesChangePassword.input_ok);
-      console.log('Validation passwd match failed');
       return false
     } else {
       passwordInputField.classList.add(stylesCreateUser.input_ok);
       confirmPasswordInputField.classList.add(stylesCreateUser.input_ok);
       passwordInputField.classList.add(stylesChangePassword.input_ok);
       confirmPasswordInputField.classList.add(stylesChangePassword.input_ok);
-      console.log('Validation passwd match success');
       return true
     }
   }
@@ -73,8 +67,6 @@ export const validateEmail = async (email, currentEmail=false, checkIfExists=tru
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const emailExists = await fetchCheckUserEmail(email);
   const inputField = document.getElementById('email');
-
-  console.log(email)
   
   if (regex.test(email)) {
     inputField.classList.remove(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
@@ -266,17 +258,15 @@ export const resendConfirmationEmail = async (event, form, setForm) => {
     const result = await response.json();
 
     if (response.ok) {
-      alert('Confirmation email sent successfully. Please check your inbox.');
+      toast.success('Confirmation email sent successfully. Please check your inbox.');
     } else {
-      alert(`Failed to send confirmation email: ${result.msg}`);
+      toast.warning(`Failed to send confirmation email: ${result.msg}`);
     }
 
-    // Clear the form after submission
     setForm({ email: "" });
 
   } catch (error) {
-    console.error("Error sending confirmation email:", error);
-    alert("An error occurred. Please try again later.");
+    toast.warning("An error occurred. Please try again later.", error);
   }
 }
 
@@ -353,7 +343,7 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
       if (response.ok) {
         toast.success('Succesfully change password', { toastId: 10 });
       } else {
-        toast.success('Error. password not changed', { toastId: 10 });
+        toast.warning('Error. password not changed', { toastId: 10 });
         console.error(result);
       }
 
@@ -373,10 +363,6 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
 
 export const resetPassword = async (event, email) => {
   event.preventDefault();
-
-  //const formData = new FormData();
-  //formData.append('email', email);
-
   const url = 'http://127.0.0.1:5000/api/resetpassword';
   const options = {
     method: 'POST',
@@ -388,17 +374,14 @@ export const resetPassword = async (event, email) => {
 
   try {
     const response = await fetch(url, options);
-    const result = await response.json();
-    console.log(result);
 
     if (response.ok) {
-      // Handle successful response here
-    } else {
-      // Handle error response here
-      console.error(result);
-    }
+      toast.success('success')
+    } 
+
   } catch (error) {
     console.error(error);
+    toast.warning(error)
   }
 }
 
@@ -418,6 +401,9 @@ export const logOut = props => {
       console.log(error.response)
       console.log(error.response.status)
       console.log(error.response.headers)
+      toast.warning(error.response)
+      toast.warning(error.response.status)
+      toast.warning(error.response.headers)
       }
   })}
 
@@ -439,6 +425,9 @@ export const deleteUser = props => {
       console.log(error.response)
       console.log(error.response.status)
       console.log(error.response.headers)
+      toast.warning(error.response)
+      toast.warning(error.response.status)
+      toast.warning(error.response.headers)
       }
   })
 }

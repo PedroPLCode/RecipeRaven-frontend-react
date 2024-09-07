@@ -4,11 +4,11 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from "prop-types";
-import { createFavorite } from '../../utils/favorites';
+import { createFavorite } from '../../../utils/favorites';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 import { useNavigate } from 'react-router-dom';
 import { elementsNames, parametersNames } from '../../../settings';
 
@@ -57,7 +57,7 @@ const SingleResult = props => {
       </div>  
       <div className={styles.description}>
         <p><strong className={styles.blue}>{props.singleHit.label}</strong></p>
-        <p><span className={styles.blue}>Dist Type: </span> 
+        <p><span className={styles.blue}>Dish Type: </span> 
           <strong>{props.singleHit.dishType} / {props.singleHit.mealType}</strong>
         </p>
         <p><span className={styles.blue}>Cuisine Type: </span>  

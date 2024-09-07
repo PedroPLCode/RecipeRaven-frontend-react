@@ -12,10 +12,11 @@ const AboutPage = () => {
 
     return (
       <div className={styles.about}>
-        <h3>Receipes Search App</h3>
+        <h3>Receipe Raven App</h3>
         <h5>simple app written in</h5>
         <h5>Javascript React and Python Flask</h5>
         <h5>helps searching for new meal recipes</h5>
+        <h5>Explore</h5>
         <h5>I hope you will like it</h5>
         <h5>still under construction</h5>
         <h5>created by piotrek gaszczynski</h5>

@@ -14,8 +14,8 @@ import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import NoResultsPage from "../../features/NoResultsPage/NoResultsPage";
 import RandomQuote from '../RandomQuote/RandomQuote';
 import FavoritesCheck from '../../features/FavoritesCheck/FavoritesCheck';
-import { createFavorite } from '../../utils/favorites';
-import { fetchMoreReceipes } from '../../utils/recipes';
+import { createFavorite } from '../../../utils/favorites';
+import { fetchMoreReceipes } from '../../../utils/recipes';
 
 const SearchResults = () => {
   const dispatch = useDispatch();

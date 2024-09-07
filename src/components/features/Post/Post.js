@@ -1,19 +1,19 @@
 import styles from './Post.module.scss';
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
-import { createComment } from '../../utils/comments';
+import { createComment } from '../../../utils/comments';
 import Comment from '../Comment/Comment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../utils/posts';
+import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
 import { Link } from 'react-router-dom';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { settings } from '../../../settings.js'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 import { ConfirmToast } from 'react-confirm-toast'
 import clsx from 'clsx';
 import { useEffect } from 'react';

@@ -2,7 +2,7 @@ import styles from './Profile.module.scss';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getUserData, resendConfirmationEmail } from '../../utils/users';
+import { getUserData, resendConfirmationEmail } from '../../../utils/users';
 import { getUser } from '../../../redux/reducers/userReducer';
 
 const Profile = () => {

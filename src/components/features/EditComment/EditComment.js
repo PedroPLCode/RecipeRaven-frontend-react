@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { getPosts, updatePosts } from '../../../redux/reducers/postsReducer';
 import { getUser } from '../../../redux/reducers/userReducer';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updateComment } from '../../utils/comments';
-import { fetchPosts } from '../../utils/posts';
+import { updateComment } from '../../../utils/comments';
+import { fetchPosts } from '../../../utils/posts';
 import { ConfirmToast } from 'react-confirm-toast'
 import { ToastContainer, toast } from 'react-toastify';
 

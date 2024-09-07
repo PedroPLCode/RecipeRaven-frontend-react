@@ -7,7 +7,7 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { changeUserDetails, getUserData } from '../../utils/users';
+import { changeUserDetails, getUserData } from '../../../utils/users';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -97,7 +97,7 @@ const ChangeUserPicture = () => {
         setPictureChanged(true);
         const url = URL.createObjectURL(file);
         setPhotoURL(url);
-        setShowCameraModal(false); // Close camera modal after photo is taken
+        setShowCameraModal(false);
       });
   };
 

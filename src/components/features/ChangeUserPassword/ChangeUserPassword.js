@@ -8,7 +8,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
-import { getUserData, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../utils/users'
+import { getUserData, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../../utils/users'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';

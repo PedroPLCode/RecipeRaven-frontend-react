@@ -1,8 +1,7 @@
-import { updatePosts } from '../../redux/reducers/postsReducer';
-import { ToastContainer, toast } from 'react-toastify';
+import { updateNews } from '../redux/reducers/newsReducer';
 
-export const fetchPosts = async dispatch => {
-  const url = `http://localhost:5000/api/posts`;
+export const fetchNews = async dispatch => {
+  const url = `http://localhost:5000/api/news`;
   const options = {
     method: 'GET',
   };
@@ -10,7 +9,7 @@ export const fetchPosts = async dispatch => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
-    dispatch(updatePosts(finalResponse));
+    dispatch(updateNews(finalResponse));
     console.log(finalResponse)
     return finalResponse;
   } catch (error) {
@@ -19,8 +18,8 @@ export const fetchPosts = async dispatch => {
   }
 }
 
-export const createPost = async (payload) => {
-  const url = `http://localhost:5000/api/posts`;
+export const createNews = async (payload) => {
+  const url = `http://localhost:5000/api/news`;
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -44,13 +43,13 @@ export const createPost = async (payload) => {
     const parsedResponse = await response.json();
     return parsedResponse;
   } catch (error) {
-    console.error('Error creating post:', error);
+    console.error('Error creating news:', error);
   }
 };
 
 
-export const updatePost = async (postId, payload) => {
-  const url = `http://localhost:5000/api/posts/${postId}`;
+export const updateSingleNews = async (newsId, payload) => {
+  const url = `http://localhost:5000/api/news/${newsId}`;
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -74,13 +73,13 @@ export const updatePost = async (postId, payload) => {
     const parsedResponse = await response.json();
     return parsedResponse;
   } catch (error) {
-    console.error('Error updating post:', error);
+    console.error('Error updating news:', error);
   }
 };
 
 
-export const deletePost = async postId => {
-  const url = `http://localhost:5000/api/posts/${postId}`;
+export const deleteNews = async newsId => {
+  const url = `http://localhost:5000/api/news/${newsId}`;
   const options = {
     method: 'DELETE',
     mode: 'cors',
@@ -98,37 +97,4 @@ export const deletePost = async postId => {
     console.log(error);
     return error;
   }
-}
-
-export const handleUserReaction = async (target, reactionType, Id, reactionExists, setUserReacted, setCounter) => {
-  const url = `http://localhost:5000/api/${target}/${reactionType}/${Id}`;
-  const options = {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.token,
-    },
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.text();
-    const finalResult = JSON.parse(result);
-
-    if (finalResult.message.includes('successfully')) {
-      setUserReacted(prevReacted => !prevReacted);
-      setCounter(prevCounter => prevCounter + (reactionExists ? -1 : 1));
-    }
-    
-    return finalResult;
-  } catch (error) {
-    console.error(`Error handling ${reactionType}:`, error);
-    return error;
-  }
-};
-
-export const handleLikeHateOwn = () => {
-  const msg = localStorage.token ? "You can't add reaction to your own enrty" : "Only logged in users can add reactions.";
-  toast.warning(msg, {toastId: 8});
 }

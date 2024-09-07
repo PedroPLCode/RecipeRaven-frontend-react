@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { getNews, updateNews } from '../../../redux/reducers/newsReducer';
 import { getUser } from '../../../redux/reducers/userReducer';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updateReaction } from '../../utils/reactions';
-import { fetchNews } from '../../utils/news';
+import { updateReaction } from '../../../utils/reactions';
+import { fetchNews } from '../../../utils/news';
 import { ConfirmToast } from 'react-confirm-toast'
 import { ToastContainer, toast } from 'react-toastify';
 

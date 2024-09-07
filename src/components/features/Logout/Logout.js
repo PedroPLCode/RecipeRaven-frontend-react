@@ -1,9 +1,9 @@
 import styles from './Logout.module.scss'
-import { logOut } from '../../utils/users';
+import { logOut } from '../../../utils/users';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { updateUser } from '../../../redux/reducers/userReducer';
-import { createNotification } from '../../utils/notifications';
+import { createNotification } from '../../../utils/notifications';
 
 const Logout = props => {
 
