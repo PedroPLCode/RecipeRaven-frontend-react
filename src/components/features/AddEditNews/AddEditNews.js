@@ -3,15 +3,13 @@ import RandomQuote from '../RandomQuote/RandomQuote';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { getNews, updateNews } from '../../../redux/reducers/newsReducer';
-import { getUser } from '../../../redux/reducers/userReducer';
 import { messages } from '../../../settings';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { fetchNews, createNews, updateSingleNews } from '../../../utils/news';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../../utils/notifications';
 import { ConfirmToast } from 'react-confirm-toast'
 
 const AddEditNews = () => {
@@ -19,8 +17,6 @@ const AddEditNews = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const news = useSelector(state => getNews(state));
-  const userData = useSelector(state => getUser(state));
-
   const [newNewsTitle, setNewNewsTitle] = useState('');
   const [newNewsContent, setNewNewsContent] = useState('');
   const [reloadTrigger, setReloadTrigger] = useState(false);
@@ -32,7 +28,6 @@ const AddEditNews = () => {
         await fetchNews(dispatch);
       }
     };
-
     fetchData();
   }, [dispatch, reloadTrigger]);
 
@@ -74,9 +69,7 @@ const AddEditNews = () => {
         toast.error('Error during creation');
       }
     }
-
     navigate(-1)
-
     setNewNewsTitle('');
     setNewNewsContent('');
     setReloadTrigger(!reloadTrigger);

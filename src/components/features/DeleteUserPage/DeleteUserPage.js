@@ -1,14 +1,13 @@
 import styles from './DeleteUserPage.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { getUser, updateUser } from '../../../redux/reducers/userReducer';
+import { updateUser } from '../../../redux/reducers/userReducer';
 import { deleteUser, getUserData, checkUserPassword } from '../../../utils/users';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { createNotification } from '../../../utils/notifications';
@@ -24,8 +23,6 @@ const DeleteUserPage = (props) => {
       getUserData(dispatch);
     }
   }, [dispatch]);
-
-  const userData = useSelector(state => getUser(state));
 
   const handleClickDelete = () => {
     if (deleteUserForm.password) {

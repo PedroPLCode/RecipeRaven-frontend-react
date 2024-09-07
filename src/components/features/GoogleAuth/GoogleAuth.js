@@ -6,7 +6,7 @@ import UserAvatar from "../../../utils/userAvatar.js";
 import { getUserData } from "../../../utils/users.js";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { fetchFavorites, deleteFavorite } from '../../../utils/favorites';
+import { fetchFavorites } from '../../../utils/favorites';
 
 const GoogleAuth = props => {
 
@@ -45,17 +45,11 @@ async function getUserInfo(codeResponse) {
         props.setToken(googleUserToken.access_token)
         localStorage.setItem('token', googleUserToken.access_token);
         setLoggedIn(true);
-        
         const userData = await getUserData(dispatch);
-        console.log(userData)
         setUser(userData);
-
-        //dispatch(updateUser(response.data));
-        //window.location.reload();
         getUserData(dispatch)
         fetchFavorites(dispatch)
         navigate('/login');
-        
       } catch (error) {
         console.error('Login failed:', error);
       }

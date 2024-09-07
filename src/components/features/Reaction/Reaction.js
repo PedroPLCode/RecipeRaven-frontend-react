@@ -3,22 +3,21 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
+import { handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
 import { useDispatch } from "react-redux";
 import { updateNews } from '../../../redux/reducers/newsReducer';
 import { deleteReaction } from '../../../utils/reactions';
 import { Link } from 'react-router-dom';
 import { settings } from '../../../settings'
 import { ConfirmToast } from 'react-confirm-toast'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../../utils/notifications';
 
 const Reaction = props => {
 
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false)
-
   const [userLikedReaction, setUserLikedReaction] = useState(false);
   const [likesCounter, setLikesCounter] = useState(props.r.likes ? props.r.likes.length : null);
   const [userHatedReaction, setUserHatedReaction] = useState(false);
@@ -33,12 +32,8 @@ const Reaction = props => {
     }
   }, [props.r.likes, props.r.hates]);
 
-  const dispatch = useDispatch();
-
   const handleDeleteReaction = () => {
-
     deleteReaction(props.r.id);
-
     const updatedNews = props.news.map(n => {
       if (n.id === props.n.id) {
         const updatedReactions = n.reactions.filter(r => r.id !== props.r.id);
@@ -47,7 +42,6 @@ const Reaction = props => {
         return n;
       }
     });
-
     dispatch(updateNews(updatedNews));
     toast.success('Reaction deleted');
   };

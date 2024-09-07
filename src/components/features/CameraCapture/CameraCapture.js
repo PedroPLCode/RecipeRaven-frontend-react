@@ -6,7 +6,6 @@ function CameraCapture() {
   const [photo, setPhoto] = useState(null);
 
   useEffect(() => {
-    // Uzyskanie dostępu do kamery
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
         videoRef.current.srcObject = stream;
@@ -21,15 +20,12 @@ function CameraCapture() {
     const width = videoRef.current.videoWidth;
     const height = videoRef.current.videoHeight;
 
-    // Ustawienie rozmiaru canvasa
     canvasRef.current.width = width;
     canvasRef.current.height = height;
 
-    // Przechwycenie zdjęcia
     const context = canvasRef.current.getContext('2d');
     context.drawImage(videoRef.current, 0, 0, width, height);
 
-    // Konwersja do data URL (base64)
     const dataUrl = canvasRef.current.toDataURL('image/png');
     setPhoto(dataUrl);
   };

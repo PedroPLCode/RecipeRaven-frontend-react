@@ -1,19 +1,13 @@
 import styles from './ConfirmUser.module.scss'
 import { useState } from 'react';
-import axios from "axios";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { fetchFavorites, deleteFavorite } from '../../../utils/favorites';
-import { getUserData } from '../../../utils/users';
 import useToken from '../../features/useToken/useToken.js'
 import { validateEmail, resendConfirmationEmail } from '../../../utils/users';
+import { toast } from 'react-toastify';
 
 const ConfirmUser = props => {
 
   const { token, removeToken, setToken } = useToken();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [confirmUserForm, setCreateUserForm] = useState({
@@ -31,18 +25,15 @@ const ConfirmUser = props => {
       await resendConfirmationEmail(event, confirmUserForm, setCreateUserForm);
       navigate('/confirmuser');
     } else {
-      // Obsługa błędów walidacji
-      console.log('Validation failed');
+      toast.warning('Validation failed');
     }
   }
-
 
   const handleChange = event => {
     const {value, name} = event.target
     setCreateUserForm(prevNote => ({
         ...prevNote, [name]: value})
     )}
-
 
   return (
 
@@ -69,7 +60,6 @@ const ConfirmUser = props => {
       </div>
       }
     </div>
-
   );
 }
       

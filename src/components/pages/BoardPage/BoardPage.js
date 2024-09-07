@@ -7,10 +7,9 @@ import { getUser } from '../../../redux/reducers/userReducer';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Post from '../../features/Post/Post';
 import { fetchPosts, createPost } from '../../../utils/posts';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../../utils/notifications';
 import { parse, compareAsc, compareDesc } from 'date-fns';
 
 const BoardPage = () => {
@@ -18,11 +17,7 @@ const BoardPage = () => {
   const dispatch = useDispatch();
   const posts = useSelector(state => getPosts(state));
   const userData = useSelector(state => getUser(state));
-  const [newPostTitle, setNewPostTitle] = useState('');
-  const [newPostContent, setNewPostContent] = useState('');
-  const [newPostAuthor, setNewPostAuthor] = useState(userData ? `${userData.name ? userData.name : userData.login}` : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
-
   const [filterPostsString, setFilterPostsString] = useState('');
   const [filterAuthorsString, setFilterAuthorsString] = useState('');
   const [sortByNewest, setSortByNewest] = useState(true);
@@ -37,54 +32,18 @@ const BoardPage = () => {
       const contentMatch = post.content.toLowerCase().includes(filterPostsString.toLowerCase());
       const authorMatch = (post.author && post.author.toLowerCase().includes(filterAuthorsString.toLowerCase())) ||
         (post.guest_author && post.guest_author.toLowerCase().includes(filterAuthorsString.toLowerCase()));
-
       return (titleMatch || contentMatch) && authorMatch;
     });
   };
 
-
-  const handleSendNewPost = async () => {
-    const newPost = {
-      title: newPostTitle,
-      content: newPostContent,
-      guest_author: newPostAuthor,
-    }
-    posts.push(newPost);
-    dispatch(updatePosts(posts));
-
-    try {
-      await toast.promise(
-        createPost(newPost),
-        {
-          pending: 'Creating comment',
-          success: 'comment created',
-          error: 'Error',
-        }, { toastId: 4 }
-      );
-    } catch (error) {
-      console.error('Error during delete:', error);
-      toast.error('Error during delete');
-    }
-
-    setNewPostTitle('');
-    setNewPostContent('');
-    setNewPostAuthor('');
-    setReloadTrigger(!reloadTrigger);
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (localStorage.token) {
-        }
-
         fetchPosts(dispatch);
-
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
-
     fetchData();
   }, [reloadTrigger]);
 
@@ -132,9 +91,7 @@ const BoardPage = () => {
         <h3>BoardPage component</h3>
         <h5>No posts found</h5>
 
-
         <a href="/addeditpost">Add first Post</a>
-
 
         <RandomQuote />
       </div>

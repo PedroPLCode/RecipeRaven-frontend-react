@@ -13,12 +13,9 @@ import { parse, compareAsc, compareDesc } from 'date-fns';
 
 const UserPosts = () => {
   const dispatch = useDispatch();
-
+  const posts = useSelector(state => getPosts(state));
+  const userData = useSelector(state => getUser(state));
   const [sortByNewest, setSortByNewest] = useState(true);
-
-  const handleSortPosts = () => {
-    setSortByNewest(!sortByNewest)
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,12 +29,12 @@ const UserPosts = () => {
         console.error('Error fetching user data:', error);
       }
     };
-
     fetchData();
   }, []);
 
-  const posts = useSelector(state => getPosts(state));
-  const userData = useSelector(state => getUser(state));
+  const handleSortPosts = () => {
+    setSortByNewest(!sortByNewest)
+  }
 
   const parseDate = (dateString) => {
     return parse(dateString.replace(' ', 'T').replace(' CET', 'Z'), 'yyyy-MM-dd\'T\'HH:mm:ssX', new Date());
@@ -51,7 +48,6 @@ const UserPosts = () => {
   .sort((a, b) => {
     const dateA = parseDate(a.creation_date);
     const dateB = parseDate(b.creation_date);
-    console.log("Porównanie dat:", dateA, dateB);
     return sortByNewest ? compareDesc(dateA, dateB) : compareAsc(dateA, dateB);
   });
 

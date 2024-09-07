@@ -3,20 +3,17 @@ import RandomQuote from '../RandomQuote/RandomQuote';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { getPosts, updatePosts } from '../../../redux/reducers/postsReducer';
-import { getUser } from '../../../redux/reducers/userReducer';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateComment } from '../../../utils/comments';
 import { fetchPosts } from '../../../utils/posts';
 import { ConfirmToast } from 'react-confirm-toast'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const EditComment = () => {
   const { commentId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const posts = useSelector(state => getPosts(state));
-  const userData = useSelector(state => getUser(state));
-
   const [newCommentContent, setNewCommentContent] = useState('');
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [showToast, setShowToast] = useState(false)
@@ -61,7 +58,6 @@ const EditComment = () => {
         })
         .catch(error => console.error('Error updating comment:', error));
       }
-
     setNewCommentContent('');
     setReloadTrigger(!reloadTrigger);
   }

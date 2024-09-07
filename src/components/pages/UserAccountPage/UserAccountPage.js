@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Login from '../../features/Login/Login.js'
 import Profile from '../../features/Profile/Profile.js'
-import Logout from '../../features/Logout/Logout.js'
 import useToken from '../../features/useToken/useToken.js'
 
 const LoginPage = () => {

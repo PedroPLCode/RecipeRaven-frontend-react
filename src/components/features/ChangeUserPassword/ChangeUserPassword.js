@@ -3,15 +3,12 @@ import { useState, useEffect } from 'react';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { getUser } from '../../../redux/reducers/userReducer';
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { getUserData, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../../utils/users'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Modal from 'react-modal';
 
 const ChangeUserPassword = () => {
 
@@ -24,9 +21,6 @@ const ChangeUserPassword = () => {
       getUserData(dispatch);
     }
   }, []);
-  
-  const userData = useSelector(state => getUser(state));
-  console.log(userData)
 
   const [changeUserPasswordForm, setChangeUserPasswordForm] = useState({
     oldPassword: "",

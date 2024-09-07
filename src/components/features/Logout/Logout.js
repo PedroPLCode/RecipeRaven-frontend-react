@@ -3,7 +3,6 @@ import { logOut } from '../../../utils/users';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { updateUser } from '../../../redux/reducers/userReducer';
-import { createNotification } from '../../../utils/notifications';
 
 const Logout = props => {
 
@@ -14,7 +13,6 @@ const Logout = props => {
     logOut(props);
     dispatch(updateUser(false));
     navigate('/');
-    //createNotification('warning', 'Succecfully Logged Out', 4);
   }
 
   return(

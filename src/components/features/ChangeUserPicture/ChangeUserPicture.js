@@ -58,7 +58,7 @@ const ChangeUserPicture = () => {
   const handleChangeUserPicture = async (event) => {
     await changeUserDetails(event, changeUserPictureForm, setChangeUserPictureForm, dispatch);
     navigate('/login');
-    window.location.reload(); // Serio konieczne ???
+    window.location.reload();
   }
 
   const handleFileChange = (event) => {
@@ -143,7 +143,6 @@ const ChangeUserPicture = () => {
       <RandomQuote />
       <ToastContainer />
 
-      {/* Camera Modal */}
       <Modal 
         isOpen={showCameraModal} 
         onRequestClose={handleCancel} 

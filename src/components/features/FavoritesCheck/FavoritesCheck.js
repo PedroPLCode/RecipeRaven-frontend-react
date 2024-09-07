@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux';
 const FavoritesCheck = props => {
 
   const dispatch = useDispatch();
-
   const searchResult = useSelector(state => getSearchResult(state));
 
   const sleep = ms => {

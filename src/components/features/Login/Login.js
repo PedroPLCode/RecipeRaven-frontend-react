@@ -5,7 +5,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { fetchFavorites, deleteFavorite } from '../../../utils/favorites';
+import { fetchFavorites } from '../../../utils/favorites';
 import { getUserData } from '../../../utils/users';
 
 const Login = props => {
@@ -33,8 +33,6 @@ const Login = props => {
       if (response.data.email_confirmed && response.data.access_token) {
         props.setToken(response.data.access_token);
         localStorage.setItem('token', response.data.access_token);
-        //dispatch(updateUser(response.data));
-        //window.location.reload();
         getUserData(dispatch)
         fetchFavorites(dispatch)
         localStorage.setItem('email_confirmed', response.data.email_confirmed);
@@ -52,12 +50,10 @@ const Login = props => {
           console.log(error.response.headers)
           }
     })
-  
     setloginForm(({
       login: "",
       password: ""}))
       event.preventDefault();
-
     }
   
   const handleChange = event => {

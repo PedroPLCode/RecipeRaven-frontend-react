@@ -3,20 +3,17 @@ import RandomQuote from '../RandomQuote/RandomQuote';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { getNews, updateNews } from '../../../redux/reducers/newsReducer';
-import { getUser } from '../../../redux/reducers/userReducer';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateReaction } from '../../../utils/reactions';
 import { fetchNews } from '../../../utils/news';
 import { ConfirmToast } from 'react-confirm-toast'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const EditReaction = () => {
   const { reactionId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const news = useSelector(state => getNews(state));
-  const userData = useSelector(state => getUser(state));
-
   const [newReactionContent, setNewReactionContent] = useState('');
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [showToast, setShowToast] = useState(false)

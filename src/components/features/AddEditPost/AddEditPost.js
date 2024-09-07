@@ -8,10 +8,9 @@ import { messages } from '../../../settings';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { fetchPosts, createPost, updatePost } from '../../../utils/posts';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../../utils/notifications';
 import { ConfirmToast } from 'react-confirm-toast'
 
 const AddEditPost = () => {
@@ -20,7 +19,6 @@ const AddEditPost = () => {
   const navigate = useNavigate();
   const posts = useSelector(state => getPosts(state));
   const userData = useSelector(state => getUser(state));
-
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
   const [newPostAuthor, setNewPostAuthor] = useState(userData ? (userData.name || userData.login) : '');
@@ -33,7 +31,6 @@ const AddEditPost = () => {
         await fetchPosts(dispatch);
       }
     };
-
     fetchData();
   }, [dispatch, reloadTrigger]);
 
@@ -77,9 +74,7 @@ const AddEditPost = () => {
         toast.error('Error during creation');
       }
     }
-
     navigate(-1)
-
     setNewPostTitle('');
     setNewPostContent('');
     setNewPostAuthor(userData ? (userData.name || userData.login) : '');

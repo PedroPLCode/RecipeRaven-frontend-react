@@ -3,22 +3,21 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
+import { handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
 import { useDispatch } from "react-redux";
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { deleteComment } from '../../../utils/comments';
 import { Link } from 'react-router-dom';
 import { settings } from '../../../settings'
 import { ConfirmToast } from 'react-confirm-toast'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../../utils/notifications';
 
 const Comment = props => {
 
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false)
-
   const [userLikedComment, setUserLikedComment] = useState(false);
   const [likesCounter, setLikesCounter] = useState(props.comment.likes ? props.comment.likes.length : 0);
   const [userHatedComment, setUserHatedComment] = useState(false);
@@ -33,12 +32,9 @@ const Comment = props => {
     }
   }, [props.comment.likes, props.comment.hates]);
 
-  const dispatch = useDispatch();
-
   const handleDeleteComment = () => {
 
     deleteComment(props.comment.id);
-
     const updatedPosts = props.posts.map(post => {
       if (post.id === props.post.id) {
         const updatedComments = post.comments.filter(comment => comment.id !== props.comment.id);
@@ -47,7 +43,6 @@ const Comment = props => {
         return post;
       }
     });
-
     dispatch(updatePosts(updatedPosts));
     toast.success('Comment deleted');
   };
@@ -66,7 +61,6 @@ const Comment = props => {
     handleUserReaction('comments', 'hate', props.comment.id, userHatedComment, setUserHatedComment, setHatesCounter);
   };
   
-
   return (
     <div className={styles.comment}>
 

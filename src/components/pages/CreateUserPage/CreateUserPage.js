@@ -11,7 +11,6 @@ import Webcam from 'react-webcam';
 import Modal from 'react-modal';
 import { getUser } from '../../../redux/reducers/userReducer';
 
-// Ustawienie elementu root dla modalu
 Modal.setAppElement('#root');
 
 const CreateUserPage = () => {
@@ -85,7 +84,7 @@ const CreateUserPage = () => {
         setFile(file);
         const url = URL.createObjectURL(file);
         setPhotoURL(url);
-        setShowCameraModal(false); // Zamknięcie modalu po zrobieniu zdjęcia
+        setShowCameraModal(false);
       });
   };
 
@@ -104,7 +103,6 @@ const CreateUserPage = () => {
       await createUser(event, createUserForm, setCreateUserForm);
       navigate('/confirmuser');
     } else {
-      // Obsługa błędów walidacji
       console.log('Validation failed');
     }
   }

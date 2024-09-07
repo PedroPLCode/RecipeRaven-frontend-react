@@ -10,10 +10,9 @@ import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../../util
 import { Link } from 'react-router-dom';
 import { updatePosts } from '../../../redux/reducers/postsReducer';
 import { settings } from '../../../settings.js'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../../utils/notifications';
 import { ConfirmToast } from 'react-confirm-toast'
 import clsx from 'clsx';
 import { useEffect } from 'react';
@@ -25,7 +24,6 @@ const Post = (props) => {
   const [newCommentAuthor, setNewCommentAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [showToast, setShowToast] = useState(false)
-
   const [userLikedPost, setUserLikedPost] = useState(false)
   const [likesCounter, setLikesCounter] = useState(props.post.likes.length)
   const [userHatedPost, setUserHatedPost] = useState(false)
@@ -228,7 +226,6 @@ const Post = (props) => {
       </button>
   </>
 )}
-
 
     </div>
   );

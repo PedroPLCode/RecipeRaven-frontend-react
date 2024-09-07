@@ -6,15 +6,14 @@ import Reaction from '../Reaction/Reaction.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit, faThumbsUp as solidFaThumbsUp, faThumbsDown as solidFaThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularFaThumbsUp, faThumbsDown as regularFaThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { deletePost, handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
+import { handleUserReaction, handleLikeHateOwn } from '../../../utils/posts';
 import { deleteNews } from '../../../utils/news.js';
 import { Link } from 'react-router-dom';
 import { updateNews } from '../../../redux/reducers/newsReducer.js';
 import { settings } from '../../../settings.js'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { createNotification } from '../../../utils/notifications.js';
 import { ConfirmToast } from 'react-confirm-toast'
 import clsx from 'clsx';
 
@@ -25,7 +24,6 @@ const News = props => {
   const [newReactionAuthor, setNewReactionAuthor] = useState(props.userData ? (props.userData.name ? props.userData.name : props.userData.login) : "");
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [showToast, setShowToast] = useState(false)
-
   const [userLikedNews, setUserLikedNews] = useState(false);
   const [likesCounter, setLikesCounter] = useState(props.n.likes.length);
   const [userHatedNews, setUserHatedNews] = useState(false);
@@ -111,7 +109,6 @@ const News = props => {
     handleUserReaction('news', 'hate', props.n.id, userHatedNews, setUserHatedNews, setHatesCounter);
   };
   
-
   return (
     <div className={styles.news}>
 
@@ -213,7 +210,6 @@ const News = props => {
       </button>
   </>
 )}
-
 
     </div>
   );

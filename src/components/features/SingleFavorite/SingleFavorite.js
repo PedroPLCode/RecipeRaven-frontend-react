@@ -11,11 +11,11 @@ import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
 import { deleteFavorite, changeFavoriteStarred, fetchFavorites } from '../../../utils/favorites';
 import { updateNote } from '../../../utils/notes';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#root'); // Dodaj to, aby uniknąć ostrzeżeń w konsoli
+Modal.setAppElement('#root');
 
 const SingleFavorite = React.memo(props => {
   const dispatch = useDispatch();

@@ -1,19 +1,15 @@
 import styles from './ForgottenPassword.module.scss';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import RandomQuote from '../RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
-import { getUserData, changeUserDetails, resetPassword } from '../../../utils/users'
+import { resetPassword } from '../../../utils/users'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
 const ForgottenPassword = () => {
 
   const [forgottenPasswordEmail, setForgottenPasswordEmail] = useState('')
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleConfirm = (event) => {
     setShowModal(false);
@@ -21,16 +17,12 @@ const ForgottenPassword = () => {
   };
 
   const handleResetPassword = (event, email) => {
-    console.log(email)
     resetPassword(event, email);
   }
 
   const handleCancel = () => {
     setShowModal(false);
   };
-
-//  const handleChange = event => {
-//    setForgottenPasswordEmail(event.target.value)}
 
   return (
     <div className={styles.user}>
