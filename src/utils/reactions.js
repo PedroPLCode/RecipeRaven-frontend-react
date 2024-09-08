@@ -1,5 +1,8 @@
+import { toast } from 'react-toastify';
+import { settings } from '../settings';
+
 export const createReaction = async (payload) => {
-    const url = `http://localhost:5000/api/reactions`;
+    const url = `${settings.backendUrl}/api/reactions`;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -29,7 +32,7 @@ export const createReaction = async (payload) => {
   
   
   export const updateReaction = async (reactionId, payload) => {
-    const url = `http://localhost:5000/api/reactions/${reactionId}`;
+    const url = `${settings.backendUrl}/api/reactions/${reactionId}`;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -49,17 +52,20 @@ export const createReaction = async (payload) => {
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        toast.success('Reaction updated succesfully.');
       }
       const parsedResponse = await response.json();
       return parsedResponse;
     } catch (error) {
       console.error('Error creating comment:', error);
+      toast.warning('There was an error updating Reaction. Please try again later.');
     }
   };
 
   
   export const deleteReaction = async reactionId => {
-    const url = `http://localhost:5000/api/reactions/${reactionId}`;
+    const url = `${settings.backendUrl}/api/reactions/${reactionId}`;
     const options = {
       method: 'DELETE',
       mode: 'cors',
@@ -74,7 +80,6 @@ export const createReaction = async (payload) => {
       const finalResult = await JSON.parse(result)
       return finalResult;
     } catch (error) {
-      console.log(error);
       return error;
     }
   }

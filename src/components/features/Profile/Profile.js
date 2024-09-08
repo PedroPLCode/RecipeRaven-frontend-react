@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getUserData, resendConfirmationEmail } from '../../../utils/users';
 import { getUser } from '../../../redux/reducers/userReducer';
+import { settings } from '../../../settings';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -42,23 +43,19 @@ const Profile = () => {
         <div>
           {userData.picture ? (
             <img
-              src={`${(userData.google_user && userData.original_google_picture) ? '' : 'http://localhost:5000/static/uploaded_photos/'}${userData.picture}`}
+              src={`${(userData.google_user && userData.original_google_picture) ? '' : `${settings.backendUrl}/static/uploaded_photos/`}${userData.picture}`}
               alt="Profile"
             />
           ) : (
             <p>No profile picture available</p>
           )}
-
           <div>
-            <p>Login: {userData.login}</p>
-            <p>Name: {userData.name}</p>
-            <p>Email: {userData.email}</p>
-            <p>Details: {userData.about}</p>
-            <p>Created: {userData.creation_date}</p>
-            <p>Last Login: {userData.last_login}</p>
-            <p>Last Activity: {userData.last_api_activity}</p>
+            <p>Login:<br/>{userData.login}</p>
+            <p>Name:<br/>{userData.name}</p>
+            <p>Email:<br/>{userData.email}</p>
+            <p>Details:<br/>{userData.about}</p>
           </div>
-
+  
           <a href="/favorites" onClick={(e) => { e.preventDefault(); navigate('/favorites'); }}>
             Favorites: {userData.favorites_count}
           </a>
@@ -82,6 +79,13 @@ const Profile = () => {
           <a href="/deleteuserpage" onClick={(e) => { e.preventDefault(); navigate('/deleteuserpage'); }}>
             {userData.google_user ? 'Remove account' : 'Delete user'}
           </a>
+
+          <div>
+            <p>Account Created:<br/>{userData.creation_date}</p>
+            <p>Last Login:<br/>{userData.last_login}</p>
+            <p>Last Activity:<br/>{userData.last_api_activity}</p>
+          </div>
+
         </div>
       )}
     </div>

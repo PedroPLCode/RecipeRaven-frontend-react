@@ -1,5 +1,7 @@
+import { settings } from '../settings';
+
 export const updateNote = async (payload) => {
-  const url = `http://localhost:5000/api/notes`;
+  const url = `${settings.backendUrl}/api/notes`;
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -23,6 +25,5 @@ export const updateNote = async (payload) => {
     const parsedResponse = await response.json();
     return parsedResponse;
   } catch (error) {
-    console.error('Error updating note:', error);
   }
 };

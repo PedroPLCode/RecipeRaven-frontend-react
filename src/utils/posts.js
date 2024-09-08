@@ -1,8 +1,9 @@
 import { updatePosts } from '../redux/reducers/postsReducer';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { settings } from '../settings';
 
 export const fetchPosts = async dispatch => {
-  const url = `http://localhost:5000/api/posts`;
+  const url = `${settings.backendUrl}/api/posts`;
   const options = {
     method: 'GET',
   };
@@ -11,16 +12,14 @@ export const fetchPosts = async dispatch => {
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
     dispatch(updatePosts(finalResponse));
-    console.log(finalResponse)
     return finalResponse;
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
 
 export const createPost = async (payload) => {
-  const url = `http://localhost:5000/api/posts`;
+  const url = `${settings.backendUrl}/api/posts`;
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -50,7 +49,7 @@ export const createPost = async (payload) => {
 
 
 export const updatePost = async (postId, payload) => {
-  const url = `http://localhost:5000/api/posts/${postId}`;
+  const url = `${settings.backendUrl}/api/posts/${postId}`;
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -68,19 +67,30 @@ export const updatePost = async (postId, payload) => {
 
   try {
     const response = await fetch(url, options);
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if (response.status === 401) {
+        throw new Error('Unauthorized: Invalid token or session expired.');
+      } else if (response.status === 404) {
+        throw new Error('Post not found.');
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } else {
+      toast.success('Post updated succesfully.');
     }
+
     const parsedResponse = await response.json();
     return parsedResponse;
   } catch (error) {
-    console.error('Error updating post:', error);
+    console.error('Error updating post:', error.message);
+    toast.warning('There was an error updating the post. Please try again later.');
   }
 };
 
 
 export const deletePost = async postId => {
-  const url = `http://localhost:5000/api/posts/${postId}`;
+  const url = `${settings.backendUrl}/api/posts/${postId}`;
   const options = {
     method: 'DELETE',
     mode: 'cors',
@@ -93,15 +103,16 @@ export const deletePost = async postId => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResult = await JSON.parse(result)
+    toast.success('Post deleted succesfully.');
     return finalResult;
   } catch (error) {
-    console.log(error);
+    toast.warning('There was an error deleting the post. Please try again later.');
     return error;
   }
 }
 
 export const handleUserReaction = async (target, reactionType, Id, reactionExists, setUserReacted, setCounter) => {
-  const url = `http://localhost:5000/api/${target}/${reactionType}/${Id}`;
+  const url = `${settings.backendUrl}/api/${target}/${reactionType}/${Id}`;
   const options = {
     method: 'POST',
     mode: 'cors',

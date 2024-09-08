@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import Webcam from 'react-webcam';
+import { settings } from '../../../settings';
 
 const ChangeUserPicture = () => {
 
@@ -112,7 +113,7 @@ const ChangeUserPicture = () => {
         (pictureChanged ? 
           <img src={photoURL} alt="Captured" style={{ width: '100%', maxWidth: '500px' }} />
           :
-          <img src={`${userData.google_user && userData.original_google_picture ? '' : 'http://localhost:5000/static/uploaded_photos/'}${userData.picture}`} alt={userData.picture} />
+          <img src={`${userData.google_user && userData.original_google_picture ? '' : `${settings.backendUrl}/static/uploaded_photos/`}${userData.picture}`} alt={userData.picture} />
         )
       ) : (
         <p>No profile picture available</p>

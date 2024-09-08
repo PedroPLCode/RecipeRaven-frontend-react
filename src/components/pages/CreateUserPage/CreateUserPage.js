@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import Modal from 'react-modal';
 import { getUser } from '../../../redux/reducers/userReducer';
+import { settings } from '../../../settings';
 
 Modal.setAppElement('#root');
 
@@ -17,7 +18,7 @@ const CreateUserPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showCameraModal, setShowCameraModal] = useState(false);
-  const [photoURL, setPhotoURL] = useState('http://localhost:5000/static/uploaded_photos/anonym.png');
+  const [photoURL, setPhotoURL] = useState(`${settings.backendUrl}/static/uploaded_photos/anonym.png`);
   const [file, setFile] = useState(null);
   const [createUserForm, setCreateUserForm] = useState({
     login: "",
@@ -102,9 +103,7 @@ const CreateUserPage = () => {
     if (createUserValidators.every(valid => valid)) {
       await createUser(event, createUserForm, setCreateUserForm);
       navigate('/confirmuser');
-    } else {
-      console.log('Validation failed');
-    }
+    } else {}
   }
 
   return (

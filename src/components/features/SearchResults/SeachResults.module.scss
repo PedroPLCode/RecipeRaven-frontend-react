@@ -10,7 +10,7 @@
     font-weight: bold;
     
     &:last-of-type {
-      margin-bottom: calc($base-size * 6);
+      margin-bottom: calc($base-size * 2);
 
       @media (max-width: $media-border) {
         margin-bottom: calc($base-size * 5);
@@ -19,14 +19,13 @@
 
     &.button_nextpage {
       margin: auto;
-      margin-top: calc($base-size * 7);
+      margin-top: calc($base-size * 1);
       color: $color-two;
       font-size: calc($base-size * 1.4);
       font-weight: bold;
       padding: auto;
       height: calc($base-size * 3);
       width: 240px;
-      
       display: flex;
       flex-direction: row;
       justify-content: center;

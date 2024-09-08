@@ -2,9 +2,10 @@ import axios from "axios";
 import stylesCreateUser from '../components/pages/CreateUserPage/CreateUserPage.module.scss'
 import stylesChangeUserDetails from '../components/features/ChangeUserDetails/ChangeUserDetails.module.scss'
 import stylesChangePassword from '../components/features/ChangeUserPassword/ChangeUserPassword.module.scss'
+import stylesResetPassword from '../components/features/ResetPassword/ResetPassword.module.scss'
 import { settings } from '../settings';
 import { updateUser } from '../redux/reducers/userReducer';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export const validateLogin = async (login) => {
   const inputField = document.getElementById('login');
@@ -32,12 +33,14 @@ export const validatePasswordInput = (password, field_id=false) => {
     if (passwordInputField) {
       passwordInputField.classList.remove(stylesCreateUser.input_ok);
       passwordInputField.classList.remove(stylesChangePassword.input_ok);
+      passwordInputField.classList.remove(stylesResetPassword.input_ok);
     }
     return false
   } else {
     if (passwordInputField) {
       passwordInputField.classList.add(stylesCreateUser.input_ok);
       passwordInputField.classList.add(stylesChangePassword.input_ok);
+      passwordInputField.classList.add(stylesResetPassword.input_ok);
     }
     return true;
   }
@@ -92,7 +95,7 @@ export const validateEmail = async (email, currentEmail=false, checkIfExists=tru
 };
 
 export const fetchCheckUserLogin = async loginToCheck => {
-  const url = `http://localhost:5000/api/check_user?login=${loginToCheck}`;
+  const url = `${settings.backendUrl}/api/check_user?login=${loginToCheck}`;
   const options = {
     method: 'GET',
   }; 
@@ -112,7 +115,7 @@ export const fetchCheckUserLogin = async loginToCheck => {
 };
 
 export const fetchCheckUserEmail = async emailToCheck => {
-  const url = `http://localhost:5000/api/check_user?email=${emailToCheck}`;
+  const url = `${settings.backendUrl}/api/check_user?email=${emailToCheck}`;
   const options = {
     method: 'GET',
   }; 
@@ -132,8 +135,7 @@ export const fetchCheckUserEmail = async emailToCheck => {
 };
 
 export const getUserData = async (dispatch, props = null) => {
-  console.log(localStorage.token)
-  const url = `http://localhost:5000/api/users`;
+  const url = `${settings.backendUrl}/api/users`;
   const options = {
     method: 'GET',
     mode: 'cors',
@@ -171,7 +173,7 @@ export const checkUserPassword = async (form) => {
   const formData = new FormData();
   formData.append('password', form.oldPassword || form.password);
 
-  const url = 'http://127.0.0.1:5000/api/userpasswdcheck';
+  const url = `${settings.backendUrl}/api/userpasswdcheck`;
   const options = {
     method: 'POST',
     headers: {
@@ -188,10 +190,8 @@ export const checkUserPassword = async (form) => {
     }
 
     const result = await response.json();
-    console.log(result);
     return result.passwd_check === true;
   } catch (error) {
-    console.error('Error:', error);
     return false; 
   }
 };
@@ -216,7 +216,7 @@ export const createUser = async (event, createUserForm, setCreateUserForm) => {
     formData.append('picture', createUserForm.picture);
   }
 
-  const url = 'http://localhost:5000/api/users';
+  const url = `${settings.backendUrl}/api/users`;
   const options = {
     method: 'POST',
     body: formData,
@@ -247,7 +247,7 @@ export const resendConfirmationEmail = async (event, form, setForm) => {
     formData.append('email', form.email);
   }
 
-  const url = 'http://localhost:5000/api/resend/';
+  const url = `${settings.backendUrl}/api/resend/`;
   const options = {
     method: 'POST',
     body: formData,
@@ -288,7 +288,7 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
     formData.append('picture', changeUserDetailsForm.picture);
   }
 
-  const url = 'http://localhost:5000/api/users';
+  const url = `${settings.backendUrl}/api/users`;
   const options = {
     method: 'PUT',
     headers: {
@@ -297,14 +297,9 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
     body: formData,
   }; 
 
-  for (var pair of formData.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]);
-  }
-
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
     setChangeUserDetailsForm({
       email: "",
       name: "",
@@ -313,7 +308,6 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
     });
     getUserData(dispatch)
   } catch (error) {
-    console.error(error);
   }
 }
 
@@ -326,7 +320,7 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
     formData.append('oldPassword', changeUserPasswordForm.oldPassword);
     formData.append('newPassword', changeUserPasswordForm.password);
 
-    const url = 'http://127.0.0.1:5000/api/users';
+    const url = `${settings.backendUrl}/api/users`;
     const options = {
       method: 'PUT',
       headers: {
@@ -338,13 +332,11 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      console.log(result);
 
       if (response.ok) {
         toast.success('Succesfully change password', { toastId: 10 });
       } else {
         toast.warning('Error. password not changed', { toastId: 10 });
-        console.error(result);
       }
 
       setChangeUserPasswordForm({
@@ -355,15 +347,13 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
     } catch (error) {
       console.error(error);
     }
-  } else {
-    console.log("Passwords do not match");
-  }
+  } else {}
 }
 
 
 export const resetPassword = async (event, email) => {
   event.preventDefault();
-  const url = 'http://127.0.0.1:5000/api/resetpassword';
+  const url = `${settings.backendUrl}/api/resetpassword`;
   const options = {
     method: 'POST',
     headers: {
@@ -390,7 +380,7 @@ export const logOut = props => {
   axios({
     method: "POST",
     url:"/logout",
-    baseURL: 'http://127.0.0.1:5000',
+    baseURL: `${settings.backendUrl}`,
   })
   .then((response) => {
      props.token()
@@ -398,9 +388,6 @@ export const logOut = props => {
      localStorage.removeItem('token');
   }).catch((error) => {
     if (error.response) {
-      console.log(error.response)
-      console.log(error.response.status)
-      console.log(error.response.headers)
       toast.warning(error.response)
       toast.warning(error.response.status)
       toast.warning(error.response.headers)
@@ -411,7 +398,7 @@ export const deleteUser = props => {
   axios({
     method: "DELETE",
     url:"/api/users",
-    baseURL: 'http://127.0.0.1:5000',
+    baseURL: `${settings.backendUrl}`,
     headers: {
       Authorization: 'Bearer ' + localStorage.token
     }
@@ -422,9 +409,6 @@ export const deleteUser = props => {
     localStorage.removeItem('token');
   }).catch((error) => {
     if (error.response) {
-      console.log(error.response)
-      console.log(error.response.status)
-      console.log(error.response.headers)
       toast.warning(error.response)
       toast.warning(error.response.status)
       toast.warning(error.response.headers)

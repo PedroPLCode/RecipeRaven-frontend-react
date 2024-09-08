@@ -15,7 +15,7 @@
   }
 
   div {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,7 +26,7 @@
       width: 100%;
     }
 
-    div {
+    div:first-of-type {
       width: 100%;
       padding: calc($base-size);
       background: $transparent-background;
@@ -34,23 +34,28 @@
       p {
         margin: 0px;
         padding: 0px;
-
-        &:nth-of-type(5) {
-          line-height: 4px;
-          padding-top: calc($base-size / 8);
-        }
-
-        &:nth-of-type(6) {
-          line-height: 4px;
-        }
-
-        &:nth-of-type(7) {
-          line-height: 4px;
-          padding-bottom: calc($base-size / 2);
-        }
+        width: 100%;
+        font-size: calc($base-size * 1.5);
   
         @media (max-width: $media-border) {
-          font-size: 14px;
+          font-size: $base-size;
+        }
+      }
+    }
+
+    div:last-of-type {
+      width: 100%;
+      padding: calc($base-size);
+      background: $transparent-background;
+
+      p {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        font-size: calc($base-size * 1.5);
+  
+        @media (max-width: $media-border) {
+          font-size: $base-size;
         }
       }
     }
@@ -88,7 +93,7 @@
       background-position: 100% 0;
       background-size: 300% 300%;
       transition-duration: $transition-duration;
-      transition-property: color, background-color, background-position, box-shadow;
+      transition-property: color, background-color, background-position;
   
       p {
         margin: auto;

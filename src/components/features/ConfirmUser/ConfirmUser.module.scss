@@ -1,13 +1,13 @@
 @import '../../../styles/settings.scss';
 
 .confirm {
+  padding-top: calc($base-size * 9);
   padding-bottom: $base-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-    
   form {
     display: flex;
     flex-direction: column;

@@ -72,7 +72,7 @@ const Post = (props) => {
         );
       } catch (error) {
         console.error('Error during delete:', error);
-        toast.error('Error during delete');
+        toast.error('Error during create');
       }
   
       setNewCommentContent('');
@@ -152,8 +152,8 @@ const Post = (props) => {
         </div>
         <div className={styles.post_author}>
           {props.post.author_picture ? (
-                <img src={`${(props.post.author_google_user && props.post.author_original_google_picture) ? '' : 'http://localhost:5000/static/uploaded_photos/'}${props.post.author_picture}`} alt='no profile picture' />
-              ) : <img src='http://localhost:5000/static/uploaded_photos/guest_author.jpeg' alt='no profile picture'/> }
+                <img src={`${(props.post.author_google_user && props.post.author_original_google_picture) ? '' : `${settings.backendUrl}/static/uploaded_photos/`}${props.post.author_picture}`} alt='no profile picture' />
+              ) : <img src={`${settings.backendUrl}/static/uploaded_photos/guest_author.jpeg`} alt='no profile picture'/> }
           <i className={styles.author_name}>Author:<br />{displayAuthorName}</i>
         </div>
       </div>

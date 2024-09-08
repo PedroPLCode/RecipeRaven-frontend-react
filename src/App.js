@@ -28,7 +28,7 @@ import EditComment from './components/features/EditComment/EditComment.js';
 import AddEditNews from './components/features/AddEditNews/AddEditNews.js';
 import EditReaction from './components/features/EditReaction/EditReaction.js';
 import CameraCapture from './components/features/CameraCapture/CameraCapture.js';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ForgottenPassword from './components/features/ForgottenPassword/ForgottenPassword.js';
 import ResetPassword from './components/features/ResetPassword/ResetPassword.js';

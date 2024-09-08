@@ -7,10 +7,12 @@ import { parametersNames, settings } from '../../../settings';
 import PropTypes from "prop-types";
 import { fetchFavorites } from '../../../utils/favorites'
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const FavoritesCheck = props => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const searchResult = useSelector(state => getSearchResult(state));
 
   const sleep = ms => {
@@ -50,7 +52,7 @@ const FavoritesCheck = props => {
     checkIfAlreadyInFavorites(favorites);
   })()
 
-  const bottomText = ((searchResult.count <= searchResult.hits.length) || (props.random['value'])) ? "That's it.. Lets search again!" : "Click button to load more!";
+  const bottomText = ((searchResult.count <= searchResult.hits.length) || (props.random['value'])) ? "That's it.. Lets search again!" : null;
 
   return (
     <div>
@@ -58,7 +60,7 @@ const FavoritesCheck = props => {
       {localStorage.token ? 
         (props.favoriteKeys.length !== 0 ? <h3 className={styles.favorites_bottom}>{props.favoriteKeys.length} recipes saved in favorites</h3> : <h3>And let's save something in favorites</h3>)
         :
-        <a className={styles.favorites_login}href='/login'>Login to save in favorites</a>
+        <a className={styles.favorites_login} href='/login' onClick={(e) => { e.preventDefault(); navigate('/login'); }}>Login to save favorites</a>
       }
     </div>
   )

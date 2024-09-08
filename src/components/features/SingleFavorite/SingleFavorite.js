@@ -14,6 +14,7 @@ import { updateNote } from '../../../utils/notes';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
+import { settings } from '../../../settings';
 
 Modal.setAppElement('#root');
 
@@ -98,7 +99,7 @@ const handleStarredFavorite = async () => {
       <div className={styles.image}>
         <a href={SingleFavoriteObject.url} target='_blank' rel='noreferrer'>
           <i>Click for full recipe!</i>
-          <img src={`http://localhost:5000/static/uploaded_photos/${imageName}`} alt={imageName} width='400' height='400' />
+          <img src={`${settings.backendUrl}/static/uploaded_photos/${imageName}`} alt={imageName} width='400' height='400' />
         </a>
       </div>
       
@@ -171,10 +172,9 @@ const handleStarredFavorite = async () => {
 
 SingleFavorite.propTypes = {
   favorites: PropTypes.array.isRequired,
-  singleKey: PropTypes.string.isRequired,
   setReload: PropTypes.func.isRequired,
   favorite: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     note: PropTypes.shape({
       content: PropTypes.string
     }),

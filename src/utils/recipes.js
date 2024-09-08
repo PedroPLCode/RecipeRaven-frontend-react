@@ -64,7 +64,7 @@ export const fetchReceipes = async (ingredients, excluded, diet, dietKeys, rando
     params: diet && dietKeys ? prepareDietArray(diet, dietKeys) : false,
     random: random ? random : false,
   }
-  const url = 'http://localhost:5000/api/search'
+  const url = `${settings.backendUrl}/api/search`
   const options = {
     method: 'POST',
     headers: {
@@ -98,7 +98,7 @@ export const fetchMoreReceipes = async (dispatch, setLoading, changeIndicator, s
   const preparedRequestBody = {
     link_next_page: link_next_page,
   }
-  const url = 'http://localhost:5000/api/search'
+  const url = `${settings.backendUrl}/api/search`
   const options = {
     method: 'POST',
     headers: {

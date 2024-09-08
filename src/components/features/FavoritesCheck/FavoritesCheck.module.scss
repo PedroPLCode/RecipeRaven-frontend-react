@@ -2,17 +2,18 @@
 
 .favorites_top, .favorites_bottom {
   color: $color-one;
-  margin-top: calc($base-size * 6);
+  margin-top: calc($base-size * 1);
 }
 
 .favorites_login {
   text-decoration: none;
+  color: $color-one;
   font-weight: bold;
   font-size: calc($base-size * 1.4);
   padding: auto;
+  margin: auto;
   height: calc($base-size * 3);
   width: 240px;
-  
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { fetchFavorites } from '../../../utils/favorites';
 import { getUserData } from '../../../utils/users';
+import { toast } from 'react-toastify';
+import { settings } from '../../../settings';
 
 const Login = props => {
 
@@ -22,14 +24,13 @@ const Login = props => {
     axios({
       method: "POST",
       url:"/token",
-      baseURL: 'http://127.0.0.1:5000',
+      baseURL: `${settings.backendUrl}`,
       data:{
         login: loginForm.login,
         password: loginForm.password
        }
     })
     .then((response) => {
-      console.log(response)
       if (response.data.email_confirmed && response.data.access_token) {
         props.setToken(response.data.access_token);
         localStorage.setItem('token', response.data.access_token);
@@ -41,13 +42,12 @@ const Login = props => {
         localStorage.setItem('email_confirmed', response.data.email_confirmed);
         navigate('/confirmuser')
       }
-      console.log(localStorage)
     })
     .catch((error) => {
       if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          console.log(error.response.headers)
+          toast.warning(error.response)
+          toast.warning(error.response.status)
+          toast.warning(error.response.headers)
           }
     })
     setloginForm(({

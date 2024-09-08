@@ -7,6 +7,7 @@ import { getUserData } from "../../../utils/users.js";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { fetchFavorites } from '../../../utils/favorites';
+import { settings } from "../../../settings.js";
 
 const GoogleAuth = props => {
 
@@ -17,7 +18,7 @@ const [user, setUser] = useState({});
 
 async function getUserInfo(codeResponse) {
   try {
-    const response = await fetch("http://localhost:5000/google_token", {
+    const response = await fetch(`${settings.backendUrl}/google_token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

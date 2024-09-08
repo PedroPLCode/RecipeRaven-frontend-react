@@ -48,7 +48,6 @@ const ChangeUserDetails = () => {
             about: userData.about,
           });
           setCurrentEmail(userData.email)
-          console.log(userData);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 import useToken from '../../features/useToken/useToken.js'
+import { settings } from '../../../settings.js';
 
 const UserConfirmed = props => {
 
@@ -13,7 +14,7 @@ const UserConfirmed = props => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`http://127.0.0.1:5000/api/user/confirm/${token}`, { token });
+      const response = await axios.post(`${settings.backendUrl}/api/user/confirm/${token}`, { token });
       setMessage(response.data.msg);
     } catch (error) {
       setMessage(error);

@@ -28,6 +28,11 @@ const SearchResults = () => {
   const favoriteKeys = Object.keys(favorites);
   const link_next_page = useSelector(state => getLinkNextPage(state));
   const random = useSelector(state => getRandom(state));
+  const [topMessage, setTopMessage] = useState(`Loading..`);
+
+  useEffect(() => {
+    setTopMessage(random['value'] ? '20 Random Search Results..' : `Found ${searchResult.count} receipes..`)
+  }, []);
 
   useEffect(() => {
     const resultBoxes = document.querySelectorAll(classNames.resultBoxes);
@@ -93,7 +98,7 @@ const SearchResults = () => {
     const preppedHits = prepDishesInfo(searchResult.hits);
     return (
       <div className={styles.results_wrapper}>
-        <h3>{random['value'] ? '20 Random Search Results..' : `Found ${searchResult.count} receipes..`}</h3>
+        <h3>{topMessage}</h3>
         <h3>{messages.takeALook}</h3>
         {preppedHits.map(singleHit => (
           <SingleResult key={singleHit.calories+singleHit.totalTime} singleHit={singleHit} favorites={favorites} changeButtonStyle={changeButtonStyle} createFavorite={createFavorite} />

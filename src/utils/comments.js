@@ -1,5 +1,8 @@
+import { toast } from 'react-toastify';
+import { settings } from '../settings';
+
 export const createComment = async (payload) => {
-    const url = `http://localhost:5000/api/comments`;
+    const url = `${settings.backendUrl}/api/comments`;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -29,7 +32,7 @@ export const createComment = async (payload) => {
   
   
   export const updateComment = async (commentId, payload) => {
-    const url = `http://localhost:5000/api/comments/${commentId}`;
+    const url = `${settings.backendUrl}/api/comments/${commentId}`;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -49,17 +52,20 @@ export const createComment = async (payload) => {
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        toast.success('Comment updated succesfully.');
       }
       const parsedResponse = await response.json();
       return parsedResponse;
     } catch (error) {
       console.error('Error creating comment:', error);
+      toast.warning('There was an error updating comment. Please try again later.');
     }
   };
 
   
   export const deleteComment = async commentId => {
-    const url = `http://localhost:5000/api/comments/${commentId}`;
+    const url = `${settings.backendUrl}/api/comments/${commentId}`;
     const options = {
       method: 'DELETE',
       mode: 'cors',
@@ -74,7 +80,6 @@ export const createComment = async (payload) => {
       const finalResult = await JSON.parse(result)
       return finalResult;
     } catch (error) {
-      console.log(error);
       return error;
     }
   }

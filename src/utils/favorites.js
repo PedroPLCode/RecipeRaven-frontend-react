@@ -1,7 +1,8 @@
 import { updateFavorites } from '../redux/reducers/favoritesReducer';
+import { settings } from '../settings';
 
 export const fetchFavorites = async dispatch => {
-  const url = `http://localhost:5000/api/favorites`;
+  const url = `${settings.backendUrl}/api/favorites`;
   const options = {
     method: 'GET',
     headers: {
@@ -10,22 +11,19 @@ export const fetchFavorites = async dispatch => {
   }; 
   try {
     const response = await fetch(url, options);
-    console.log(response)
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
     if (response.ok) {
       dispatch(updateFavorites(finalResponse));
-      console.log(finalResponse)
     }
     return result;
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
 
 export const createFavorite = async payload => {
-  const url = `http://localhost:5000/api/favorites`;
+  const url = `${settings.backendUrl}/api/favorites`;
   const options = {
     method: 'POST',
     mode: 'cors',
@@ -40,13 +38,12 @@ export const createFavorite = async payload => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
     return { msg: 'Failed to add favorite' };
   }
 };
 
 export const deleteFavorite = async favoriteId => {
-  const url = `http://localhost:5000/api/favorites/${favoriteId}`;
+  const url = `${settings.backendUrl}/api/favorites/${favoriteId}`;
   const options = {
     method: 'DELETE',
     mode: 'cors',
@@ -61,13 +58,12 @@ export const deleteFavorite = async favoriteId => {
     const finalResult = await JSON.parse(result)
     return finalResult;
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
 
 export const changeFavoriteStarred = async (favoriteId)=> {
-  const url = `http://localhost:5000/api/favorites/starred/${favoriteId}`;
+  const url = `${settings.backendUrl}/api/favorites/starred/${favoriteId}`;
   const options = {
     method: 'POST',
     mode: 'cors',
@@ -82,7 +78,6 @@ export const changeFavoriteStarred = async (favoriteId)=> {
     const finalResult = await JSON.parse(result)
     return finalResult;
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
