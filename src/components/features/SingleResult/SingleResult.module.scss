@@ -177,6 +177,7 @@
         background-position: 0 100%;
         color: $color-three;
         width: calc(100% - ($base-size * 2));
+        font-size: calc($base-size * 1.2);
       }
 
       @media (min-width: $media-border) and (max-width: $media-border-tablets) {

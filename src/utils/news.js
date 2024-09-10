@@ -11,7 +11,8 @@ export const fetchNews = async dispatch => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
-    dispatch(updateNews(finalResponse));
+    toast.success(finalResponse.msg)
+    dispatch(updateNews(finalResponse.results));
     return finalResponse;
   } catch (error) {
     return error;

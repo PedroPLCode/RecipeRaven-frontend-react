@@ -381,6 +381,9 @@ export const logOut = props => {
     method: "POST",
     url:"/logout",
     baseURL: `${settings.backendUrl}`,
+    headers: {
+      Authorization: 'Bearer ' + localStorage.token
+    }
   })
   .then((response) => {
      props.token()

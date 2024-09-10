@@ -29,11 +29,11 @@
     margin-bottom: $base-size;
     background-position: 0 100%;
     color: $color-three;
-    box-shadow: 0 0 5px 5px $color-one;
   }
 
   @media (min-width: $media-border) and (max-width: $media-border-tablets) {
     height: calc($base-size * 2);
+    margin-top: 0;
   }
 
   &:hover {

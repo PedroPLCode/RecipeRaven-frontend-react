@@ -13,7 +13,7 @@
       margin-bottom: calc($base-size * 2);
 
       @media (max-width: $media-border) {
-        margin-bottom: calc($base-size * 5);
+        margin-bottom: calc($base-size * 2);
       }
     }
 
@@ -39,7 +39,7 @@
 
       @media (max-width: $media-border) {
         margin-bottom: $base-size;
-        
+        margin-top: $base-size * 2;
       }
 
       @media (min-width: $media-border) and (max-width: $media-border-tablets) {

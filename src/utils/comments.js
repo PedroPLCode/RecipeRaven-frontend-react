@@ -24,6 +24,7 @@ export const createComment = async (payload) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const parsedResponse = await response.json();
+      toast.success(parsedResponse.msg);
       return parsedResponse;
     } catch (error) {
       console.error('Error creating comment:', error);
@@ -52,10 +53,9 @@ export const createComment = async (payload) => {
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
-        toast.success('Comment updated succesfully.');
       }
       const parsedResponse = await response.json();
+      toast.success(parsedResponse.msg);
       return parsedResponse;
     } catch (error) {
       console.error('Error creating comment:', error);
@@ -78,6 +78,7 @@ export const createComment = async (payload) => {
       const response = await fetch(url, options);
       const result = await response.text();
       const finalResult = await JSON.parse(result)
+      toast.success(finalResult.msg);
       return finalResult;
     } catch (error) {
       return error;

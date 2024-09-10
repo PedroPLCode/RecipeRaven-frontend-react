@@ -27,13 +27,15 @@ const BoardPage = () => {
   }
 
   const handleFilterPosts = () => {
-    return posts.filter(post => {
+    return posts ? 
+    posts.filter(post => {
       const titleMatch = post.title.toLowerCase().includes(filterPostsString.toLowerCase());
       const contentMatch = post.content.toLowerCase().includes(filterPostsString.toLowerCase());
       const authorMatch = (post.author && post.author.toLowerCase().includes(filterAuthorsString.toLowerCase())) ||
         (post.guest_author && post.guest_author.toLowerCase().includes(filterAuthorsString.toLowerCase()));
       return (titleMatch || contentMatch) && authorMatch;
-    });
+    }) 
+    : false;
   };
 
   useEffect(() => {
@@ -51,13 +53,15 @@ const BoardPage = () => {
     return parse(dateString.replace(' ', 'T').replace(' CET', 'Z'), 'yyyy-MM-dd\'T\'HH:mm:ssX', new Date());
   };
 
-  const sortedPosts = handleFilterPosts()
+  const sortedPosts = posts ? 
+  handleFilterPosts()
     .slice()
     .sort((a, b) => {
       const dateA = parseDate(a.creation_date);
       const dateB = parseDate(b.creation_date);
       return sortByNewest ? compareDesc(dateA, dateB) : compareAsc(dateA, dateB);
-    });
+    }) 
+    : false;
 
   if (posts.length >= 1) {
     return (
@@ -76,11 +80,11 @@ const BoardPage = () => {
 
         <a href="/addeditpost">Add New Post</a>
 
-        {sortedPosts.map(post => (
+        {posts ? (sortedPosts.map(post => (
           <Post key={post.id} post={post} posts={posts} userData={userData} />
-        ))}
+        ))) : null}
 
-        <a href="/addeditpost">Add New Post</a>
+        {posts ? <a href="/addeditpost">Add New Post</a> : null}
 
         <RandomQuote />
       </div>

@@ -91,6 +91,6 @@ export const settings = {
   regexPasswordString: /^[a-zA-Z0-9!@#$%^&*]{6,}$/,
   title: 'Receipe Raven App',
   backendUrl: process.env.NODE_ENV === 'production' 
-  ? 'http://pedrogaszczas.pythonanywhere.com:5000' 
+  ? 'http://localhost:5000' 
   : 'http://localhost:5000',
 }
