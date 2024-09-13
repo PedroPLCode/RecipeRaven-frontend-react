@@ -79,7 +79,7 @@ const SearchPage = () => {
       fetchReceipes(ingredients, excluded, diet, dietKeys, random['value'], setLoading, setSuccess, dispatch, setInputOK),
       {
         pending: 'Searching',
-        success: 'Search completed',
+        success: null,
         error: 'Search error',
       }, {toastId: 5}
     );

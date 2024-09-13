@@ -65,7 +65,7 @@ const AddEditPost = () => {
           createPost(newPost),
           {
             pending: 'Creating comment',
-            success: 'comment created',
+            success: null,
             error: 'Error',
           }, {toastId: 4}
         );

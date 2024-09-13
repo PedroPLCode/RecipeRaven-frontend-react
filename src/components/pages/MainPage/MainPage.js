@@ -38,7 +38,6 @@ const MainPage = () => {
     fetchData();
   }, []);
 
-
   if (news.length >= 1) {
     return (
       <div className={styles.news}>

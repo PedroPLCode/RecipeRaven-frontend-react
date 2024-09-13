@@ -31,7 +31,7 @@ const SingleResult = props => {
           createFavorite(props.singleHit),
           {
             pending: 'Creating favorite',
-            success: 'Favorite created',
+            success: null,
             error: 'Error',
           }, {toastId: 3}
         );

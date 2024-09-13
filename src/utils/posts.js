@@ -1,6 +1,7 @@
 import { updatePosts } from '../redux/reducers/postsReducer';
 import { toast } from 'react-toastify';
 import { settings } from '../settings';
+import { displayApiResponseMessage } from './utlis.js'
 
 export const fetchPosts = async dispatch => {
   const url = `${settings.backendUrl}/api/posts`;
@@ -11,9 +12,11 @@ export const fetchPosts = async dispatch => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
-    dispatch(updatePosts(finalResponse));
+    displayApiResponseMessage(response, finalResponse);
+    dispatch(updatePosts(finalResponse['results']));
     return finalResponse;
   } catch (error) {
+    console.error(error);
     return error;
   }
 }
@@ -40,10 +43,12 @@ export const createPost = async (payload) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const parsedResponse = await response.json();
-    return parsedResponse;
+    const result = await response.json();
+    displayApiResponseMessage(response, result);
+    return result;
   } catch (error) {
-    console.error('Error creating post:', error);
+    console.error(error);
+    return error;
   }
 };
 
@@ -67,24 +72,12 @@ export const updatePost = async (postId, payload) => {
 
   try {
     const response = await fetch(url, options);
-
-    if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error('Unauthorized: Invalid token or session expired.');
-      } else if (response.status === 404) {
-        throw new Error('Post not found.');
-      } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-    } else {
-      toast.success('Post updated succesfully.');
-    }
-
-    const parsedResponse = await response.json();
-    return parsedResponse;
+    const result = await response.json();
+    displayApiResponseMessage(response, result);
+    return result;
   } catch (error) {
-    console.error('Error updating post:', error.message);
-    toast.warning('There was an error updating the post. Please try again later.');
+    console.error(error);
+    return error;
   }
 };
 
@@ -102,11 +95,11 @@ export const deletePost = async postId => {
   try {
     const response = await fetch(url, options);
     const result = await response.text();
-    const finalResult = await JSON.parse(result)
-    toast.success('Post deleted succesfully.');
+    const finalResult = await JSON.parse(result);
+    displayApiResponseMessage(response, result);
     return finalResult;
   } catch (error) {
-    toast.warning('There was an error deleting the post. Please try again later.');
+    console.error(error);
     return error;
   }
 }
@@ -134,7 +127,7 @@ export const handleUserReaction = async (target, reactionType, Id, reactionExist
     
     return finalResult;
   } catch (error) {
-    console.error(`Error handling ${reactionType}:`, error);
+    console.error(error);
     return error;
   }
 };

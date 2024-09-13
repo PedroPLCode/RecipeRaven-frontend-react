@@ -1,5 +1,6 @@
 import { updateFavorites } from '../redux/reducers/favoritesReducer';
 import { settings } from '../settings';
+import { displayApiResponseMessage } from './utlis.js'
 
 export const fetchFavorites = async dispatch => {
   const url = `${settings.backendUrl}/api/favorites`;
@@ -16,8 +17,10 @@ export const fetchFavorites = async dispatch => {
     if (response.ok) {
       dispatch(updateFavorites(finalResponse));
     }
+    displayApiResponseMessage(response, finalResponse);
     return result;
   } catch (error) {
+    console.error(error);
     return error;
   }
 }
@@ -36,6 +39,7 @@ export const createFavorite = async payload => {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
+    displayApiResponseMessage(response, data);
     return data;
   } catch (error) {
     return { msg: 'Failed to add favorite' };
@@ -56,8 +60,10 @@ export const deleteFavorite = async favoriteId => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResult = await JSON.parse(result)
+    displayApiResponseMessage(response, result);
     return finalResult;
   } catch (error) {
+    console.error(error);
     return error;
   }
 }
@@ -76,8 +82,10 @@ export const changeFavoriteStarred = async (favoriteId)=> {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResult = await JSON.parse(result)
+    displayApiResponseMessage(response, result);
     return finalResult;
   } catch (error) {
+    console.error(error);
     return error;
   }
 }

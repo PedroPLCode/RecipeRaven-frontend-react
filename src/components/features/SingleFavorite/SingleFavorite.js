@@ -45,7 +45,7 @@ const SingleFavorite = React.memo(props => {
     dispatch(updateFavorites(updatedFavorites));
     await toast.promise(updateNote(updatedNote), {
       pending: 'Updating note',
-      success: 'Note updated',
+      success: null,
       error: 'Error',
     }, { toastId: 1 });
     setNote(updatedNote.content);
@@ -76,7 +76,7 @@ const handleStarredFavorite = async () => {
         deleteFavorite(props.favorite.id),
         {
           pending: 'Removing favorite',
-          success: 'Favorite removed',
+          success: null,
           error: 'Error',
         },
         { toastId: 2 }

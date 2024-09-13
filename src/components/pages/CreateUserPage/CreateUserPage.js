@@ -11,10 +11,14 @@ import Webcam from 'react-webcam';
 import Modal from 'react-modal';
 import { getUser } from '../../../redux/reducers/userReducer';
 import { settings } from '../../../settings';
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import GoogleAuth from '../../features/GoogleAuth/GoogleAuth';
+import useToken from '../../features/useToken/useToken.js'
 
 Modal.setAppElement('#root');
 
 const CreateUserPage = () => {
+  const { token, removeToken, setToken } = useToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showCameraModal, setShowCameraModal] = useState(false);
@@ -111,55 +115,9 @@ const CreateUserPage = () => {
       <h3>User Account Form</h3>
       <h5>Will allow login or create account</h5>
       <div>
-        <form className="login">
-          <input
-            onChange={handleChange}
-            id="login"
-            type="text"
-            name="login"
-            placeholder="Login"
-            value={createUserForm.login}
-          />
-          <input
-            onChange={handleChange}
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={createUserForm.password}
-          />
-          <input
-            onChange={handleChange}
-            id="confirmPassword"
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={createUserForm.confirmPassword}
-          />
-          <input
-            onChange={handleChange}
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={createUserForm.email}
-          />
-          <input
-            onChange={handleChange}
-            id="name"
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={createUserForm.name}
-          />
-          <input
-            onChange={handleChange}
-            id="about"
-            type="text"
-            name="about"
-            placeholder="About"
-            value={createUserForm.about}
-          />
+        <form className="login" autocomplete="off">
+
+        {photoURL && <img src={photoURL} alt="Preview" style={{ width: '100px', height: '100px' }} />}
           
           <input
             onChange={handleFileChange}
@@ -168,14 +126,72 @@ const CreateUserPage = () => {
             name="picture"
           />
           <button type="button" onClick={() => setShowCameraModal(true)}>Or use Camera</button>
-
-          {photoURL && <img src={photoURL} alt="Preview" style={{ width: '100px', height: '100px' }} />}
+          
+          <input
+            onChange={handleChange}
+            id="login"
+            type="text"
+            name="login"
+            placeholder="Login"
+            value={createUserForm.login}
+            autocomplete="off"
+          />
+          <input
+            onChange={handleChange}
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={createUserForm.password}
+            autocomplete="off"
+          />
+          <input
+            onChange={handleChange}
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={createUserForm.confirmPassword}
+            autocomplete="off"
+          />
+          <input
+            onChange={handleChange}
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={createUserForm.email}
+            autocomplete="off"
+          />
+          <input
+            onChange={handleChange}
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={createUserForm.name}
+            autocomplete="off"
+          />
+          <input
+            onChange={handleChange}
+            id="about"
+            type="text"
+            name="about"
+            placeholder="About"
+            value={createUserForm.about}
+            autocomplete="off"
+          />
 
           <button onClick={handleCreateUser}>
             {userData ? "Change User Details" : "Create New User"}
           </button>
         </form>
         <a href="/login">Login existing user</a>
+
+        <GoogleOAuthProvider clientId="868534734276-qbdh8jfvu93533vpnqljgevh1it0s2oj.apps.googleusercontent.com">
+          <GoogleAuth setToken={setToken}></GoogleAuth>
+        </GoogleOAuthProvider>
+
       </div>
 
       <h5>Still under construction</h5>

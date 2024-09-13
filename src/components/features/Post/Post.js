@@ -66,7 +66,7 @@ const Post = (props) => {
           createComment(newComment),
           {
             pending: 'Creating comment',
-            success: 'comment created',
+            success: null,
             error: 'Error',
           }, {toastId: 4}
         );
@@ -91,7 +91,7 @@ const Post = (props) => {
       const updatedPosts = props.posts.filter(post => post.id !== props.post.id);
       dispatch(updatePosts(updatedPosts));
     } else {
-      alert(`Post have ${props.post.comments.length} comments already`)
+      toast.warning(`Post have ${props.post.comments.length} comments already`)
     }
   };
 

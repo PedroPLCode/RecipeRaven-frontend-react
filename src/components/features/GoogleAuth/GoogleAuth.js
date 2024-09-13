@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from './GoogleAuth.module.scss';
 import GoogleIcon from "@mui/icons-material/Google";
 import IconButton from "@mui/material/IconButton";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -8,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { fetchFavorites } from '../../../utils/favorites';
 import { settings } from "../../../settings.js";
+import { TonalitySharp } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const GoogleAuth = props => {
 
@@ -45,6 +48,7 @@ async function getUserInfo(codeResponse) {
         const googleUserToken = await getUserInfo(codeResponse);
         props.setToken(googleUserToken.access_token)
         localStorage.setItem('token', googleUserToken.access_token);
+        toast.success(googleUserToken.msg)
         setLoggedIn(true);
         const userData = await getUserData(dispatch);
         setUser(userData);
@@ -65,14 +69,14 @@ async function getUserInfo(codeResponse) {
   };
 
   return (
-    <>
+    <div className={styles.google}>
       {!loggedIn ? (
-        <IconButton
+        <IconButton className={styles.google_icon}
           color="primary"
           aria-label="google login"
           onClick={() => googleLogin()}
         >
-          <GoogleIcon fontSize="large" />
+          <GoogleIcon fontSize="large" />oogle Login
         </IconButton>
       ) : (
         <UserAvatar 
@@ -81,7 +85,7 @@ async function getUserInfo(codeResponse) {
           onClick={handleLogout} 
         />
       )}
-    </>
+    </div>
   );
 }
 

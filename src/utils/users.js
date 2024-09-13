@@ -5,6 +5,7 @@ import stylesChangePassword from '../components/features/ChangeUserPassword/Chan
 import stylesResetPassword from '../components/features/ResetPassword/ResetPassword.module.scss'
 import { settings } from '../settings';
 import { updateUser } from '../redux/reducers/userReducer';
+import { displayApiResponseMessage } from './utlis.js'
 import { toast } from 'react-toastify';
 
 export const validateLogin = async (login) => {
@@ -18,6 +19,7 @@ export const validateLogin = async (login) => {
   const loginExists = await fetchCheckUserLogin(login);
   if (loginExists) {
     inputField.classList.add(stylesCreateUser.input_error);
+    toast.warning('This login is in use.', {toastId: 13})
     return false;
   }
 
@@ -86,6 +88,9 @@ export const validateEmail = async (email, currentEmail=false, checkIfExists=tru
     } else {
       inputField.classList.add(!currentEmail ? stylesCreateUser.input_error : stylesChangeUserDetails.input_error);
       inputField.classList.remove(!currentEmail ? stylesCreateUser.input_ok : stylesChangeUserDetails.input_ok);
+      if (!currentEmail) {
+        toast.warning('This email is in use.', {toastId: 17})
+      }
       return false;
     }
   }
@@ -110,7 +115,8 @@ export const fetchCheckUserLogin = async loginToCheck => {
     }
     
   } catch (error) {
-    console.error("Error fetching logins:", error);
+    console.error(error);
+    return error;
   }
 };
 
@@ -126,11 +132,13 @@ export const fetchCheckUserEmail = async emailToCheck => {
       const emailStatus = await response.json();
       return emailStatus['email_status']
     } else {
-      console.error("Error fetching emails:", response.statusText);
+      console.error(response.statusText);
+      return response;
     }
     
   } catch (error) {
-    console.error("Error fetching emails:", error);
+    console.error(error);
+    return error;
   }
 };
 
@@ -163,7 +171,7 @@ export const getUserData = async (dispatch, props = null) => {
 
     return userData;
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error(error);
     return error;
   }
 };
@@ -225,6 +233,7 @@ export const createUser = async (event, createUserForm, setCreateUserForm) => {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
+    const finalResult = await JSON.parse(result)
     setCreateUserForm({
       login: "",
       password: "",
@@ -233,8 +242,10 @@ export const createUser = async (event, createUserForm, setCreateUserForm) => {
       about: "",
       picture: null,
     });
+    displayApiResponseMessage(response, finalResult);
   } catch (error) {
     console.error(error);
+    return error;
   }
 }
 
@@ -256,26 +267,20 @@ export const resendConfirmationEmail = async (event, form, setForm) => {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-
-    if (response.ok) {
-      toast.success('Confirmation email sent successfully. Please check your inbox.');
-    } else {
-      toast.warning(`Failed to send confirmation email: ${result.msg}`);
-    }
-
     setForm({ email: "" });
-
+    displayApiResponseMessage(response, result);
   } catch (error) {
-    toast.warning("An error occurred. Please try again later.", error);
+    console.error(error);
+    return error;
   }
 }
 
 
-export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch) => {
+export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch, currentEmail=false) => {
   event.preventDefault();
   
   const formData = new FormData();
-  if (changeUserDetailsForm.email !== undefined && validateEmail(changeUserDetailsForm.email)) {
+  if (changeUserDetailsForm.email !== undefined && validateEmail(changeUserDetailsForm.email, currentEmail)) {
     formData.append('email', changeUserDetailsForm.email);
   }
   if (changeUserDetailsForm.name !== undefined) {
@@ -300,6 +305,7 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
   try {
     const response = await fetch(url, options);
     const result = await response.json();
+    const finalResult = await JSON.parse(result)
     setChangeUserDetailsForm({
       email: "",
       name: "",
@@ -307,14 +313,16 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
       picture: null,
     });
     getUserData(dispatch)
+    displayApiResponseMessage(response, finalResult);
   } catch (error) {
+    console.error(error);
+    return error;
   }
 }
 
 
 export const changeUserPassword = async (event, changeUserPasswordForm, setChangeUserPasswordForm) => {
   event.preventDefault();
-
   if (passwordAndConfirmPasswordMatch(changeUserPasswordForm.newPassword, changeUserPasswordForm.confirmNewPassword)) {
     const formData = new FormData();
     formData.append('oldPassword', changeUserPasswordForm.oldPassword);
@@ -332,22 +340,17 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-
-      if (response.ok) {
-        toast.success('Succesfully change password', { toastId: 10 });
-      } else {
-        toast.warning('Error. password not changed', { toastId: 10 });
-      }
-
       setChangeUserPasswordForm({
         oldPassword: "",
         newPassword: "",
         confirmNewPassword: "",
       });
+      displayApiResponseMessage(response, result);
     } catch (error) {
       console.error(error);
+      return error;
     }
-  } else {}
+  }
 }
 
 
@@ -361,60 +364,56 @@ export const resetPassword = async (event, email) => {
     },
     body: JSON.stringify({ email }),
   }
-
   try {
     const response = await fetch(url, options);
-
-    if (response.ok) {
-      toast.success('success')
-    } 
-
+    const result = await response.json();
+    displayApiResponseMessage(response, result);
   } catch (error) {
     console.error(error);
-    toast.warning(error)
+    return error;
   }
 }
 
 
-export const logOut = props => {
-  axios({
-    method: "POST",
-    url:"/logout",
-    baseURL: `${settings.backendUrl}`,
-    headers: {
-      Authorization: 'Bearer ' + localStorage.token
-    }
-  })
-  .then((response) => {
-     props.token()
-     window.location.reload();
-     localStorage.removeItem('token');
-  }).catch((error) => {
-    if (error.response) {
-      toast.warning(error.response)
-      toast.warning(error.response.status)
-      toast.warning(error.response.headers)
+export const logOut = async (props) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      url: "/logout",
+      baseURL: `${settings.backendUrl}`,
+      headers: {
+        Authorization: 'Bearer ' + localStorage.token
       }
-  })}
-
-export const deleteUser = props => {
-  axios({
-    method: "DELETE",
-    url:"/api/users",
-    baseURL: `${settings.backendUrl}`,
-    headers: {
-      Authorization: 'Bearer ' + localStorage.token
-    }
-  })
-  .then((response) => {
-    props.token()
-    window.location.reload();
+    });
+    props.token();
     localStorage.removeItem('token');
-  }).catch((error) => {
-    if (error.response) {
-      toast.warning(error.response)
-      toast.warning(error.response.status)
-      toast.warning(error.response.headers)
-      }
-  })
-}
+    window.location.reload();
+    const result = response.data;
+    displayApiResponseMessage(response, result);
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
+
+
+  export const deleteUser = async (props) => {
+    try {
+      const response = await axios({
+        method: "DELETE",
+        url: "/api/users",
+        baseURL: `${settings.backendUrl}`,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.token
+        }
+      });
+      props.token();
+      window.location.reload();
+      localStorage.removeItem('token');
+      const result = response.data;
+      displayApiResponseMessage(response, result);
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };  

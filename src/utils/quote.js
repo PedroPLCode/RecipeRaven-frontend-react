@@ -8,6 +8,7 @@ export const fetchQuote = async dispatch => {
     const quoteResult = JSON.parse(result);
     dispatch(updateQuote(quoteResult[0] ? quoteResult[0] : messages.defalutQuote));
   } catch (error) {
+    console.error(error);
     return error;
   }     
 }  

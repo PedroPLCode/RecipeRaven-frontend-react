@@ -66,7 +66,7 @@ const News = props => {
           createReaction(newReaction),
           {
             pending: 'Creating Reaction',
-            success: 'Reaction created',
+            success: null,
             error: 'Error',
           }, {toastId: 4}
         );

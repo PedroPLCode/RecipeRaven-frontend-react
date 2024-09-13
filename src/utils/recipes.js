@@ -4,7 +4,8 @@ import { updateLinkNextPage } from '../redux/reducers/nextResultsPageReducer';
 import { updateServerResponse } from '../redux/reducers/serverResponseReducer';
 import { updateServerError } from '../redux/reducers/serverErrorReducer'
 import { elementsNames, settings } from '../settings';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { displayApiResponseMessage } from './utlis.js'
 
 const prepareArrayFromStringInput = string => {
   if (typeof string !== 'string') {
@@ -78,9 +79,11 @@ export const fetchReceipes = async (ingredients, excluded, diet, dietKeys, rando
       const response = await fetch(url, options);
       dispatch(updateServerResponse(response));
       const result = await response.text();
-      const searchResponse = JSON.parse(result)
-      dispatch(updateSearchResult(searchResponse));
-      dispatch(updateLinkNextPage(searchResponse._links.next ? searchResponse._links.next : null));
+      const searchResponse = JSON.parse(result);
+      const searchFinalResults = searchResponse['search_results']
+      displayApiResponseMessage(response, searchResponse);
+      dispatch(updateSearchResult(searchFinalResults));
+      dispatch(updateLinkNextPage(searchFinalResults._links.next ? searchFinalResults._links.next : null));
       dispatch(updateServerError(false));
       setLoading(false); 
       setSuccess(true); 
@@ -89,6 +92,8 @@ export const fetchReceipes = async (ingredients, excluded, diet, dietKeys, rando
       dispatch(updateServerError(error));
       setLoading(false); 
       setSuccess(true); 
+      console.error(error);
+      return error;
     }
   }
 }
@@ -112,16 +117,20 @@ export const fetchMoreReceipes = async (dispatch, setLoading, changeIndicator, s
     dispatch(updateServerResponse(response));
     const result = await response.text();
     const searchResponse = JSON.parse(result);
-    searchResult['hits'].push(...searchResponse['hits']);
-    searchResult['_links'] = searchResponse['_links'];
-    searchResult['headers'] = searchResponse['headers'];
+    const searchFinalResults = searchResponse['search_results']
+    displayApiResponseMessage(response, searchResponse);
+    searchResult['hits'].push(...searchFinalResults['hits']);
+    searchResult['_links'] = searchFinalResults['_links'];
+    searchResult['headers'] = searchFinalResults['headers'];
     dispatch(updateSearchResult(searchResult));
-    dispatch(updateLinkNextPage(searchResponse._links.next ? searchResponse._links.next : null));
+    dispatch(updateLinkNextPage(searchFinalResults._links.next ? searchFinalResults._links.next : null));
     setChangeIndicator(!changeIndicator);
     setLoading(false);
     return result;
   } catch (error) {
     dispatch(updateServerError(error));
     setLoading(false);
+    console.error(error);
+    return error;
   }
 }

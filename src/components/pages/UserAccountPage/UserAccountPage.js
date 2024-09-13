@@ -14,11 +14,11 @@ const LoginPage = () => {
     <div className={styles.account}>
       <h3>User Account Page</h3>
       <h5>login or create new account</h5>
-      <div>
+      <div className={styles.outer}>
         {!token || token ==="" || token === undefined ?  
-        <div>
+        <div className={styles.inner}>
           <Login setToken={setToken} />
-          <a href="/createuser">or create new user</a>
+          <a className={styles.create} href="/createuser">or create new user</a>
         </div>
         :(
         <div>

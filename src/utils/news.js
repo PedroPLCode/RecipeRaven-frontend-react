@@ -1,6 +1,6 @@
 import { updateNews } from '../redux/reducers/newsReducer';
-import { toast } from 'react-toastify';
 import { settings } from '../settings';
+import { displayApiResponseMessage } from './utlis.js'
 
 export const fetchNews = async dispatch => {
   const url = `${settings.backendUrl}/api/news`;
@@ -11,10 +11,11 @@ export const fetchNews = async dispatch => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResponse = await JSON.parse(result)
-    toast.success(finalResponse.msg)
+    displayApiResponseMessage(response, finalResponse);
     dispatch(updateNews(finalResponse.results));
     return finalResponse;
   } catch (error) {
+    console.error(error);
     return error;
   }
 }
@@ -41,10 +42,12 @@ export const createNews = async (payload) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const parsedResponse = await response.json();
-    return parsedResponse;
+    const result = await response.json();
+    displayApiResponseMessage(response, result);
+    return result;
   } catch (error) {
-    console.error('Error creating news:', error);
+    console.error(error);
+    return error;
   }
 };
 
@@ -68,16 +71,12 @@ export const updateSingleNews = async (newsId, payload) => {
 
   try {
     const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    } else {
-      toast.success('News updated succesfully.');
-    }
-    const parsedResponse = await response.json();
-    return parsedResponse;
+    const result = await response.json();
+    displayApiResponseMessage(response, result);
+    return result;
   } catch (error) {
-    console.error('Error updating news:', error);
-    toast.warning('There was an error updating the news. Please try again later.');
+    console.error(error);
+    return error;
   }
 };
 
@@ -96,10 +95,10 @@ export const deleteNews = async newsId => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResult = await JSON.parse(result)
-    toast.success('News deleted succesfully.');
+    displayApiResponseMessage(response, result);
     return finalResult;
   } catch (error) {
-    toast.warning('There was an error deleting the news. Please try again later.');
+    console.error(error);
     return error;
   }
 }

@@ -1,4 +1,5 @@
 import { settings } from '../settings';
+import { displayApiResponseMessage } from './utlis.js'
 
 export const updateNote = async (payload) => {
   const url = `${settings.backendUrl}/api/notes`;
@@ -19,11 +20,11 @@ export const updateNote = async (payload) => {
 
   try {
     const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const parsedResponse = await response.json();
-    return parsedResponse;
+    const result = await response.json();
+    displayApiResponseMessage(response, result);
+    return result;
   } catch (error) {
+    console.error(error);
+    return error;
   }
 };

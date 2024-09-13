@@ -60,7 +60,7 @@ const AddEditNews = () => {
           createNews(newNews),
           {
             pending: 'Creating News',
-            success: 'News created',
+            success: null,
             error: 'Error',
           }, {toastId: 4}
         );

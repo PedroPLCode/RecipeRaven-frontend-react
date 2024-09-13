@@ -25,7 +25,7 @@ const ForgottenPassword = () => {
   };
 
   return (
-    <div className={styles.user}>
+    <div className={styles.password}>
       <h3>setForgottenPasswordEmail form</h3>
       <h5>Change User Password</h5>
       <div>

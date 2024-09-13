@@ -44,7 +44,7 @@ const Comment = props => {
       }
     });
     dispatch(updatePosts(updatedPosts));
-    toast.success('Comment deleted');
+    toast.success('Comment deleted succesfully.');
   };
 
   const handleLikes = () => {

@@ -72,11 +72,10 @@ const ChangeUserDetails = () => {
     )}
 
   const handleChangeUserDetails = (event) => {
-    if (!validateEmail(changeUserDetailsForm.email)) {
+    if (!validateEmail(changeUserDetailsForm.email, currentEmail)) {
       toast('Error. Wrong email address', { toastId: 10 });
     } else {
-      changeUserDetails(event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch);
-      toast('Success. Details changed', { toastId: 10 });
+      changeUserDetails(event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch, currentEmail);
       navigate('/login')
     }
   }

@@ -1,5 +1,5 @@
-import { toast } from 'react-toastify';
 import { settings } from '../settings';
+import { displayApiResponseMessage } from './utlis.js'
 
 export const createReaction = async (payload) => {
     const url = `${settings.backendUrl}/api/reactions`;
@@ -23,10 +23,12 @@ export const createReaction = async (payload) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const parsedResponse = await response.json();
-      return parsedResponse;
+      const result = await response.json();
+      displayApiResponseMessage(response, result);
+      return result;
     } catch (error) {
-      console.error('Error creating Reaction:', error);
+      console.error(error);
+      return error;
     }
   };
   
@@ -50,16 +52,12 @@ export const createReaction = async (payload) => {
   
     try {
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
-        toast.success('Reaction updated succesfully.');
-      }
-      const parsedResponse = await response.json();
-      return parsedResponse;
+      const result = await response.json();
+      displayApiResponseMessage(response, result);
+      return result;
     } catch (error) {
-      console.error('Error creating comment:', error);
-      toast.warning('There was an error updating Reaction. Please try again later.');
+      console.error(error);
+      return error;
     }
   };
 
@@ -77,9 +75,11 @@ export const createReaction = async (payload) => {
     try {
       const response = await fetch(url, options);
       const result = await response.text();
-      const finalResult = await JSON.parse(result)
+      const finalResult = await JSON.parse(result);
+      displayApiResponseMessage(response, result);
       return finalResult;
     } catch (error) {
+      console.error(error);
       return error;
     }
   }
