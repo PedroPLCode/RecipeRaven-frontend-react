@@ -40,10 +40,6 @@
       justify-content: center;
       align-items: center;
 
-      img {
-        margin-bottom: $base-size;
-      }
-
       input {
         width: 100%;
         height: calc($base-size *3);
@@ -53,10 +49,6 @@
         background: $total-transparent;
         transition-property: border, color, background-color, box-shadow;
         transition-duration: $transition-duration;  
-      }
-
-      input:first-of-type {
-        border-bottom: none;
       }
 
       input::placeholder {
@@ -86,6 +78,64 @@
       .input_ok {
         &:focus {
           background-color: green;
+        }
+      }
+
+      .picture_outer {
+        width: 100%;
+        padding: none;
+        margin: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: $base-size * 2;
+    
+        img {
+          width: auto;
+          padding: none;
+          margin: none;
+          max-width: 200px;
+          max-height: 120px;
+          object-fit: contain;
+          border-radius: 5px;
+        }
+    
+        .picture_inner {
+          width: 100%;
+          padding: none;
+          margin: none;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: $base-size * 2;
+    
+          input[type="file"] {
+            display: none;
+          }
+      
+          .file_input_button {
+            width: $base-size * 12;
+            margin: 0px;
+            border-radius: 4px;
+            background-color: $color-one;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            font-size: calc($base-size * 1.3);
+            transition: background-color $transition-duration;
+      
+            &:hover {
+              background-color: darken($color-one, 10%);
+            }
+          }
+    
+          button {
+            margin: 0px;
+            font-size: calc($base-size * 1.3);
+            width: $base-size * 12;
+          }
         }
       }
     }

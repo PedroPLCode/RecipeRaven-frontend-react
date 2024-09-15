@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './CreateUserPage.module.scss';
 import RandomQuote from '../../features/RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,6 +21,7 @@ const CreateUserPage = () => {
   const { token, removeToken, setToken } = useToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [showCameraModal, setShowCameraModal] = useState(false);
   const [photoURL, setPhotoURL] = useState(`${settings.backendUrl}/static/uploaded_photos/anonym.png`);
   const [file, setFile] = useState(null);
@@ -117,15 +118,30 @@ const CreateUserPage = () => {
       <div>
         <form className="login" autocomplete="off">
 
-        {photoURL && <img src={photoURL} alt="Preview" style={{ width: '100px', height: '100px' }} />}
-          
-          <input
-            onChange={handleFileChange}
-            id="picture"
-            type="file"
-            name="picture"
-          />
-          <button type="button" onClick={() => setShowCameraModal(true)}>Or use Camera</button>
+          <div className={styles.picture_outer}>
+          {photoURL && <img src={photoURL} alt="Preview" style={{ width: '100px', height: '100px' }} />}
+            <div className={styles.picture_inner}>
+              
+              <input
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              id="picture"
+              type="file"
+              name="picture"
+            />
+
+            <button
+            type="button"
+            className={styles.file_input_button}
+            onClick={() => fileInputRef.current.click()}
+            >
+            Choose File
+            </button>
+
+            <button type="button" onClick={() => setShowCameraModal(true)}>Use Camera</button>
+
+            </div>
+          </div>
           
           <input
             onChange={handleChange}

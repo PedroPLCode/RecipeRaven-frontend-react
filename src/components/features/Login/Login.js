@@ -1,14 +1,10 @@
 import styles from './Login.module.scss'
 import { useState } from 'react';
-import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { fetchFavorites } from '../../../utils/favorites';
-import { getUserData } from '../../../utils/users';
-import { toast } from 'react-toastify';
-import { settings } from '../../../settings';
+import { logMeIn } from '../../../utils/session.js'
 
 const Login = props => {
 
@@ -20,36 +16,9 @@ const Login = props => {
     password: ""
   })
 
-  const logMeIn = event => {
-    axios({
-      method: "POST",
-      url:"/token",
-      baseURL: `${settings.backendUrl}`,
-      data:{
-        login: loginForm.login,
-        password: loginForm.password
-       }
-    })
-    .then((response) => {
-      if (response.data.email_confirmed && response.data.access_token) {
-        props.setToken(response.data.access_token);
-        localStorage.setItem('token', response.data.access_token);
-        getUserData(dispatch)
-        fetchFavorites(dispatch)
-        localStorage.setItem('email_confirmed', response.data.email_confirmed);
-        navigate('/login');
-      } else {
-        localStorage.setItem('email_confirmed', response.data.email_confirmed);
-        navigate('/confirmuser')
-      }
-    })
-    .catch((error) => {
-      if (error.response) {
-          toast.warning(error.response)
-          toast.warning(error.response.status)
-          toast.warning(error.response.headers)
-          }
-    })
+  const handleClicklogIn = (event) => {
+    event.preventDefault();
+    logMeIn(loginForm, props, dispatch, navigate)
     setloginForm(({
       login: "",
       password: ""}))
@@ -77,7 +46,7 @@ const Login = props => {
                name="password" 
                placeholder="Password" 
                value={loginForm.password} />
-        <button onClick={logMeIn}>Login</button>
+        <button onClick={handleClicklogIn}>Login</button>
       </form>
 
       <a href="/forgottenpassword">Forgotten password</a>

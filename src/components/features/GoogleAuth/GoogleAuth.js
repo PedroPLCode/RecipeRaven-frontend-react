@@ -8,9 +8,8 @@ import { getUserData } from "../../../utils/users.js";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { fetchFavorites } from '../../../utils/favorites';
-import { settings } from "../../../settings.js";
-import { TonalitySharp } from "@mui/icons-material";
-import { toast } from "react-toastify";
+import { displayApiResponseMessage } from '../../../utils/utlis.js';
+import { getGoogleUserInfo } from '../../../utils/session.js'
 
 const GoogleAuth = props => {
 
@@ -19,44 +18,23 @@ const navigate = useNavigate();
 const [loggedIn, setLoggedIn] = useState(false);
 const [user, setUser] = useState({});
 
-async function getUserInfo(codeResponse) {
-  try {
-    const response = await fetch(`${settings.backendUrl}/google_token`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ code: codeResponse.code }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Server error: ${response.status} ${errorText}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching user info:', error);
-    throw error;
-  }
-}
-
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
       try {
-        const googleUserToken = await getUserInfo(codeResponse);
+        const googleUserToken = await getGoogleUserInfo(codeResponse);
         props.setToken(googleUserToken.access_token)
         localStorage.setItem('token', googleUserToken.access_token);
-        toast.success(googleUserToken.msg)
         setLoggedIn(true);
         const userData = await getUserData(dispatch);
         setUser(userData);
-        getUserData(dispatch)
-        fetchFavorites(dispatch)
+        getUserData(dispatch);
+        fetchFavorites(dispatch);
+        displayApiResponseMessage({ok: true}, googleUserToken);
         navigate('/login');
       } catch (error) {
-        console.error('Login failed:', error);
+        console.error(error);
+        displayApiResponseMessage({ok: false}, error);
       }
     },
     onError: (errorResponse) => {

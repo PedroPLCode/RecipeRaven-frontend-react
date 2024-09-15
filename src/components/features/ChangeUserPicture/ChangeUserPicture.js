@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './ChangeUserPicture.module.scss';
 import RandomQuote from '../RandomQuote/RandomQuote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +18,7 @@ import { settings } from '../../../settings';
 const ChangeUserPicture = () => {
 
   const dispatch = useDispatch();
+  const fileInputRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [showCameraModal, setShowCameraModal] = useState(false);
   const [file, setFile] = useState(null);
@@ -108,26 +109,41 @@ const ChangeUserPicture = () => {
     <div className={styles.user}>
       <h3>User Account form</h3>
       <h5>Change User Details</h5>
-      {userData && userData.picture ? (
-
-        (pictureChanged ? 
-          <img src={photoURL} alt="Captured" style={{ width: '100%', maxWidth: '500px' }} />
-          :
-          <img src={`${userData.google_user && userData.original_google_picture ? '' : `${settings.backendUrl}/static/uploaded_photos/`}${userData.picture}`} alt={userData.picture} />
-        )
-      ) : (
-        <p>No profile picture available</p>
-      )}
       
       <div>
-        <form className="login">
-          <input 
-            onChange={handleFileChange} 
-            id="picture"
-            type="file"
-            name="picture" 
-          />
-          <button type="button" onClick={() => setShowCameraModal(true)}>Or use camera</button>
+        <form>
+
+          <div className={styles.picture_outer}> 
+            {userData && userData.picture ? (
+            (pictureChanged ? 
+              <img src={photoURL} alt="Captured" style={{ width: '100%', maxWidth: '500px' }} />
+              :
+              <img src={`${userData.google_user && userData.original_google_picture ? '' : `${settings.backendUrl}/static/uploaded_photos/`}${userData.picture}`} alt={userData.picture} />
+            )
+            ) : (
+            <p>No profile picture available</p>
+            )}
+            <div className={styles.picture_inner}>
+              <input 
+                ref={fileInputRef}
+                onChange={handleFileChange} 
+                id="picture"
+                type="file"
+                name="picture" 
+              />
+
+              <button
+                type="button"
+                className={styles.file_input_button}
+                onClick={() => fileInputRef.current.click()}
+              >
+                Choose File
+              </button>
+
+              <button type="button" onClick={() => setShowCameraModal(true)}>Use camera</button>
+            </div>
+          </div>
+
           <button type="button" onClick={() => setShowModal(true)}>Use this Picture</button>
           <ConfirmationModal 
             text="Profile picture change"
