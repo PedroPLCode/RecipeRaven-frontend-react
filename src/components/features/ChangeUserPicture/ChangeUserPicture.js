@@ -8,7 +8,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { changeUserDetails, getUserData } from '../../../utils/users';
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import { ConfirmToast } from 'react-confirm-toast'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
@@ -19,7 +19,7 @@ const ChangeUserPicture = () => {
 
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
-  const [showModal, setShowModal] = useState(false);
+  const [show, setShow] = useState(false)
   const [showCameraModal, setShowCameraModal] = useState(false);
   const [file, setFile] = useState(null);
   const [pictureChanged, setPictureChanged] = useState(false);
@@ -36,20 +36,17 @@ const ChangeUserPicture = () => {
   }, [file, dispatch]);
   const userData = useSelector(state => getUser(state));
 
-  const handleConfirm = async (event) => {
-    event.preventDefault();
-    setShowModal(false);
+  const handleConfirm = async event => {
 
     if (file) {
       await handleChangeUserPicture(event);
-      toast.success('Success. Picture changed', { toastId: 10 });
     } else {
       toast.error('Error. No file selected', { toastId: 10 });
     }
   };
 
   const handleCancel = () => {
-    setShowModal(false);
+    setShow(false);
     setShowCameraModal(false);
   };
 
@@ -57,7 +54,7 @@ const ChangeUserPicture = () => {
     picture: null,
   });
 
-  const handleChangeUserPicture = async (event) => {
+  const handleChangeUserPicture = async event => {
     await changeUserDetails(event, changeUserPictureForm, setChangeUserPictureForm, dispatch);
     navigate('/login');
     window.location.reload();
@@ -108,7 +105,7 @@ const ChangeUserPicture = () => {
   return (
     <div className={styles.user}>
       <h3>User Account form</h3>
-      <h5>Change User Details</h5>
+      <h5>Change User Picture</h5>
       
       <div>
         <form>
@@ -144,13 +141,15 @@ const ChangeUserPicture = () => {
             </div>
           </div>
 
-          <button type="button" onClick={() => setShowModal(true)}>Use this Picture</button>
-          <ConfirmationModal 
-            text="Profile picture change"
-            show={showModal} 
-            onClose={handleCancel} 
-            onConfirm={handleConfirm} 
+          <button type="button" onClick={() => setShow(true)}>Use this Picture</button>
+
+          <ConfirmToast
+            asModal={true}
+            customFunction={event => handleConfirm(event)}
+            setShowConfirmToast={setShow}
+            showConfirmToast={show}
           />
+
         </form>
         <a href="/login">back</a>
       </div>

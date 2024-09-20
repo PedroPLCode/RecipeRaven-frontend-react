@@ -45,8 +45,8 @@ const SingleFavorite = React.memo(props => {
     dispatch(updateFavorites(updatedFavorites));
     await toast.promise(updateNote(updatedNote), {
       pending: 'Updating note',
-      success: null,
-      error: 'Error',
+      success: updatedNote.content ? 'Note updated.' : 'Note deleted.',
+      error: 'Error updating Note',
     }, { toastId: 1 });
     setNote(updatedNote.content);
     setIsModalOpen(false);

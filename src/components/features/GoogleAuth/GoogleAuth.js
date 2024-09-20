@@ -28,7 +28,7 @@ const [user, setUser] = useState({});
         setLoggedIn(true);
         const userData = await getUserData(dispatch);
         setUser(userData);
-        getUserData(dispatch);
+        //getUserData(dispatch);
         fetchFavorites(dispatch);
         displayApiResponseMessage({ok: true}, googleUserToken);
         navigate('/login');
@@ -44,6 +44,8 @@ const [user, setUser] = useState({});
 
   const handleLogout = () => {
     setLoggedIn(false);
+    setUser(null);
+    localStorage.removeItem('token');
   };
 
   return (
@@ -57,11 +59,11 @@ const [user, setUser] = useState({});
           <GoogleIcon fontSize="large" />oogle Login
         </IconButton>
       ) : (
-        <UserAvatar 
-          userName={user.given_name} 
-          userPicture={user.picture} 
-          onClick={handleLogout} 
-        />
+      <UserAvatar 
+        userName={user?.given_name || "User"}
+        userPicture={user?.picture || null}
+        onClick={handleLogout} 
+      />
       )}
     </div>
   );

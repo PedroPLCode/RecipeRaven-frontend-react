@@ -5,14 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import { ConfirmToast } from 'react-confirm-toast'
 import { getUserData, changeUserPassword, checkUserPassword, passwordAndConfirmPasswordMatch, validatePasswordInput } from '../../../utils/users'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ChangeUserPassword = () => {
 
-  const [showModal, setShowModal] = useState(false);
+  const [show, setShow] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,30 +28,36 @@ const ChangeUserPassword = () => {
     confirmPassword: "",
   })
 
-  const handleClickChangePassword = () => {
+  const handleSubmitForm = async event => {
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
+
     if (!changeUserPasswordForm.oldPassword) {
       toast.warning('Error. enter current password to confirm', { toastId: 10 });
+      setShow(false);
     } else if (!changeUserPasswordForm.password) {
       toast.warning('Error. enter new password', { toastId: 10 });
+      setShow(false);
     } else if (!changeUserPasswordForm.confirmPassword) {
       toast.warning('Error. confirm new password', { toastId: 10 });
+      setShow(false);
     } else if (!validatePasswordInput(changeUserPasswordForm.password, 'password')) {
       toast.warning('Error. passwords too short', { toastId: 10 });
+      setShow(false);
     } else if (!passwordAndConfirmPasswordMatch(changeUserPasswordForm.password, changeUserPasswordForm.confirmPassword)) {
       toast.warning('Error. passwords not match', { toastId: 10 });
-    } else {
-      setShowModal(true);
+      setShow(false);
     }
-  };
+  }
   
-  const handleConfirm = async (event) => {
-    event.preventDefault();
-    setShowModal(false);
-    
+  const handleConfirm = async event => {
     try {
       const passwdCheck = await checkUserPassword(changeUserPasswordForm);
       if (passwdCheck) {
         handleChangeUserPassword(event);
+        localStorage.token = null;
+        navigate('/login')
       } else {
         toast.error('Error. wrong passwords', { toastId: 10 });
       }
@@ -59,10 +65,6 @@ const ChangeUserPassword = () => {
       console.error('Error during password check:', error);
       toast.error('Error. something went wrong', { toastId: 10 });
     }
-  };
-  
-  const handleCancel = () => {
-    setShowModal(false);
   };
 
   const handleChange = event => {
@@ -80,7 +82,7 @@ const ChangeUserPassword = () => {
 
   const handleChangeUserPassword = (event) => {
     changeUserPassword(event, changeUserPasswordForm, setChangeUserPasswordForm);
-    navigate('/login')
+    //navigate('/login')
   }
   
   return (
@@ -88,7 +90,7 @@ const ChangeUserPassword = () => {
       <h3>User Account form</h3>
       <h5>change Password</h5>
       <div>
-        <form className="login">
+        <form className="login" onSubmit={handleSubmitForm}>
           <input onChange={handleChange} 
                 type="password"
                 text={changeUserPasswordForm.oldPassword} 
@@ -112,13 +114,15 @@ const ChangeUserPassword = () => {
                 placeholder="Confirm New Password" 
                 value={changeUserPasswordForm.confirmPassword} />
           
-          <button type="button" onClick={() => handleClickChangePassword()}>Change User Password</button>
-          <ConfirmationModal 
-            text="User password change"
-            show={showModal} 
-            onClose={handleCancel} 
-            onConfirm={handleConfirm} 
+          <button type="submit" onClick={() => setShow(true)}>Change User Password</button>
+
+          <ConfirmToast
+            asModal={true}
+            customFunction={event => handleConfirm(event)}
+            setShowConfirmToast={setShow}
+            showConfirmToast={show}
           />
+
         </form>
         <a href="/login">back</a>
       </div>

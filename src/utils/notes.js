@@ -21,7 +21,8 @@ export const updateNote = async (payload) => {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    displayApiResponseMessage(response, result);
+    const finalResult = await JSON.parse(result)
+    displayApiResponseMessage(response, finalResult);
     return result;
   } catch (error) {
     console.error(error);

@@ -37,6 +37,7 @@ import { useDispatch } from "react-redux";
 import MainPage from './components/pages/MainPage/MainPage.js'
 import ConfirmUser from './components/features/ConfirmUser/ConfirmUser.js'
 import UserConfirmed from './components/features/UserConfirmed/UserConfirmed.js'
+import RemoveGoogleUser from './components/features/RemoveGoogleUser/RemoveGoogleUser.js'
 
 const App = () => {
 
@@ -98,6 +99,7 @@ const App = () => {
 
             <Route path="/changeuserpassword" element={<ChangeUserPassword token={token} setToken={setToken} />} />
             <Route path="/deleteuserpage" element={<DeleteUserPage token={token} setToken={setToken} />} />
+            <Route path="/removegoogleuserpage" element={<RemoveGoogleUser token={token} setToken={setToken} />} />
 
             <Route path="/forgottenpassword" element={<ForgottenPassword />} />
             <Route path="/resetpassword/:token" element={<ResetPassword />} />

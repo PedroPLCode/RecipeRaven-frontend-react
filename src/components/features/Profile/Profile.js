@@ -22,6 +22,8 @@ const Profile = () => {
 
   const emailConfirmed = userData ? userData.email_confirmed : localStorage.getItem('email_confirmed') === 'true';
 
+  console.log(userData)
+  
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -76,9 +78,16 @@ const Profile = () => {
               Change user password
             </a>
           )}
-          <a href="/deleteuserpage" onClick={(e) => { e.preventDefault(); navigate('/deleteuserpage'); }}>
-            {userData.google_user ? 'Remove account' : 'Delete user'}
-          </a>
+
+          {userData.google_user ?
+            <a href="/removegoogleuserpage" onClick={(e) => { e.preventDefault(); navigate('/removegoogleuserpage'); }}>
+              Remove account
+            </a>
+            :
+            <a href="/deleteuserpage" onClick={(e) => { e.preventDefault(); navigate('/deleteuserpage'); }}>
+              Delete account
+            </a>
+          }
 
           <div>
             <p>Account Created:<br/>{userData.creation_date}</p>

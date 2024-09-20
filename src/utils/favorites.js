@@ -60,7 +60,7 @@ export const deleteFavorite = async favoriteId => {
     const response = await fetch(url, options);
     const result = await response.text();
     const finalResult = await JSON.parse(result)
-    displayApiResponseMessage(response, result);
+    displayApiResponseMessage(response, finalResult);
     return finalResult;
   } catch (error) {
     console.error(error);

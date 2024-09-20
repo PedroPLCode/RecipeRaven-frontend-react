@@ -277,7 +277,9 @@ export const resendConfirmationEmail = async (event, form, setForm) => {
 
 
 export const changeUserDetails = async (event, changeUserDetailsForm, setChangeUserDetailsForm, dispatch, currentEmail=false) => {
-  event.preventDefault();
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
   
   const formData = new FormData();
   if (changeUserDetailsForm.email !== undefined && validateEmail(changeUserDetailsForm.email, currentEmail)) {
@@ -305,7 +307,7 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    const finalResult = await JSON.parse(result)
+    //const finalResult = await JSON.parse(result)
     setChangeUserDetailsForm({
       email: "",
       name: "",
@@ -313,7 +315,7 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
       picture: null,
     });
     getUserData(dispatch)
-    displayApiResponseMessage(response, finalResult);
+    displayApiResponseMessage(response, result);
   } catch (error) {
     console.error(error);
     return error;
@@ -322,7 +324,10 @@ export const changeUserDetails = async (event, changeUserDetailsForm, setChangeU
 
 
 export const changeUserPassword = async (event, changeUserPasswordForm, setChangeUserPasswordForm) => {
-  event.preventDefault();
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
+
   if (passwordAndConfirmPasswordMatch(changeUserPasswordForm.newPassword, changeUserPasswordForm.confirmNewPassword)) {
     const formData = new FormData();
     formData.append('oldPassword', changeUserPasswordForm.oldPassword);
@@ -345,6 +350,10 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
         newPassword: "",
         confirmNewPassword: "",
       });
+
+      console.log(response)
+      console.log(result)
+
       displayApiResponseMessage(response, result);
     } catch (error) {
       console.error(error);
@@ -355,7 +364,9 @@ export const changeUserPassword = async (event, changeUserPasswordForm, setChang
 
 
 export const resetPassword = async (event, email) => {
-  event.preventDefault();
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
   const url = `${settings.backendUrl}/api/resetpassword`;
   const options = {
     method: 'POST',
@@ -397,7 +408,7 @@ export const logOut = async (props) => {
 };
 
 
-  export const deleteUser = async (props) => {
+  export const deleteUser = async props => {
     try {
       const response = await axios({
         method: "DELETE",

@@ -6,25 +6,16 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { getUserData, changeUserDetails, validateEmail } from '../../../utils/users'
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { toast } from 'react-toastify';
+import { ConfirmToast } from 'react-confirm-toast'
 import 'react-toastify/dist/ReactToastify.css';
 
 const ChangeUserDetails = () => {
 
-  const [showModal, setShowModal] = useState(false);
+  const [show, setShow] = useState(false)
   const [currentEmail, setCurrentEmail] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const handleConfirm = (event) => {
-    setShowModal(false);
-    handleChangeUserDetails(event);
-  };
-
-  const handleCancel = () => {
-    setShowModal(false);
-  };
 
   const [changeUserDetailsForm, setChangeUserDetailsForm] = useState({
     email: "",
@@ -71,7 +62,7 @@ const ChangeUserDetails = () => {
         ...prevNote, [name]: value})
     )}
 
-  const handleChangeUserDetails = (event) => {
+  const handleChangeUserDetails = event => {
     if (!validateEmail(changeUserDetailsForm.email, currentEmail)) {
       toast('Error. Wrong email address', { toastId: 10 });
     } else {
@@ -85,7 +76,7 @@ const ChangeUserDetails = () => {
       <h3>User Account form</h3>
       <h5>Change User Details</h5>
       <div>
-        <form className="login">
+        <form className="change">
           <input onChange={handleChange} 
                 type="email"
                 id="email"
@@ -107,13 +98,15 @@ const ChangeUserDetails = () => {
                 name="about" 
                 placeholder="About" 
                 value={changeUserDetailsForm.about} />
-          <button type="button" onClick={() => setShowModal(true)}>Change User Details</button>
-          <ConfirmationModal 
-            text="User details change"
-            show={showModal} 
-            onClose={handleCancel} 
-            onConfirm={handleConfirm} 
+          <button type="button" onClick={() => setShow(true)}>Change User Details</button>
+
+          <ConfirmToast
+            asModal={true}
+            customFunction={event => handleChangeUserDetails(event)}
+            setShowConfirmToast={setShow}
+            showConfirmToast={show}
           />
+
         </form>
         <a href="/login">back</a>
       </div>
