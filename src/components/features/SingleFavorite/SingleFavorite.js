@@ -52,6 +52,25 @@ const SingleFavorite = React.memo(props => {
     setIsModalOpen(false);
   }, [dispatch, note, props.favorite.id, props.favorites]);
 
+  const handleDeleteNote = useCallback(async event => {
+    event.preventDefault();
+    const deletedNote = {
+      content: '',
+      favorite_id: props.favorite.id,
+    };
+    const updatedFavorites = props.favorites.map(favorite => 
+      favorite.id === props.favorite.id ? { ...favorite, note: deletedNote } : favorite
+    );
+    dispatch(updateFavorites(updatedFavorites));
+    await toast.promise(updateNote(deletedNote), {
+      pending: 'Updating note',
+      success: 'Note deleted.',
+      error: 'Error deleting Note',
+    }, { toastId: 1 });
+    setNote('');
+    setIsModalOpen(false);
+  }, [dispatch, note, props.favorite.id, props.favorites]);
+
 const handleStarredFavorite = async () => {
   setAnimate(true);
   setAnimateDirectionUp(!favoriteStarred);
@@ -158,6 +177,13 @@ const handleStarredFavorite = async () => {
             <button onClick={handleUpdateNote}>
               <i>{note ? 'Update Note ' : 'Save note '} <FontAwesomeIcon icon={faPen} /></i>
             </button>
+
+            {note ?
+            <button onClick={handleDeleteNote}>
+              <i>Delete Note <FontAwesomeIcon icon={faTrashCan}/> </i>
+            </button>
+            : null}
+
             <button onClick={toggleNote}>Close</button>
           </Modal>
         </div>

@@ -72,8 +72,8 @@ const DeleteUserPage = (props) => {
 
   return (
     <div className={styles.delete}>
-      <h3>User Account form</h3>
-      <h5>Change Password</h5>
+      <h3>User Account</h3>
+      <h5>Delete user</h5>
       <div>
       <form className="login">
         <input 

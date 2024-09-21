@@ -80,13 +80,15 @@ const Comment = props => {
       {props.userData ?
         <div className={styles.buttons_for_users}>
           {props.comment.user_id === props.userData.id || props.userData.id === settings.adminId || props.post.user_id === props.userData.id ?
-            (<div><div onClick={() => setShow(true)} className={styles.button_remove}><i><FontAwesomeIcon icon={faTrashCan} /></i></div>
+            (<div>
+              <div onClick={() => setShow(true)} className={styles.button_remove}><i><FontAwesomeIcon icon={faTrashCan} /></i></div>
               <ConfirmToast
                 asModal={true}
                 customFunction={handleDeleteComment}
                 setShowConfirmToast={setShow}
                 showConfirmToast={show}
-              /></div>)
+              />
+            </div>)
             : null}
           {props.comment.user_id === props.userData.id || props.userData.id === settings.adminId ?
             <Link to={`/editcomment/${props.comment.id}`}><i><FontAwesomeIcon icon={faEdit} /></i></Link>

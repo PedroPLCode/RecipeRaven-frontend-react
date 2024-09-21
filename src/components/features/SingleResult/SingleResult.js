@@ -64,16 +64,16 @@ const SingleResult = props => {
           <strong>{props.singleHit.cuisineType}</strong>
         </p>
         <p><span className={styles.blue}>Cautions:</span>  
-          <strong>{props.singleHit.cautions.map(singleCaution => ` ${singleCaution},`)}</strong>
+          <strong>{props.singleHit.cautions.join(', ')}</strong>
         </p>
         <p><span className={styles.blue}>Prep Time: </span>  
           <strong>{props.singleHit.totalTime} min</strong>
         </p>
         <p><span className={styles.blue}>Diet Info: </span>  
-          <strong>{props.singleHit.dietLabels}</strong>
+          <strong>{props.singleHit.dietLabels.join(', ')}</strong>
         </p>
         <p><span className={styles.blue}>Health Info:</span> 
-          <strong>{props.singleHit.healthLabels.map(singleHealthLabel => ` ${singleHealthLabel},`)}</strong>
+          <strong>{props.singleHit.healthLabels.join(', ')}</strong>
         </p>
         <p><span className={styles.blue}>Calories per one portion: </span> 
           <strong>{props.singleHit.calories}</strong>

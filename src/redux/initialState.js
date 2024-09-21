@@ -15,11 +15,11 @@ const initialState = {
       string: 'vegan',
       description: 'Vegan',
     },
-    glutenFree: {
+    highProtein: {
       value: false,
-      id: 'glutenFree',
-      string: 'gluten-free',
-      description: 'Gluten Free',
+      id: 'highProtein',
+      string: 'high-protein',
+      description: 'High Protein',
     },
     alcoholFree: {
       value: false,

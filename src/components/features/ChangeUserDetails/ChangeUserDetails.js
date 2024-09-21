@@ -102,6 +102,7 @@ const ChangeUserDetails = () => {
 
           <ConfirmToast
             asModal={true}
+            toastText='Are you sure?'
             customFunction={event => handleChangeUserDetails(event)}
             setShowConfirmToast={setShow}
             showConfirmToast={show}
